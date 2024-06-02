@@ -2,6 +2,10 @@
 name = "daisy_rsx"
 version = "0.1.0"
 edition = "2021"
+description = "Daisy UI components for the Dioxus Rust library."
+license = "MIT"
+repository = "https://github.com/bionic-gpt/daisy-rsx/"
+homepage = "https://github.com/bionic-gpt/daisy-rsx"
 
 [lib]
 path = "src/lib.rs"
