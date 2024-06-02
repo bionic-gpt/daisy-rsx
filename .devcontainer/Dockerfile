@@ -12,3 +12,10 @@ RUN echo 'git config core.hooksPath /workspace/.devcontainer/.githooks' >> ~/.ba
 ARG USERNAME=vscode
 RUN sudo mkdir -p /workspace/target && sudo chown $USERNAME:$USERNAME /workspace/target
 #RUN sudo mkdir -p /workspace/crates/asset-pipeline/node_modules && sudo chown $USERNAME:$USERNAME /workspace/crates/asset-pipeline/node_modules
+
+RUN sudo wget https://github.com/cargo-bins/cargo-binstall/releases/latest/download/cargo-binstall-x86_64-unknown-linux-musl.tgz
+RUN sudo tar -xvf cargo-binstall-x86_64-unknown-linux-musl.tgz
+RUN sudo cp cargo-binstall /usr/local/cargo/bin
+
+# Install cargo-leptos
+RUN cargo binstall cargo-release -y

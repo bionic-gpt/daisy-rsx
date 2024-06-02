@@ -1,8 +1,0 @@
-[release]
-registry = "https://crates.io"
-
-[pre-release-hook]
-script = ["cargo test"]
-
-[post-release-hook]
-script = ["git push --follow-tags origin main"]
