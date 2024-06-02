@@ -8,6 +8,8 @@ To create a new release, use the following command locally:
 cargo release patch
 ```
 
+Once you are ready, pass the `--execute` flag.
+
 This will:
 
 - Bump the version number.
