@@ -1,5 +1,7 @@
 ## Daisy-RSX
 
+This is a [Dioxus](https://dioxuslabs.com/) version of the [Daisy UI](https://daisyui.com/) components.
+
 ## To Create a Release
 
 To create a new release, use the following command locally:
