@@ -62,7 +62,7 @@ pub fn DropDown(props: DropDownProps) -> Element {
                         }
                 },
                 span {
-                    class: "text-ellipsis overflow-hidden",
+                    class: "truncate",
                     "{props.button_text}"
                 }
                 if let Some(img_src) = props.suffix_image_src {
