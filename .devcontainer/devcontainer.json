@@ -7,7 +7,9 @@
 	],
 	"service": "development",
 	"workspaceFolder": "/workspace",
-		
+	"mounts": [
+    	"source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
+	],
 	// Set *default* container specific settings.json values on container create.
 	"customizations": {
 		"vscode": {
