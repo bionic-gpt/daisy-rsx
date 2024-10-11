@@ -17,7 +17,7 @@ pub fn BlankSlate(props: BlankSlateProps) -> Element {
         div {
             class: "mt-4 flex flex-col justify-center items-center",
             img {
-                class: "mb-4",
+                class: "mb-4 svg-icon",
                 src: "{props.visual}",
                 width: "10%"
             }
