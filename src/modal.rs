@@ -5,7 +5,6 @@ use dioxus::prelude::*;
 #[derive(Props, Clone, PartialEq)]
 pub struct ModalProps {
     trigger_id: String,
-    label: String,
     children: Element,
     submit_action: Option<String>,
 }
@@ -18,6 +17,7 @@ pub fn Modal(props: ModalProps) -> Element {
                 method: "post",
                 dialog {
                     class: "modal",
+                    id: "{props.trigger_id}",
                     ModalBody {
                         {props.children}
                     }
@@ -26,6 +26,7 @@ pub fn Modal(props: ModalProps) -> Element {
         } else {
             dialog {
                 class: "modal",
+                id: "{props.trigger_id}",
                 ModalBody {
                     {props.children}
                 }
