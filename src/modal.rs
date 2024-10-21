@@ -7,16 +7,22 @@ pub struct ModalProps {
     trigger_id: String,
     children: Element,
     submit_action: Option<String>,
+    class: Option<String>,
 }
 
 pub fn Modal(props: ModalProps) -> Element {
+    let class = if let Some(class) = props.class {
+        format!("modal {}", class)
+    } else {
+        "modal".to_string()
+    };
     rsx!(
         if let Some(action) = &props.submit_action {
             form {
                 action: "{action}",
                 method: "post",
                 dialog {
-                    class: "modal",
+                    class: "{class}",
                     id: "{props.trigger_id}",
                     ModalBody {
                         {props.children}
@@ -25,7 +31,7 @@ pub fn Modal(props: ModalProps) -> Element {
             }
         } else {
             dialog {
-                class: "modal",
+                class: "{class}",
                 id: "{props.trigger_id}",
                 ModalBody {
                     {props.children}
