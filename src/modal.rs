@@ -24,18 +24,14 @@ pub fn Modal(props: ModalProps) -> Element {
                 dialog {
                     class: "{class}",
                     id: "{props.trigger_id}",
-                    ModalBody {
-                        {props.children}
-                    }
+                    {props.children}
                 }
             }
         } else {
             dialog {
                 class: "{class}",
                 id: "{props.trigger_id}",
-                ModalBody {
-                    {props.children}
-                }
+                {props.children}
             }
         }
     )
