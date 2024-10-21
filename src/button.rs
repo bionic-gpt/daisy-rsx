@@ -73,6 +73,7 @@ pub struct ButtonProps {
     button_size: Option<ButtonSize>,
     button_scheme: Option<ButtonScheme>,
     drawer_trigger: Option<String>,
+    modal_trigger: Option<String>,
     disabled_text: Option<String>,
 }
 
@@ -125,6 +126,7 @@ pub fn Button(props: ButtonProps) -> Element {
             id: props.id,
             disabled: disabled,
             "data-drawer-target": props.drawer_trigger,
+            "data-modal-target": props.modal_trigger,
             "type": "{button_type}",
             "data-disabled-text": props.disabled_text,
             if let Some(img_src) = props.prefix_image_src {
