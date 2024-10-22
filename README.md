@@ -4,12 +4,6 @@ This is a [Dioxus](https://dioxuslabs.com/) version of the [Daisy UI](https://da
 
 ## To Create a Release
 
-Get token from secrets manager
-
-```sh
-cargo login
-```
-
 To create a new release, use the following command locally:
 
 ```sh
