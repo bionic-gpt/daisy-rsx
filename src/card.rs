@@ -6,6 +6,8 @@ use dioxus::prelude::*;
 pub struct BoxProps {
     class: Option<String>,
     children: Element,
+    drawer_trigger: Option<String>,
+    modal_trigger: Option<String>,
 }
 
 pub fn Box(props: BoxProps) -> Element {
@@ -20,6 +22,8 @@ pub fn Box(props: BoxProps) -> Element {
     rsx!(
         div {
             class: "{class}",
+            "data-drawer-target": props.drawer_trigger,
+            "data-modal-target": props.modal_trigger,
             {props.children}
         }
     )
