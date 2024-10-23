@@ -22,9 +22,9 @@ impl AvatarSize {
     pub fn to_string(&self) -> (&'static str, &'static str) {
         match self {
             AvatarSize::Small => ("24", "24"),
-            AvatarSize::Medium => ("24", "24"),
-            AvatarSize::Large => ("24", "24"),
-            AvatarSize::ExtraLarge => ("24", "24"),
+            AvatarSize::Medium => ("48", "48"),
+            AvatarSize::Large => ("96", "96"),
+            AvatarSize::ExtraLarge => ("128", "128"),
         }
     }
 }
@@ -35,7 +35,7 @@ pub struct AvatarProps {
     avatar_type: Option<AvatarType>,
     name: Option<String>,
     _email: Option<String>,
-    _image_src: Option<String>,
+    image_src: Option<String>,
 }
 
 pub fn Avatar(props: AvatarProps) -> Element {
@@ -55,85 +55,102 @@ pub fn Avatar(props: AvatarProps) -> Element {
         };
     }
 
-    match props.avatar_type {
-        Some(AvatarType::User) => rsx!(
-            svg {
-                "aria-hidden": true,
-                xmlns: "http://www.w3.org/2000/svg",
-                height: avatar_size.0,
-                width: avatar_size.1,
-                "viewbox": "0 0 27 27",
-                rect {
-                    fill: "rgb(125, 73, 193)",
-                    height: "27",
-                    rx: "12",
-                    width: "27",
-                    x: "0",
-                    y: "0"
-                }
-                g {
-                    fill: "#fff",
-                    opacity: ".5",
-                    circle {
-                        cx: "13.5",
-                        cy: "30",
-                        r: "13"
-                    }
-                    circle {
-                        cx: "13.5",
-                        cy: "11",
-                        r: "5"
+    if let Some(image) = props.image_src {
+        rsx!(
+            div {
+                class: "avatar",
+                div {
+                    class: "rounded",
+                    img {
+                        width: avatar_size.0,
+                        height: avatar_size.1,
+                        src: image
                     }
                 }
             }
-        ),
-        Some(_) => rsx!(
-            svg {
-                "aria-hidden": true,
-                xmlns: "http://www.w3.org/2000/svg",
-                "viewBox": "0 0 50 50",
-                height: avatar_size.0,
-                width: avatar_size.1,
-                rect {
-                    fill: "rgb(46, 77, 172)",
-                    height: "100%",
-                    width: "100%",
+        )
+    } else {
+
+        match props.avatar_type {
+            Some(AvatarType::User) => rsx!(
+                svg {
+                    "aria-hidden": true,
+                    xmlns: "http://www.w3.org/2000/svg",
+                    height: avatar_size.0,
+                    width: avatar_size.1,
+                    "viewbox": "0 0 27 27",
+                    rect {
+                        fill: "rgb(125, 73, 193)",
+                        height: "27",
+                        rx: "12",
+                        width: "27",
+                        x: "0",
+                        y: "0"
+                    }
+                    g {
+                        fill: "#fff",
+                        opacity: ".5",
+                        circle {
+                            cx: "13.5",
+                            cy: "30",
+                            r: "13"
+                        }
+                        circle {
+                            cx: "13.5",
+                            cy: "11",
+                            r: "5"
+                        }
+                    }
                 }
-                text {
-                    fill: "#fff",
-                    "font-size": "26",
-                    "font-weight": "500",
-                    x: "50%",
-                    y: "55%",
-                    "dominant-baseline": "middle",
-                    "text-anchor": "middle",
-                    {the_name}
+            ),
+            Some(_) => rsx!(
+                svg {
+                    "aria-hidden": true,
+                    xmlns: "http://www.w3.org/2000/svg",
+                    "viewBox": "0 0 50 50",
+                    height: avatar_size.0,
+                    width: avatar_size.1,
+                    rect {
+                        fill: "rgb(46, 77, 172)",
+                        height: "100%",
+                        width: "100%",
+                    }
+                    text {
+                        fill: "#fff",
+                        "font-size": "26",
+                        "font-weight": "500",
+                        x: "50%",
+                        y: "55%",
+                        "dominant-baseline": "middle",
+                        "text-anchor": "middle",
+                        {the_name}
+                    }
                 }
-            }
-        ),
-        None => rsx!(
-            svg {
-                "aria-hidden": true,
-                xmlns: "http://www.w3.org/2000/svg",
-                "viewBox": "0 0 50 50",
-                height: avatar_size.0,
-                width: avatar_size.1,
-                rect {
-                    fill: "rgb(46, 77, 172)",
-                    height: "100%",
-                    width: "100%",
+            ),
+            None => rsx!(
+                svg {
+                    "aria-hidden": true,
+                    xmlns: "http://www.w3.org/2000/svg",
+                    "viewBox": "0 0 50 50",
+                    height: avatar_size.0,
+                    width: avatar_size.1,
+                    rect {
+                        fill: "rgb(46, 77, 172)",
+                        height: "100%",
+                        width: "100%",
+                    }
+                    text {
+                        fill: "#fff",
+                        "font-size": "26",
+                        "font-weight": "500",
+                        x: "50%",
+                        y: "55%",
+                        "dominant-baseline": "middle",
+                        "text-anchor": "middle",
+                        {the_name}
+                    }
                 }
-                text {
-                    fill: "#fff",
-                    "font-size": "26",
-                    "font-weight": "500",
-                    x: "50%",
-                    y: "55%",
-                    "dominant-baseline": "middle",
-                    "text-anchor": "middle",
-                    {the_name}
-                }
-            }
-        ),
+            ),
+        }
     }
 }
