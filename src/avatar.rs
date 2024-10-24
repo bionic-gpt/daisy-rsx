@@ -19,12 +19,12 @@ pub enum AvatarSize {
 }
 
 impl AvatarSize {
-    pub fn to_string(&self) -> (&'static str, &'static str) {
+    pub fn to_string(&self) -> (&'static str, &'static str, &'static str) {
         match self {
-            AvatarSize::Small => ("24", "24"),
-            AvatarSize::Medium => ("48", "48"),
-            AvatarSize::Large => ("96", "96"),
-            AvatarSize::ExtraLarge => ("128", "128"),
+            AvatarSize::Small => ("24", "24", "w-8 h-8"),
+            AvatarSize::Medium => ("48", "48", "w-16 h-16"),
+            AvatarSize::Large => ("96", "96", "w-20 w-20"),
+            AvatarSize::ExtraLarge => ("128", "128", "w-32 h-32"),
         }
     }
 }
@@ -60,7 +60,7 @@ pub fn Avatar(props: AvatarProps) -> Element {
             div {
                 class: "avatar",
                 div {
-                    class: "rounded",
+                    class: "rounded {avatar_size.2}",
                     img {
                         width: avatar_size.0,
                         height: avatar_size.1,
@@ -70,84 +70,101 @@ pub fn Avatar(props: AvatarProps) -> Element {
             }
         )
     } else {
-
         match props.avatar_type {
             Some(AvatarType::User) => rsx!(
-                svg {
-                    "aria-hidden": true,
-                    xmlns: "http://www.w3.org/2000/svg",
-                    height: avatar_size.0,
-                    width: avatar_size.1,
-                    "viewbox": "0 0 27 27",
-                    rect {
-                        fill: "rgb(125, 73, 193)",
-                        height: "27",
-                        rx: "12",
-                        width: "27",
-                        x: "0",
-                        y: "0"
-                    }
-                    g {
-                        fill: "#fff",
-                        opacity: ".5",
-                        circle {
-                            cx: "13.5",
-                            cy: "30",
-                            r: "13"
-                        }
-                        circle {
-                            cx: "13.5",
-                            cy: "11",
-                            r: "5"
+                div {
+                    class: "avatar",
+                    div {
+                        class: "rounded {avatar_size.2}",
+                        svg {
+                            "aria-hidden": true,
+                            xmlns: "http://www.w3.org/2000/svg",
+                            height: avatar_size.0,
+                            width: avatar_size.1,
+                            "viewbox": "0 0 27 27",
+                            rect {
+                                fill: "rgb(125, 73, 193)",
+                                height: "27",
+                                rx: "12",
+                                width: "27",
+                                x: "0",
+                                y: "0"
+                            }
+                            g {
+                                fill: "#fff",
+                                opacity: ".5",
+                                circle {
+                                    cx: "13.5",
+                                    cy: "30",
+                                    r: "13"
+                                }
+                                circle {
+                                    cx: "13.5",
+                                    cy: "11",
+                                    r: "5"
+                                }
+                            }
                         }
                     }
                 }
             ),
             Some(_) => rsx!(
-                svg {
-                    "aria-hidden": true,
-                    xmlns: "http://www.w3.org/2000/svg",
-                    "viewBox": "0 0 50 50",
-                    height: avatar_size.0,
-                    width: avatar_size.1,
-                    rect {
-                        fill: "rgb(46, 77, 172)",
-                        height: "100%",
-                        width: "100%",
-                    }
-                    text {
-                        fill: "#fff",
-                        "font-size": "26",
-                        "font-weight": "500",
-                        x: "50%",
-                        y: "55%",
-                        "dominant-baseline": "middle",
-                        "text-anchor": "middle",
-                        {the_name}
+                div {
+                    class: "avatar",
+                    div {
+                        class: "rounded {avatar_size.2}",
+                        svg {
+                            "aria-hidden": true,
+                            xmlns: "http://www.w3.org/2000/svg",
+                            "viewBox": "0 0 50 50",
+                            height: avatar_size.0,
+                            width: avatar_size.1,
+                            rect {
+                                fill: "rgb(46, 77, 172)",
+                                height: "100%",
+                                width: "100%",
+                            }
+                            text {
+                                fill: "#fff",
+                                "font-size": "26",
+                                "font-weight": "500",
+                                x: "50%",
+                                y: "55%",
+                                "dominant-baseline": "middle",
+                                "text-anchor": "middle",
+                                {the_name}
+                            }
+                        }
                     }
                 }
             ),
             None => rsx!(
-                svg {
-                    "aria-hidden": true,
-                    xmlns: "http://www.w3.org/2000/svg",
-                    "viewBox": "0 0 50 50",
-                    height: avatar_size.0,
-                    width: avatar_size.1,
-                    rect {
-                        fill: "rgb(46, 77, 172)",
-                        height: "100%",
-                        width: "100%",
-                    }
-                    text {
-                        fill: "#fff",
-                        "font-size": "26",
-                        "font-weight": "500",
-                        x: "50%",
-                        y: "55%",
-                        "dominant-baseline": "middle",
-                        "text-anchor": "middle",
-                        {the_name}
+                div {
+                    class: "avatar",
+                    div {
+                        class: "rounded {avatar_size.2}",
+                        svg {
+                            "aria-hidden": true,
+                            xmlns: "http://www.w3.org/2000/svg",
+                            "viewBox": "0 0 50 50",
+                            height: avatar_size.0,
+                            width: avatar_size.1,
+                            rect {
+                                fill: "rgb(46, 77, 172)",
+                                height: "100%",
+                                width: "100%",
+                            }
+                            text {
+                                fill: "#fff",
+                                "font-size": "26",
+                                "font-weight": "500",
+                                x: "50%",
+                                y: "55%",
+                                "dominant-baseline": "middle",
+                                "text-anchor": "middle",
+                                {the_name}
+                            }
+                        }
                     }
                 }
             ),

@@ -59,13 +59,20 @@ pub fn BoxHeader(props: BoxHeadersProps) -> Element {
 
 #[derive(Props, Clone, PartialEq)]
 pub struct BoxBodyProps {
+    class: Option<String>,
     children: Element,
 }
 
 pub fn BoxBody(props: BoxBodyProps) -> Element {
+    let class = if let Some(class) = props.class {
+        format!("card-body {}", class)
+    } else {
+        "card-body".to_string()
+    };
+
     rsx!(
         div {
-            class: "card-body",
+            class: "{class}",
             {props.children}
         }
     )
