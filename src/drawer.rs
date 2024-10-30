@@ -11,15 +11,41 @@ pub struct DrawerProps {
 }
 
 pub fn Drawer(props: DrawerProps) -> Element {
-    let action = if let Some(action) = &props.submit_action {
-        action.to_string()
+    if let Some(action) = &props.submit_action {
+        rsx!(
+            form {
+                action: "{action}",
+                method: "post",
+                div {
+                    div {
+                        class: "side-drawer flex flex-col",
+                        id: props.trigger_id,
+                        div {
+                            class: "drawer__overlay",
+                            tabindex: "-1"
+                        }
+                        div {
+                            class: "drawer__panel",
+                            header {
+                                class: "drawer__header",
+                                h4 {
+                                    class: "drawer__title",
+                                    "{props.label}"
+                                }
+                                a {
+                                    href: "#",
+                                    class: "drawer__close",
+                                    "X"
+                                }
+                            }
+                            {props.children}
+                        }
+                    }
+                }
+            }
+        )
     } else {
-        "".to_string()
-    };
-    rsx!(
-        form {
-            action: "{action}",
-            method: "post",
+        rsx!(
             div {
                 div {
                     class: "side-drawer flex flex-col",
@@ -46,8 +72,8 @@ pub fn Drawer(props: DrawerProps) -> Element {
                     }
                 }
             }
-        }
-    )
+        )
+    }
 }
 
 #[derive(Props, Clone, PartialEq)]
