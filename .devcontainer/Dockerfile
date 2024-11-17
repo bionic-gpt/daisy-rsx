@@ -1,4 +1,4 @@
-FROM purtontech/rust-on-nails-devcontainer:1.3.1 AS development
+FROM purtontech/rust-on-nails-devcontainer:1.3.13 AS development
 
 COPY ps1.bash .
 RUN cat ps1.bash >> ~/.bashrc && sudo rm ps1.bash
@@ -13,9 +13,5 @@ ARG USERNAME=vscode
 RUN sudo mkdir -p /workspace/target && sudo chown $USERNAME:$USERNAME /workspace/target
 #RUN sudo mkdir -p /workspace/crates/asset-pipeline/node_modules && sudo chown $USERNAME:$USERNAME /workspace/crates/asset-pipeline/node_modules
 
-RUN sudo wget https://github.com/cargo-bins/cargo-binstall/releases/latest/download/cargo-binstall-x86_64-unknown-linux-musl.tgz
-RUN sudo tar -xvf cargo-binstall-x86_64-unknown-linux-musl.tgz
-RUN sudo cp cargo-binstall /usr/local/cargo/bin
-
 # Install cargo-leptos
-RUN cargo binstall cargo-release -y
+RUN cargo binstall cargo-release --no-confirm
