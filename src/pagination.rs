@@ -7,6 +7,7 @@ pub struct PaginationProps {
     prev_page_url: Option<String>,
 }
 
+#[component]
 pub fn Pagination(props: PaginationProps) -> Element {
     rsx!(
         nav {

@@ -38,6 +38,7 @@ pub struct AvatarProps {
     image_src: Option<String>,
 }
 
+#[component]
 pub fn Avatar(props: AvatarProps) -> Element {
     let avatar_size = if props.avatar_size.is_some() {
         props.avatar_size.unwrap()

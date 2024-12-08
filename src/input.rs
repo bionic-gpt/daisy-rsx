@@ -60,6 +60,7 @@ pub struct InputProps {
     pub readonly: Option<bool>,
 }
 
+#[component]
 pub fn Input(props: InputProps) -> Element {
     let input_type = if props.input_type.is_some() {
         props.input_type.unwrap()
@@ -92,7 +93,7 @@ pub fn Input(props: InputProps) -> Element {
                     "{l}"
                 }
             ),
-            (None, _) => None
+            (None, _) => rsx!()
         }
         input {
             id: props.id,

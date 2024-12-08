@@ -49,6 +49,7 @@ pub struct LabelProps {
     label_size: Option<LabelSize>,
 }
 
+#[component]
 pub fn Label(props: LabelProps) -> Element {
     let label_role = if props.label_role.is_some() {
         props.label_role.unwrap()

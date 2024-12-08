@@ -77,6 +77,7 @@ pub struct ButtonProps {
     disabled_text: Option<String>,
 }
 
+#[component]
 pub fn Button(props: ButtonProps) -> Element {
     let button_scheme = if props.button_scheme.is_some() {
         props.button_scheme.unwrap()

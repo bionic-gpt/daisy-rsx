@@ -34,6 +34,7 @@ pub struct DropDownProps {
     suffix_image_src: Option<String>,
 }
 
+#[component]
 pub fn DropDown(props: DropDownProps) -> Element {
     let direction = if let Some(direction) = props.direction {
         direction.to_string()
@@ -95,6 +96,7 @@ pub struct DropDownLinkProps {
     children: Element,
 }
 
+#[component]
 pub fn DropDownLink(props: DropDownLinkProps) -> Element {
     let class = if let Some(class) = props.class {
         format!("dropdown-item {} ", class)

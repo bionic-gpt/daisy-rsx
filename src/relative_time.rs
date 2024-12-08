@@ -31,6 +31,7 @@ pub struct RelativeTimeProps {
     datetime: String,
 }
 
+#[component]
 pub fn RelativeTime(props: RelativeTimeProps) -> Element {
     let format = if props.format.is_some() {
         props.format.unwrap()

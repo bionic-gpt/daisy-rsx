@@ -41,6 +41,7 @@ pub struct Props {
     pub readonly: Option<bool>,
 }
 
+#[component]
 pub fn TextArea(props: Props) -> Element {
     let input_size = if props.area_size.is_some() {
         props.area_size.unwrap()
@@ -92,7 +93,7 @@ pub fn TextArea(props: Props) -> Element {
                     "{l}"
                 }
             ),
-            None => None
+            None => rsx!()
         }
         textarea {
             id: "{id}",
@@ -113,7 +114,7 @@ pub fn TextArea(props: Props) -> Element {
                     "{l}"
                 }
             ),
-            None => None
+            None => rsx!()
         }
     )
 }

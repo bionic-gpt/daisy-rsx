@@ -3,14 +3,15 @@
 use dioxus::prelude::*;
 
 #[derive(Props, Clone, PartialEq)]
-pub struct BoxProps {
+pub struct CardProps {
     class: Option<String>,
     children: Element,
     drawer_trigger: Option<String>,
     modal_trigger: Option<String>,
 }
 
-pub fn Box(props: BoxProps) -> Element {
+#[component]
+pub fn Card(props: CardProps) -> Element {
     let class = if let Some(class) = props.class {
         class
     } else {
@@ -30,13 +31,14 @@ pub fn Box(props: BoxProps) -> Element {
 }
 
 #[derive(Props, Clone, PartialEq)]
-pub struct BoxHeadersProps {
+pub struct CardHeadersProps {
     class: Option<String>,
     title: String,
     children: Element,
 }
 
-pub fn BoxHeader(props: BoxHeadersProps) -> Element {
+#[component]
+pub fn CardHeader(props: CardHeadersProps) -> Element {
     let class = if let Some(class) = props.class {
         class
     } else {
@@ -58,12 +60,13 @@ pub fn BoxHeader(props: BoxHeadersProps) -> Element {
 }
 
 #[derive(Props, Clone, PartialEq)]
-pub struct BoxBodyProps {
+pub struct CardBodyProps {
     class: Option<String>,
     children: Element,
 }
 
-pub fn BoxBody(props: BoxBodyProps) -> Element {
+#[component]
+pub fn CardBody(props: CardBodyProps) -> Element {
     let class = if let Some(class) = props.class {
         format!("card-body {}", class)
     } else {

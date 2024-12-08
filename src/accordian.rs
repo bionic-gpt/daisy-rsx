@@ -11,6 +11,7 @@ pub struct AccordianProps {
     children: Element,
 }
 
+#[component]
 pub fn Accordian(props: AccordianProps) -> Element {
     rsx!(
         div {

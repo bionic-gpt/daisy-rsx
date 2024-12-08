@@ -55,6 +55,7 @@ pub struct CheckBoxProps {
     checkbox_scheme: Option<CheckBoxScheme>,
 }
 
+#[component]
 pub fn CheckBox(props: CheckBoxProps) -> Element {
     let checkbox_scheme = if props.checkbox_scheme.is_some() {
         props.checkbox_scheme.unwrap()

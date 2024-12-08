@@ -10,6 +10,7 @@ pub struct DrawerProps {
     submit_action: Option<String>,
 }
 
+#[component]
 pub fn Drawer(props: DrawerProps) -> Element {
     if let Some(action) = &props.submit_action {
         rsx!(
@@ -81,6 +82,7 @@ pub struct DrawerFooterProps {
     children: Element,
 }
 
+#[component]
 pub fn DrawerFooter(props: DrawerFooterProps) -> Element {
     rsx!(
         div {
@@ -96,6 +98,7 @@ pub struct DrawerBodyProps {
     class: Option<String>,
 }
 
+#[component]
 pub fn DrawerBody(props: DrawerBodyProps) -> Element {
     let class = if let Some(class) = props.class {
         class

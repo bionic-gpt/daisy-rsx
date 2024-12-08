@@ -31,6 +31,7 @@ pub struct ToolTipProps {
     alert_color: Option<ToolTipColor>,
 }
 
+#[component]
 pub fn ToolTip(props: ToolTipProps) -> Element {
     let alert_color = if props.alert_color.is_some() {
         props.alert_color.unwrap()

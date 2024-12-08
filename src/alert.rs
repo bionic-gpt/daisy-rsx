@@ -30,6 +30,7 @@ pub struct AlertProps {
     alert_color: Option<AlertColor>,
 }
 
+#[component]
 pub fn Alert(props: AlertProps) -> Element {
     let alert_color = if props.alert_color.is_some() {
         props.alert_color.unwrap()

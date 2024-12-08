@@ -9,6 +9,7 @@ pub struct TabContainerProps {
     children: Element,
 }
 
+#[component]
 pub fn TabContainer(props: TabContainerProps) -> Element {
     let class = if let Some(class) = props.class {
         class
@@ -33,6 +34,7 @@ pub struct TabPanelProps {
     children: Element,
 }
 
+#[component]
 pub fn TabPanel(props: TabPanelProps) -> Element {
     rsx!(
         input {

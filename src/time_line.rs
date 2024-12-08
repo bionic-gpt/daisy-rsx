@@ -10,6 +10,7 @@ pub struct TimeLineProps {
     children: Element,
 }
 
+#[component]
 pub fn TimeLine(props: TimeLineProps) -> Element {
     let class = if let Some(class) = props.class {
         class
@@ -39,6 +40,7 @@ pub struct TimeLineBadgeProps {
     class: Option<String>,
 }
 
+#[component]
 pub fn TimeLineBadge(props: TimeLineBadgeProps) -> Element {
     let class = if let Some(class) = props.class {
         class
@@ -64,6 +66,7 @@ pub struct TimeLineBodyProps {
     class: Option<String>,
 }
 
+#[component]
 pub fn TimeLineBody(props: TimeLineBodyProps) -> Element {
     let class = if let Some(class) = props.class {
         class

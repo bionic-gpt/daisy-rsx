@@ -10,6 +10,7 @@ pub struct NavItemProps {
     id: Option<String>,
 }
 
+#[component]
 pub fn NavItem(props: NavItemProps) -> Element {
     let mut class = "";
     if let (Some(id), Some(selected_item_id)) = (&props.id, &props.selected_item_id) {
@@ -43,6 +44,7 @@ pub struct NavSubItemProps {
     id: Option<String>,
 }
 
+#[component]
 pub fn NavSubItem(props: NavSubItemProps) -> Element {
     let mut class = "";
     if let (Some(id), Some(selected_item_id)) = (&props.id, &props.selected_item_id) {
@@ -67,6 +69,7 @@ pub struct NavGroupProps {
     content: Element,
 }
 
+#[component]
 pub fn NavGroup(props: NavGroupProps) -> Element {
     rsx!(
         ul {
@@ -86,6 +89,7 @@ pub struct NavSubGroupProps {
     children: Element,
 }
 
+#[component]
 pub fn NavSubGroup(props: NavSubGroupProps) -> Element {
     rsx!(
         ul {

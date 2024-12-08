@@ -38,6 +38,7 @@ pub struct SelectProps {
     pub multiple: Option<bool>,
 }
 
+#[component]
 pub fn Select(props: SelectProps) -> Element {
     let select_size = if props.select_size.is_some() {
         props.select_size.unwrap()
@@ -67,7 +68,7 @@ pub fn Select(props: SelectProps) -> Element {
                     "{l}"
                 }
             ),
-            None => None
+            None => rsx!()
         }
         select {
             id: props.id,
@@ -88,7 +89,7 @@ pub fn Select(props: SelectProps) -> Element {
                     }
                 }
             ),
-            None => None
+            None => rsx!()
         }
     )
 }
@@ -100,6 +101,7 @@ pub struct OptionProps {
     pub selected_value: Option<String>,
 }
 
+#[component]
 pub fn SelectOption(props: OptionProps) -> Element {
     if let Some(selected) = props.selected_value {
         if selected == props.value {

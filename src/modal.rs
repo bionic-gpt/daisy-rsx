@@ -10,6 +10,7 @@ pub struct ModalProps {
     class: Option<String>,
 }
 
+#[component]
 pub fn Modal(props: ModalProps) -> Element {
     let class = if let Some(class) = props.class {
         format!("modal {}", class)
@@ -44,6 +45,7 @@ pub struct ModalBodyProps {
     class: Option<String>,
 }
 
+#[component]
 pub fn ModalBody(props: ModalBodyProps) -> Element {
     let class = if let Some(class) = props.class {
         class
@@ -66,6 +68,7 @@ pub struct ModalActionProps {
     class: Option<String>,
 }
 
+#[component]
 pub fn ModalAction(props: ModalActionProps) -> Element {
     let class = if let Some(class) = props.class {
         class

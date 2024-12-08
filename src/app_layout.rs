@@ -18,6 +18,7 @@ pub struct AppLayoutProps {
     sidebar_header: Element,
 }
 
+#[component]
 pub fn AppLayout(props: AppLayoutProps) -> Element {
     rsx!(
         head {

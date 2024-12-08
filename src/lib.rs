@@ -27,7 +27,7 @@ pub use app_layout::AppLayout;
 pub use avatar::{Avatar, AvatarSize, AvatarType};
 pub use blank_slate::BlankSlate;
 pub use button::{Button, ButtonScheme, ButtonSize, ButtonType};
-pub use card::{Box, BoxBody, BoxHeader};
+pub use card::{Card, CardBody, CardHeader};
 pub use check_box::{CheckBox, CheckBoxScheme, CheckBoxSize};
 pub use drawer::{Drawer, DrawerBody, DrawerFooter};
 pub use drop_down::{Direction, DropDown, DropDownLink};

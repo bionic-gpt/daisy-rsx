@@ -59,6 +59,7 @@ pub struct RangeProps {
     range_color: Option<RangeColor>,
 }
 
+#[component]
 pub fn Range(props: RangeProps) -> Element {
     let range_color = if props.range_color.is_some() {
         props.range_color.unwrap()
@@ -82,7 +83,7 @@ pub fn Range(props: RangeProps) -> Element {
                     "{l}"
                 }
             ),
-            None => None
+            None => rsx!()
         }
         input {
             "type": "range",
@@ -102,7 +103,7 @@ pub fn Range(props: RangeProps) -> Element {
                     }
                 }
             ),
-            None => None
+            None => rsx!()
         }
     )
 }

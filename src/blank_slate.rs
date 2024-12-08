@@ -12,6 +12,7 @@ pub struct BlankSlateProps {
     secondary_action: Option<(String, String)>,
 }
 
+#[component]
 pub fn BlankSlate(props: BlankSlateProps) -> Element {
     rsx!(
         div {
@@ -41,7 +42,7 @@ pub fn BlankSlate(props: BlankSlateProps) -> Element {
                         }
                     }
                  ),
-                None => None
+                None => rsx!()
             }
             match props.primary_action_drawer {
                 Some(pa) => rsx!(
@@ -53,7 +54,7 @@ pub fn BlankSlate(props: BlankSlateProps) -> Element {
                         }
                     }
                  ),
-                None => None
+                None => rsx!()
             }
             match props.secondary_action {
                 Some(pa) => rsx!(
@@ -64,7 +65,7 @@ pub fn BlankSlate(props: BlankSlateProps) -> Element {
                         }
                     }
                  ),
-                None => None
+                None => rsx!()
             }
         }
     )
