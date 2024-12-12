@@ -38,7 +38,6 @@ pub fn Modal(props: ModalProps) -> Element {
     )
 }
 
-
 #[derive(Props, Clone, PartialEq)]
 pub struct ModalBodyProps {
     children: Element,
