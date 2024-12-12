@@ -1,16 +1,12 @@
 #![allow(non_snake_case)]
-
 use dioxus::prelude::*;
 
-// Remember: owned props must implement PartialEq!
 #[derive(Props, Clone, PartialEq)]
 pub struct AppLayoutProps {
     title: String,
-    fav_icon_src: String,
-    collapse_svg_src: String,
+    fav_icon_src: Option<String>,
     stylesheets: Vec<String>,
-    section_class: String,
-    js_href: String,
+    js_href: Option<String>,
     header: Element,
     children: Element,
     sidebar: Element,
@@ -18,7 +14,6 @@ pub struct AppLayoutProps {
     sidebar_header: Element,
 }
 
-#[component]
 pub fn AppLayout(props: AppLayoutProps) -> Element {
     rsx!(
         head {
@@ -43,69 +38,91 @@ pub fn AppLayout(props: AppLayoutProps) -> Element {
                     "type": "text/css"
                 }
             }
-            script {
-                "type": "module",
-                src: "{props.js_href}"
+            if let Some(js_href) = props.js_href {
+                script {
+                    "type": "module",
+                    src: "{js_href}"
+                }
             }
-            link {
-                rel: "icon",
-                "type": "image/svg+xml",
-                href: "{props.fav_icon_src}"
+            if let Some(fav_icon_src) = props.fav_icon_src {
+                link {
+                    rel: "icon",
+                    "type": "image/svg+xml",
+                    href: "{fav_icon_src}"
+                }
             }
         }
         body {
-            input {
-                "type": "checkbox",
-                id: "nav-toggle"
-            }
             div {
-                class: "l_layout",
+                class: "flex h-screen overflow-hidden",
                 nav {
-                    class: "l_navigation",
-                    label {
-                        id: "collapse-button",
-                        "for": "nav-toggle",
-                        img {
-                            src: props.collapse_svg_src
-                        }
-                    }
+                    id: "sidebar",
+                    class: "
+                        border-r border-base-300
+                        fixed
+                        bg-base-200
+                        inset-y-0
+                        left-0
+                        w-64
+                        transform
+                        -translate-x-full
+                        transition-transform
+                        duration-200
+                        ease-in-out
+                        flex
+                        flex-col
+                        lg:translate-x-0
+                        lg:static
+                        lg:inset-auto
+                        lg:transform-none
+                        z-20",
                     div {
-                        class: "l_nav_header flex items-center",
+                        class: "flex items-center p-4",
                         {props.sidebar_header}
                     }
                     div {
-                        class: "l_nav_items",
+                        class: "flex-1 overflow-y-auto",
                         {props.sidebar}
                     }
                     div {
-                        class: "l_footer",
+                        class: "p-4",
                         {props.sidebar_footer}
                     }
                 }
-                turbo-frame {
+                main {
                     id: "main-content",
-                    "data-turbo-action": "advance",
-                    class: "l_content",
+                    class: "flex-1 flex flex-col",
                     header {
-                        label {
-                            class: "hamburger",
-                            "for": "nav-toggle",
-                            div {
-                                class: "top_bun"
-                            }
-                            div {
-                                class: "meat"
-                            }
-                            div {
-                                class: "bottom_bun"
+                        class: "flex items-center p-4 border-b border-base-300",
+                        button {
+                            id: "toggleButton",
+                            svg {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "24",
+                                height: "24",
+                                view_box: "0 0 24 24",
+                                fill: "none",
+                                stroke: "currentColor",
+                                stroke_width: "2",
+                                stroke_linecap: "round",
+                                stroke_linejoin: "round",
+                                class: "lucide lucide-panel-left",
+                                rect {
+                                    width: "18",
+                                    height: "18",
+                                    x: "3",
+                                    y: "3",
+                                    rx: "2",
+                                }
+                                path {
+                                    d: "M9 3v18",
+                                }
                             }
                         }
-                        div {
-                            {props.header}
-                        }
+                        {props.header}
                     }
                     section {
-                        class: props.section_class,
+                        class: "flex-1 overflow-y-auto",
                         {props.children}
                     }
                 }
