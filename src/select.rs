@@ -1,4 +1,6 @@
 #![allow(non_snake_case)]
+use std::fmt::Display;
+
 use dioxus::prelude::*;
 
 #[derive(Default, Copy, Clone, Debug, PartialEq, Eq)]
@@ -11,14 +13,14 @@ pub enum SelectSize {
     Medium,
 }
 
-impl SelectSize {
-    pub fn to_string(&self) -> &'static str {
+impl Display for SelectSize {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            SelectSize::Default => "select-sm",
-            SelectSize::Small => "select-sm",
-            SelectSize::ExtraSmall => "select-xs",
-            SelectSize::Large => "select-lg",
-            SelectSize::Medium => "select-md",
+            SelectSize::Default => write!(f, ""),
+            SelectSize::Small => write!(f, "select-sm"),
+            SelectSize::ExtraSmall => write!(f, "select-xs"),
+            SelectSize::Large => write!(f, "select-lg"),
+            SelectSize::Medium => write!(f, "select-md"),
         }
     }
 }
@@ -40,56 +42,34 @@ pub struct SelectProps {
 
 #[component]
 pub fn Select(props: SelectProps) -> Element {
-    let select_size = if props.select_size.is_some() {
-        props.select_size.unwrap()
-    } else {
-        Default::default()
-    };
-
-    let value = props.value.unwrap_or("".to_string());
-
-    let class = select_size.to_string();
-
-    let disabled = if let Some(disabled) = props.disabled {
-        if disabled {
-            Some(true)
-        } else {
-            None
-        }
-    } else {
-        None
-    };
+    let select_size = props.select_size.unwrap_or_default();
+    let value = props.value.unwrap_or_default();
+    let disabled = props.disabled.filter(|&d| d);
 
     rsx!(
         match props.label {
-            Some(l) => rsx!(
-                label {
-                    class: props.label_class,
-                    "{l}"
-                }
-            ),
-            None => rsx!()
+            Some(l) => rsx! {
+                label { class: props.label_class, "{l}" }
+            },
+            None => rsx! {},
         }
         select {
             id: props.id,
             required: props.required,
-            disabled: disabled,
+            disabled,
             multiple: props.multiple,
-            class: "select select-bordered {class}",
+            class: "select select-bordered {select_size}",
             value: "{value}",
             name: "{props.name}",
             {props.children}
         }
         match props.help_text {
-            Some(l) => rsx!(
-                label {
-                    class: "label-text-alt",
-                    span {
-                        "{l}"
-                    }
+            Some(l) => rsx! {
+                label { class: "label-text-alt",
+                    span { "{l}" }
                 }
-            ),
-            None => rsx!()
+            },
+            None => rsx! {},
         }
     )
 }
@@ -103,21 +83,58 @@ pub struct OptionProps {
 
 #[component]
 pub fn SelectOption(props: OptionProps) -> Element {
-    if let Some(selected) = props.selected_value {
-        if selected == props.value {
-            return rsx!(
-                option {
-                    value: props.value,
-                    selected: true,
-                    {props.children}
-                }
-            );
-        }
-    }
     rsx!(
         option {
-            value: props.value,
+            value: props.value.clone(),
+            selected: props.selected_value.as_ref().map_or(false, |s| s == &props.value),
             {props.children}
         }
     )
+}
+
+#[test]
+fn test_select_option() {
+    let props = OptionProps {
+        value: "test".to_string(),
+        selected_value: Some("test".to_string()),
+        children: rsx!( "Hello" ),
+    };
+
+    let expected = r#"<option value="test" selected=true>Hello</option>"#;
+    let result = dioxus_ssr::render_element(SelectOption(props));
+    // println!("{}", result);
+    assert_eq!(expected, result);
+}
+
+#[test]
+fn test_select() {
+    let props = SelectProps {
+        children: rsx! {
+            SelectOption {
+                value: "test".to_string(),
+                selected_value: Some("test".to_string()),
+                children: rsx! { "Hello" },
+            }
+            SelectOption {
+                value: "test2".to_string(),
+                selected_value: Some("test".to_string()),
+                children: rsx! { "Hello2" },
+            }
+        },
+        select_size: Some(SelectSize::Large),
+        name: "test".to_string(),
+        id: Some("test".to_string()),
+        value: Some("test".to_string()),
+        label: Some("test".to_string()),
+        label_class: Some("test".to_string()),
+        help_text: Some("test".to_string()),
+        required: Some(true),
+        disabled: Some(false),
+        multiple: Some(false),
+    };
+
+    let expected = r#"<label class="test">test</label><select id="test" required=true class="select select-bordered select-lg" value="test" name="test"><option value="test" selected=true>Hello</option><option value="test2">Hello2</option></select><label class="label-text-alt"><span>test</span></label>"#;
+    let result = dioxus_ssr::render_element(Select(props));
+    // println!("{}", result);
+    assert_eq!(expected, result);
 }

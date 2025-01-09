@@ -1,4 +1,6 @@
 #![allow(non_snake_case)]
+use std::fmt::Display;
+
 use dioxus::prelude::*;
 
 #[derive(Default, Copy, Clone, Debug, PartialEq, Eq)]
@@ -10,13 +12,13 @@ pub enum CheckBoxScheme {
     Danger,
 }
 
-impl CheckBoxScheme {
-    pub fn to_string(&self) -> &'static str {
+impl Display for CheckBoxScheme {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            CheckBoxScheme::Default => "checkbox-default",
-            CheckBoxScheme::Primary => "checkbox-primary",
-            CheckBoxScheme::Outline => "checkbox-outline",
-            CheckBoxScheme::Danger => "checkbox-warning",
+            CheckBoxScheme::Default => write!(f, "checkbox-default"),
+            CheckBoxScheme::Primary => write!(f, "checkbox-primary"),
+            CheckBoxScheme::Outline => write!(f, "checkbox-outline"),
+            CheckBoxScheme::Danger => write!(f, "checkbox-warning"),
         }
     }
 }
@@ -31,14 +33,14 @@ pub enum CheckBoxSize {
     Medium,
 }
 
-impl CheckBoxSize {
-    pub fn to_string(&self) -> &'static str {
+impl Display for CheckBoxSize {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            CheckBoxSize::Default => "checkbox-sm",
-            CheckBoxSize::ExtraSmall => "checkbox-xs",
-            CheckBoxSize::Small => "checkbox-sm",
-            CheckBoxSize::Medium => "checkbox-md",
-            CheckBoxSize::Large => "checkbox-lg",
+            CheckBoxSize::Default => write!(f, "checkbox-sm"),
+            CheckBoxSize::Small => write!(f, "checkbox-sm"),
+            CheckBoxSize::ExtraSmall => write!(f, "checkbox-xs"),
+            CheckBoxSize::Large => write!(f, "checkbox-lg"),
+            CheckBoxSize::Medium => write!(f, "checkbox-md"),
         }
     }
 }
@@ -57,50 +59,77 @@ pub struct CheckBoxProps {
 
 #[component]
 pub fn CheckBox(props: CheckBoxProps) -> Element {
-    let checkbox_scheme = if props.checkbox_scheme.is_some() {
-        props.checkbox_scheme.unwrap()
-    } else {
-        Default::default()
-    };
+    let checkbox_scheme = props.checkbox_scheme.unwrap_or_default();
+    let checkbox_size = props.checkbox_size.unwrap_or_default();
+    let class = props.class.unwrap_or_default();
 
-    let checkbox_size = if props.checkbox_size.is_some() {
-        props.checkbox_size.unwrap()
-    } else {
-        Default::default()
-    };
-
-    let class = if let Some(class) = props.class {
-        class
-    } else {
-        "".to_string()
-    };
-
-    let checked = if let Some(checked) = props.checked {
-        if checked {
-            Some("checked")
-        } else {
-            None
-        }
-    } else {
-        None
-    };
-
-    let class = format!(
-        "checkbox {} {} {}",
-        class,
-        checkbox_scheme.to_string(),
-        checkbox_size.to_string()
-    );
+    let checked = props
+        .checked
+        .and_then(|checked| checked.then_some("checked"));
 
     rsx!(
         input {
             "type": "checkbox",
-            class: "{class}",
+            class: "checkbox {class} {checkbox_scheme} {checkbox_size}",
             id: props.id,
             name: props.name,
             value: props.value,
-            checked: checked,
-            {props.children},
+            checked,
+            {props.children}
         }
     )
+}
+
+#[test]
+fn test_check_box() {
+    let props = CheckBoxProps {
+        children: rsx!(),
+        name: "name".to_string(),
+        value: "value".to_string(),
+        checked: Some(true),
+        class: Some("custom".to_string()),
+        checkbox_size: Some(CheckBoxSize::Large),
+        checkbox_scheme: Some(CheckBoxScheme::Danger),
+        id: Some("id".to_string()),
+    };
+    let expected = r#"<input type="checkbox" class="checkbox custom checkbox-warning checkbox-lg" id="id" name="name" value="value" checked="checked"></input>"#;
+    let result = dioxus_ssr::render_element(CheckBox(props));
+    // println!("{}", result);
+    assert_eq!(result, expected);
+}
+
+#[test]
+fn test_check_box_default() {
+    let props = CheckBoxProps {
+        children: rsx!(),
+        name: "name".to_string(),
+        value: "value".to_string(),
+        checked: None,
+        class: None,
+        checkbox_size: None,
+        checkbox_scheme: None,
+        id: None,
+    };
+    let expected = r#"<input type="checkbox" class="checkbox  checkbox-default checkbox-sm" name="name" value="value"></input>"#;
+    let result = dioxus_ssr::render_element(CheckBox(props));
+    // println!("{}", result);
+    assert_eq!(result, expected);
+}
+
+#[test]
+fn test_check_box_checked_false() {
+    let props = CheckBoxProps {
+        children: rsx!(),
+        name: "name".to_string(),
+        value: "value".to_string(),
+        checked: Some(false),
+        class: None,
+        checkbox_size: None,
+        checkbox_scheme: None,
+        id: None,
+    };
+    let expected = r#"<input type="checkbox" class="checkbox  checkbox-default checkbox-sm" name="name" value="value"></input>"#;
+    let result = dioxus_ssr::render_element(CheckBox(props));
+    // println!("{}", result);
+    assert_eq!(result, expected);
 }

@@ -11,17 +11,11 @@ pub struct TabContainerProps {
 
 #[component]
 pub fn TabContainer(props: TabContainerProps) -> Element {
-    let class = if let Some(class) = props.class {
-        class
-    } else {
-        "".to_string()
-    };
-
     rsx!(
         div {
             role: "tablist",
-            class: "tabs tabs-bordered {class}",
-            {{props.children}}
+            class: "tabs tabs-bordered {props.class.clone().unwrap_or_default()}",
+            {props.children}
         }
     )
 }
@@ -42,12 +36,8 @@ pub fn TabPanel(props: TabPanelProps) -> Element {
             "type": "radio",
             class: "tab",
             "aria-label": props.tab_name,
-            name: props.name
+            name: props.name,
         }
-        div {
-            role: "tabpanel",
-            class: "tab-content",
-            {{props.children}}
-        }
+        div { role: "tabpanel", class: "tab-content", {props.children} }
     )
 }

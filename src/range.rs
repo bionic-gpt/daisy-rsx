@@ -1,4 +1,6 @@
 #![allow(non_snake_case)]
+use std::fmt::Display;
+
 use dioxus::prelude::*;
 
 #[derive(Copy, Clone, Debug, Default, PartialEq, Eq)]
@@ -11,14 +13,14 @@ pub enum RangeColor {
     Success,
 }
 
-impl RangeColor {
-    pub fn to_string(&self) -> &'static str {
+impl Display for RangeColor {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            RangeColor::Default => "range range-info",
-            RangeColor::Info => "range range-info",
-            RangeColor::Warn => "range range-warning",
-            RangeColor::Error => "range range-error",
-            RangeColor::Success => "range range-success",
+            RangeColor::Default => write!(f, ""),
+            RangeColor::Info => write!(f, "range-info"),
+            RangeColor::Warn => write!(f, "range-warning"),
+            RangeColor::Error => write!(f, "range-error"),
+            RangeColor::Success => write!(f, "range-success"),
         }
     }
 }
@@ -33,14 +35,14 @@ pub enum RangeSize {
     Medium,
 }
 
-impl RangeSize {
-    pub fn to_string(&self) -> &'static str {
+impl Display for RangeSize {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            RangeSize::Default => "range-sm",
-            RangeSize::ExtraSmall => "range-xs",
-            RangeSize::Small => "range-sm",
-            RangeSize::Large => "range-lg",
-            RangeSize::Medium => "range-md",
+            RangeSize::Default => write!(f, "range-sm"),
+            RangeSize::ExtraSmall => write!(f, "range-xs"),
+            RangeSize::Small => write!(f, "range-sm"),
+            RangeSize::Large => write!(f, "range-lg"),
+            RangeSize::Medium => write!(f, "range-md"),
         }
     }
 }
@@ -57,53 +59,81 @@ pub struct RangeProps {
     label_class: Option<String>,
     help_text: Option<String>,
     range_color: Option<RangeColor>,
+    step: Option<i32>,
 }
 
 #[component]
 pub fn Range(props: RangeProps) -> Element {
-    let range_color = if props.range_color.is_some() {
-        props.range_color.unwrap()
-    } else {
-        Default::default()
-    };
-
-    let class = if let Some(class) = props.class {
-        class
-    } else {
-        "".to_string()
-    };
-
-    let class = format!("{} {}", range_color.to_string(), class);
-
+    let range_color = props.range_color.unwrap_or_default();
+    let class = props.class.unwrap_or_default();
     rsx!(
         match props.label {
-            Some(l) => rsx!(
-                label {
-                    class: props.label_class,
-                    "{l}"
-                }
-            ),
-            None => rsx!()
+            Some(l) => rsx! {
+                label { class: props.label_class, "{l}" }
+            },
+            None => rsx! {},
         }
         input {
             "type": "range",
             min: "{props.min}",
             max: "{props.max}",
             value: "{props.value}",
-            class: "{class}",
+            step: props.step,
+            class: "range {range_color} {class}",
             name: props.name,
-            {props.children},
+            {props.children}
         }
         match props.help_text {
-            Some(l) => rsx!(
+            Some(l) => rsx! {
                 label {
-                    span {
-                        class: "label-text-alt",
-                        "{l}"
-                    }
+                    span { class: "label-text-alt", "{l}" }
                 }
-            ),
-            None => rsx!()
+            },
+            None => rsx! {},
         }
     )
+}
+
+#[test]
+fn test_range() {
+    let props = RangeProps {
+        children: rsx!( "Hello" ),
+        class: Some("test".to_string()),
+        range_color: Some(RangeColor::Info),
+        min: 0,
+        max: 100,
+        value: 50,
+        step: Some(10),
+        name: "test".to_string(),
+        label: Some("test".to_string()),
+        label_class: Some("test".to_string()),
+        help_text: Some("test".to_string()),
+    };
+
+    let expected = r#"<label class="test">test</label><input type="range" min="0" max="100" value="50" step=10 class="range range-info test" name="test">Hello</input><label><span class="label-text-alt">test</span></label>"#;
+    let result = dioxus_ssr::render_element(Range(props));
+    // println!("{}", result);
+    assert_eq!(expected, result);
+}
+
+#[test]
+fn test_range_default() {
+    let props = RangeProps {
+        children: rsx!( "Hello" ),
+        class: None,
+        range_color: None,
+        min: 0,
+        max: 100,
+        value: 50,
+        step: None,
+        name: "test".to_string(),
+        label: None,
+        label_class: None,
+        help_text: None,
+    };
+
+    let expected = r#"<input type="range" min="0" max="100" value="50" class="range  " name="test">Hello</input>"#;
+    let result = dioxus_ssr::render_element(Range(props));
+    // println!("{}", result);
+    assert_eq!(expected, result);
 }

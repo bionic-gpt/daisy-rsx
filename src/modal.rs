@@ -12,25 +12,18 @@ pub struct ModalProps {
 
 #[component]
 pub fn Modal(props: ModalProps) -> Element {
-    let class = if let Some(class) = props.class {
-        format!("modal {}", class)
-    } else {
-        "modal".to_string()
-    };
     rsx!(
         if let Some(action) = &props.submit_action {
-            form {
-                action: "{action}",
-                method: "post",
+            form { action: "{action}", method: "post",
                 dialog {
-                    class: "{class}",
+                    class: "modal {props.class.clone().unwrap_or_default()}",
                     id: "{props.trigger_id}",
                     {props.children}
                 }
             }
         } else {
             dialog {
-                class: "{class}",
+                class: "modal {props.class.clone().unwrap_or_default()}",
                 id: "{props.trigger_id}",
                 {props.children}
             }
@@ -46,18 +39,8 @@ pub struct ModalBodyProps {
 
 #[component]
 pub fn ModalBody(props: ModalBodyProps) -> Element {
-    let class = if let Some(class) = props.class {
-        class
-    } else {
-        "".to_string()
-    };
-
-    let class = format!("modal-box {}", class);
     rsx!(
-        div {
-            class: "{class}",
-            {props.children}
-        }
+        div { class: "modal-box {props.class.clone().unwrap_or_default()}", {props.children} }
     )
 }
 
@@ -69,17 +52,37 @@ pub struct ModalActionProps {
 
 #[component]
 pub fn ModalAction(props: ModalActionProps) -> Element {
-    let class = if let Some(class) = props.class {
-        class
-    } else {
-        "".to_string()
+    rsx!(
+        div { class: "modal-action {props.class.clone().unwrap_or_default()}", {props.children} }
+    )
+}
+
+#[test]
+fn test_modal() {
+    let props = ModalProps {
+        children: rsx!( "Hello" ),
+        class: Some("test".to_string()),
+        submit_action: Some("test".to_string()),
+        trigger_id: "id".to_string(),
     };
 
-    let class = format!("modal-action {}", class);
-    rsx!(
-        div {
-            class: "{class}",
-            {props.children}
-        }
-    )
+    let expected = r#"<form action="test" method="post"><dialog class="modal test" id="id">Hello</dialog></form>"#;
+    let result = dioxus_ssr::render_element(Modal(props));
+    // println!("{}", result);
+    assert_eq!(expected, result);
+}
+
+#[test]
+fn test_modal_without_submit_action() {
+    let props = ModalProps {
+        children: rsx!( "Hello" ),
+        class: Some("test".to_string()),
+        submit_action: None,
+        trigger_id: "id".to_string(),
+    };
+
+    let expected = r#"<dialog class="modal test" id="id">Hello</dialog>"#;
+    let result = dioxus_ssr::render_element(Modal(props));
+    // println!("{}", result);
+    assert_eq!(expected, result);
 }

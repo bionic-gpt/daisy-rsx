@@ -32,24 +32,12 @@ pub struct AlertProps {
 
 #[component]
 pub fn Alert(props: AlertProps) -> Element {
-    let alert_color = if props.alert_color.is_some() {
-        props.alert_color.unwrap()
-    } else {
-        Default::default()
-    };
-
-    let class = if let Some(class) = props.class {
-        class
-    } else {
-        "".to_string()
-    };
+    let alert_color = props.alert_color.unwrap_or_default();
+    let class = props.class.unwrap_or_default();
 
     let class = format!("{} {}", alert_color.to_string(), class);
 
     rsx!(
-        div {
-            class: "{class}",
-            {props.children},
-        }
+        div { class: "{class}", {props.children} }
     )
 }
