@@ -27,7 +27,7 @@ pub use alert::{Alert, AlertColor};
 pub use app_layout::AppLayout;
 pub use avatar::{Avatar, AvatarSize, AvatarType};
 pub use blank_slate::BlankSlate;
-pub use button::{Button, ButtonScheme, ButtonSize, ButtonType, ButtonShape};
+pub use button::{Button, ButtonScheme, ButtonSize, ButtonStyle, ButtonType, ButtonShape};
 pub use card::{Card, CardBody, CardHeader};
 pub use check_box::{CheckBox, CheckBoxScheme, CheckBoxSize};
 pub use drawer::{Drawer, DrawerBody, DrawerFooter};
