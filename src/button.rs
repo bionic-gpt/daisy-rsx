@@ -91,6 +91,30 @@ impl Display for ButtonShape {
     }
 }
 
+#[derive(Default, Copy, Clone, Debug, PartialEq, Eq)]
+pub enum ButtonStyle {
+    #[default]
+    None,
+    Outline,
+    Dash,
+    Soft,
+    Ghost,
+    Link,
+}
+
+impl Display for ButtonStyle {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ButtonStyle::None => write!(f, ""),
+            ButtonStyle::Outline => write!(f, "btn-outline"),
+            ButtonStyle::Dash => write!(f, "btn-dash"),
+            ButtonStyle::Soft => write!(f, "btn-soft"),
+            ButtonStyle::Ghost => write!(f, "btn-ghost"),
+            ButtonStyle::Link => write!(f, "btn-link"),
+        }
+    }
+}
+
 #[derive(Props, Clone, PartialEq)]
 pub struct ButtonProps {
     children: Element,
@@ -107,6 +131,7 @@ pub struct ButtonProps {
     popover_target_action: Option<String>,
     disabled_text: Option<String>,
     button_shape: Option<ButtonShape>,
+    button_style: Option<ButtonStyle>,
 }
 
 #[component]
@@ -115,6 +140,7 @@ pub fn Button(props: ButtonProps) -> Element {
     let button_type = props.button_type.unwrap_or_default();
     let button_size = props.button_size.unwrap_or_default();
     let button_shape = props.button_shape.unwrap_or_default();
+    let button_style = props.button_style.unwrap_or_default();
     let class = props.class.unwrap_or_default();
     let disabled = props.disabled.filter(|&x| x);
 
@@ -145,7 +171,7 @@ pub fn Button(props: ButtonProps) -> Element {
     } else {
         rsx!(
             button {
-                class: "btn {class} {button_scheme} {button_size} {button_shape}",
+                class: "btn {class} {button_scheme} {button_size} {button_shape} {button_style}",
                 id: props.id,
                 disabled,
                 popovertarget: props.popover_target,
@@ -174,6 +200,7 @@ fn test_button() {
         button_size: Some(ButtonSize::Large),
         button_type: Some(ButtonType::Button),
         button_shape: None,
+        button_style: None,
         id: Some("id".to_string()),
         disabled: Some(false),
         prefix_image_src: None,
@@ -184,7 +211,7 @@ fn test_button() {
     };
 
     let expected =
-        r#"<button class="btn test btn-primary btn-lg " id="id" type="button">Hello</button>"#;
+        r#"<button class="btn test btn-primary btn-lg  " id="id" type="button">Hello</button>"#;
     let result = dioxus_ssr::render_element(Button(props));
     // println!("{}", result);
     assert_eq!(expected, result);
@@ -201,6 +228,7 @@ fn test_button_with_images() {
         button_size: Some(ButtonSize::Large),
         button_type: Some(ButtonType::Button),
         button_shape: None,
+        button_style: None,
         id: Some("id".to_string()),
         disabled: Some(false),
         prefix_image_src: Some("prefix.png".to_string()),
@@ -210,7 +238,7 @@ fn test_button_with_images() {
         popover_target_action: None,
     };
 
-    let expected = r#"<button class="btn test btn-primary btn-lg " id="id" type="button"><img src="prefix.png" class="mr-2" width="12"/>Hello<img src="suffix.png" class="ml-2" width="12"/></button>"#;
+    let expected = r#"<button class="btn test btn-primary btn-lg  " id="id" type="button"><img src="prefix.png" class="mr-2" width="12"/>Hello<img src="suffix.png" class="ml-2" width="12"/></button>"#;
     let result = dioxus_ssr::render_element(Button(props));
     // println!("{}", result);
     assert_eq!(expected, result);
@@ -239,6 +267,7 @@ fn test_all_button_schemes() {
             button_size: None,
             button_type: None,
             button_shape: None,
+            button_style: None,
             id: None,
             disabled: None,
             prefix_image_src: None,
@@ -266,6 +295,7 @@ fn test_default_button_scheme() {
         button_size: None,
         button_type: None,
         button_shape: None,
+        button_style: None,
         id: None,
         disabled: None,
         prefix_image_src: None,
