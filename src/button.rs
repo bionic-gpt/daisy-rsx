@@ -6,19 +6,27 @@ use dioxus::prelude::*;
 #[derive(Default, Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ButtonScheme {
     #[default]
-    Default,
+    Neutral,
     Primary,
-    Outline,
-    Danger,
+    Secondary,
+    Accent,
+    Info,
+    Success,
+    Warning,
+    Error,
 }
 
 impl Display for ButtonScheme {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            ButtonScheme::Default => write!(f, "btn-default"),
+            ButtonScheme::Neutral => write!(f, "btn-neutral"),
             ButtonScheme::Primary => write!(f, "btn-primary"),
-            ButtonScheme::Outline => write!(f, "btn-outline"),
-            ButtonScheme::Danger => write!(f, "btn-warning"),
+            ButtonScheme::Secondary => write!(f, "btn-secondary"),
+            ButtonScheme::Accent => write!(f, "btn-accent"),
+            ButtonScheme::Info => write!(f, "btn-info"),
+            ButtonScheme::Success => write!(f, "btn-success"),
+            ButtonScheme::Warning => write!(f, "btn-warning"),
+            ButtonScheme::Error => write!(f, "btn-error"),
         }
     }
 }
@@ -206,4 +214,68 @@ fn test_button_with_images() {
     let result = dioxus_ssr::render_element(Button(props));
     // println!("{}", result);
     assert_eq!(expected, result);
+}
+
+// test all button schemes
+#[test]
+fn test_all_button_schemes() {
+    let schemes = [
+        (ButtonScheme::Neutral, "btn-neutral"),
+        (ButtonScheme::Primary, "btn-primary"),
+        (ButtonScheme::Secondary, "btn-secondary"),
+        (ButtonScheme::Accent, "btn-accent"),
+        (ButtonScheme::Info, "btn-info"),
+        (ButtonScheme::Success, "btn-success"),
+        (ButtonScheme::Warning, "btn-warning"),
+        (ButtonScheme::Error, "btn-error"),
+    ];
+
+    for (scheme, expected_class) in schemes {
+        let props = ButtonProps {
+            children: rsx!( "Test" ),
+            class: None,
+            href: None,
+            button_scheme: Some(scheme),
+            button_size: None,
+            button_type: None,
+            button_shape: None,
+            id: None,
+            disabled: None,
+            prefix_image_src: None,
+            suffix_image_src: None,
+            disabled_text: None,
+            popover_target: None,
+            popover_target_action: None,
+        };
+
+        let result = dioxus_ssr::render_element(Button(props));
+        assert!(result.contains(expected_class),
+                "Expected '{}' to contain '{}', but got: {}",
+                result, expected_class, result);
+    }
+}
+
+// test default button scheme
+#[test]
+fn test_default_button_scheme() {
+    let props = ButtonProps {
+        children: rsx!( "Default" ),
+        class: None,
+        href: None,
+        button_scheme: None, // Should use default (Neutral)
+        button_size: None,
+        button_type: None,
+        button_shape: None,
+        id: None,
+        disabled: None,
+        prefix_image_src: None,
+        suffix_image_src: None,
+        disabled_text: None,
+        popover_target: None,
+        popover_target_action: None,
+    };
+
+    let result = dioxus_ssr::render_element(Button(props));
+    assert!(result.contains("btn-neutral"),
+            "Expected default scheme to be 'btn-neutral', but got: {}", result);
 }
