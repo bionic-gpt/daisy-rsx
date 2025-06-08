@@ -68,7 +68,7 @@ fn test_modal() {
         trigger_id: "id".to_string(),
     };
 
-    let expected = r#"<form action="test" method="post"><dialog class="modal test" id="id">Hello</dialog></form>"#;
+    let expected = r#"<form action="test" method="post"><dialog class="modal test" id="id" popover=true>Hello</dialog></form>"#;
     let result = dioxus_ssr::render_element(Modal(props));
     // println!("{}", result);
     assert_eq!(expected, result);
@@ -83,7 +83,7 @@ fn test_modal_without_submit_action() {
         trigger_id: "id".to_string(),
     };
 
-    let expected = r#"<dialog class="modal test" id="id">Hello</dialog>"#;
+    let expected = r#"<dialog class="modal test" id="id" popover=true>Hello</dialog>"#;
     let result = dioxus_ssr::render_element(Modal(props));
     // println!("{}", result);
     assert_eq!(expected, result);

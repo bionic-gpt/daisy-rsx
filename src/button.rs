@@ -119,9 +119,9 @@ fn test_button() {
         disabled: Some(false),
         prefix_image_src: None,
         suffix_image_src: None,
-        drawer_trigger: None,
-        modal_trigger: None,
         disabled_text: None,
+        popover_target: None,
+        popover_target_action: None,
     };
 
     let expected =
@@ -144,9 +144,9 @@ fn test_button_with_images() {
         disabled: Some(false),
         prefix_image_src: Some("prefix.png".to_string()),
         suffix_image_src: Some("suffix.png".to_string()),
-        drawer_trigger: None,
-        modal_trigger: None,
         disabled_text: None,
+        popover_target: None,
+        popover_target_action: None,
     };
 
     let expected = r#"<button class="btn test btn-primary btn-lg" id="id" type="button"><img src="prefix.png" class="mr-2" width="12"/>Hello<img src="suffix.png" class="ml-2" width="12"/></button>"#;
