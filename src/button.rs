@@ -27,6 +27,7 @@ impl Display for ButtonScheme {
 pub enum ButtonType {
     Submit,
     Reset,
+    Link,
     #[default]
     Button,
 }
@@ -37,6 +38,7 @@ impl Display for ButtonType {
             ButtonType::Submit => write!(f, "submit"),
             ButtonType::Reset => write!(f, "reset"),
             ButtonType::Button => write!(f, "button"),
+            ButtonType::Link => write!(f, "button"),
         }
     }
 }
@@ -69,6 +71,7 @@ pub struct ButtonProps {
     id: Option<String>,
     disabled: Option<bool>,
     class: Option<String>,
+    href: Option<String>,
     prefix_image_src: Option<String>,
     suffix_image_src: Option<String>,
     button_type: Option<ButtonType>,
@@ -87,24 +90,50 @@ pub fn Button(props: ButtonProps) -> Element {
     let class = props.class.unwrap_or_default();
     let disabled = props.disabled.filter(|&x| x);
 
-    rsx!(
-        button {
-            class: "btn {class} {button_scheme} {button_size}",
-            id: props.id,
-            disabled,
-            popovertarget: props.popover_target,
-            popovertargetaction: props.popover_target_action,
-            "type": "{button_type}",
-            "data-disabled-text": props.disabled_text,
-            if let Some(img_src) = props.prefix_image_src {
-                img { src: "{img_src}", class: "mr-2", width: "12" }
+
+    if props.button_type == Some(ButtonType::Link) {
+        rsx!(
+            a {
+                class: "{class}",
+                id: props.id,
+                href: props.href,
+                if let Some(img_src) = props.prefix_image_src {
+                        img {
+                            src: "{img_src}",
+                            class: "mr-2",
+                            width: "12"
+                        }
+                },
+                {props.children},
+                if let Some(img_src) = props.suffix_image_src {
+                        img {
+                            src: "{img_src}",
+                            class: "mr-2",
+                            width: "12"
+                        }
+                }
             }
-            {props.children}
-            if let Some(img_src) = props.suffix_image_src {
-                img { src: "{img_src}", class: "ml-2", width: "12" }
+        )
+    } else {
+        rsx!(
+            button {
+                class: "btn {class} {button_scheme} {button_size}",
+                id: props.id,
+                disabled,
+                popovertarget: props.popover_target,
+                popovertargetaction: props.popover_target_action,
+                "type": "{button_type}",
+                "data-disabled-text": props.disabled_text,
+                if let Some(img_src) = props.prefix_image_src {
+                    img { src: "{img_src}", class: "mr-2", width: "12" }
+                }
+                {props.children}
+                if let Some(img_src) = props.suffix_image_src {
+                    img { src: "{img_src}", class: "ml-2", width: "12" }
+                }
             }
-        }
-    )
+        )
+    }
 }
 
 #[test]
@@ -112,6 +141,7 @@ fn test_button() {
     let props = ButtonProps {
         children: rsx!( "Hello" ),
         class: Some("test".to_string()),
+        href: None,
         button_scheme: Some(ButtonScheme::Primary),
         button_size: Some(ButtonSize::Large),
         button_type: Some(ButtonType::Button),
@@ -137,6 +167,7 @@ fn test_button_with_images() {
     let props = ButtonProps {
         children: rsx!( "Hello" ),
         class: Some("test".to_string()),
+        href: None,
         button_scheme: Some(ButtonScheme::Primary),
         button_size: Some(ButtonSize::Large),
         button_type: Some(ButtonType::Button),
