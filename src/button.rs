@@ -148,7 +148,7 @@ pub fn Button(props: ButtonProps) -> Element {
     if props.button_type == Some(ButtonType::Link) {
         rsx!(
             a {
-                class: "{class}",
+                class: "btn {class} {button_scheme} {button_size} {button_shape} {button_style}",
                 id: props.id,
                 href: props.href,
                 if let Some(img_src) = props.prefix_image_src {
