@@ -6,7 +6,7 @@ use dioxus::prelude::*;
 pub struct CardProps {
     class: Option<String>,
     children: Element,
-    drawer_trigger: Option<String>,
+    popover_target: Option<String>,
     modal_trigger: Option<String>,
 }
 
@@ -23,7 +23,7 @@ pub fn Card(props: CardProps) -> Element {
     rsx!(
         div {
             class: "{class}",
-            "data-drawer-target": props.drawer_trigger,
+            "data-drawer-target": props.popover_target,
             "data-modal-target": props.modal_trigger,
             {props.children}
         }

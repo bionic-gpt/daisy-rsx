@@ -69,7 +69,7 @@ pub fn DropDown(props: DropDownProps) -> Element {
 pub struct DropDownLinkProps {
     href: String,
     target: Option<String>,
-    drawer_trigger: Option<String>,
+    popover_target: Option<String>,
     class: Option<String>,
     children: Element,
 }
@@ -78,7 +78,7 @@ pub struct DropDownLinkProps {
 pub fn DropDownLink(props: DropDownLinkProps) -> Element {
     let class = format!("dropdown-item {}", props.class.unwrap_or_default());
 
-    if let Some(trigger) = &props.drawer_trigger {
+    if let Some(trigger) = &props.popover_target {
         rsx!(
             li {
                 a {
