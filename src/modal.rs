@@ -18,6 +18,7 @@ pub fn Modal(props: ModalProps) -> Element {
                 dialog {
                     class: "modal {props.class.clone().unwrap_or_default()}",
                     id: "{props.trigger_id}",
+                    popover: true,
                     {props.children}
                 }
             }
@@ -25,6 +26,7 @@ pub fn Modal(props: ModalProps) -> Element {
             dialog {
                 class: "modal {props.class.clone().unwrap_or_default()}",
                 id: "{props.trigger_id}",
+                popover: true,
                 {props.children}
             }
         }
