@@ -25,6 +25,7 @@ pub fn Modal(props: ModalProps) -> Element {
                 dialog {
                     class: "{class}",
                     id: "{props.trigger_id}",
+                    popover: true,
                     {props.children}
                 }
             }
@@ -32,6 +33,7 @@ pub fn Modal(props: ModalProps) -> Element {
             dialog {
                 class: "{class}",
                 id: "{props.trigger_id}",
+                popover: true,
                 {props.children}
             }
         }

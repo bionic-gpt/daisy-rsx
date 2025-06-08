@@ -49,7 +49,7 @@ pub fn BlankSlate(props: BlankSlateProps) -> Element {
                     div {
                         Button {
                             button_scheme: ButtonScheme::Primary,
-                            drawer_trigger: "{pa.1}",
+                            popover_target: "{pa.1}",
                             "{pa.0}"
                         }
                     }
