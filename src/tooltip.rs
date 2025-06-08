@@ -1,4 +1,6 @@
 #![allow(non_snake_case)]
+use std::fmt::Display;
+
 use dioxus::prelude::*;
 
 #[derive(Copy, Clone, Debug, Default, PartialEq, Eq)]
@@ -11,14 +13,14 @@ pub enum ToolTipColor {
     Success,
 }
 
-impl ToolTipColor {
-    pub fn to_string(&self) -> &'static str {
+impl Display for ToolTipColor {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            ToolTipColor::Default => "tooltip tooltip-info",
-            ToolTipColor::Info => "tooltip tooltip-info",
-            ToolTipColor::Warn => "tooltip tooltip-warning",
-            ToolTipColor::Error => "tooltip tooltip-error",
-            ToolTipColor::Success => "tooltip tooltip-success",
+            ToolTipColor::Default => write!(f, ""),
+            ToolTipColor::Info => write!(f, "tooltip-info"),
+            ToolTipColor::Warn => write!(f, "tooltip-warning"),
+            ToolTipColor::Error => write!(f, "tooltip-error"),
+            ToolTipColor::Success => write!(f, "tooltip-success"),
         }
     }
 }
@@ -33,25 +35,10 @@ pub struct ToolTipProps {
 
 #[component]
 pub fn ToolTip(props: ToolTipProps) -> Element {
-    let alert_color = if props.alert_color.is_some() {
-        props.alert_color.unwrap()
-    } else {
-        Default::default()
-    };
-
-    let class = if let Some(class) = props.class {
-        class
-    } else {
-        "".to_string()
-    };
-
-    let class = format!("{} {}", alert_color.to_string(), class);
+    let alert_color = props.alert_color.unwrap_or_default();
+    let class = props.class.unwrap_or_default();
 
     rsx!(
-        div {
-            class: "{class}",
-            "data-tip": props.text,
-            {props.children}
-        }
+        div { class: "tooltip {alert_color} {class}", "data-tip": props.text, {props.children} }
     )
 }

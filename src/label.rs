@@ -1,9 +1,12 @@
 #![allow(non_snake_case)]
+use std::fmt::Display;
+
 use dioxus::prelude::*;
 
 #[derive(Default, Copy, Clone, Debug, PartialEq, Eq)]
 pub enum LabelRole {
     #[default]
+    Default,
     Neutral,
     Danger,
     Warning,
@@ -12,15 +15,16 @@ pub enum LabelRole {
     Highlight,
 }
 
-impl LabelRole {
-    pub fn to_string(&self) -> &'static str {
+impl Display for LabelRole {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            LabelRole::Neutral => "label-neutral",
-            LabelRole::Danger => "label-danger",
-            LabelRole::Warning => "label-warning",
-            LabelRole::Success => "label-success",
-            LabelRole::Info => "label-info",
-            LabelRole::Highlight => "label-highlight",
+            LabelRole::Neutral => write!(f, "badge-neutral"),
+            LabelRole::Danger => write!(f, "badge-danger"),
+            LabelRole::Warning => write!(f, "badge-warning"),
+            LabelRole::Success => write!(f, "badge-success"),
+            LabelRole::Info => write!(f, "badge-info"),
+            LabelRole::Highlight => write!(f, "badge-highlight"),
+            LabelRole::Default => write!(f, ""),
         }
     }
 }
@@ -32,11 +36,11 @@ pub enum LabelSize {
     Large,
 }
 
-impl LabelSize {
-    pub fn to_string(&self) -> &'static str {
+impl Display for LabelSize {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            LabelSize::Small => "",
-            LabelSize::Large => "badge-lg",
+            LabelSize::Small => write!(f, ""),
+            LabelSize::Large => write!(f, "badge-lg"),
         }
     }
 }
@@ -51,35 +55,26 @@ pub struct LabelProps {
 
 #[component]
 pub fn Label(props: LabelProps) -> Element {
-    let label_role = if props.label_role.is_some() {
-        props.label_role.unwrap()
-    } else {
-        Default::default()
-    };
-
-    let label_size = if props.label_size.is_some() {
-        props.label_size.unwrap()
-    } else {
-        Default::default()
-    };
-
-    let class = if let Some(class) = props.class {
-        class
-    } else {
-        "".to_string()
-    };
-
-    let class = format!(
-        "badge {} {} {}",
-        label_role.to_string(),
-        label_size.to_string(),
-        class
-    );
+    let label_role = props.label_role.unwrap_or_default();
+    let label_size = props.label_size.unwrap_or_default();
+    let class = props.class.unwrap_or_default();
 
     rsx!(
-        button {
-            class: "{class}",
-            {props.children},
-        }
+        button { class: "badge {label_role} {label_size} {class}", {props.children} }
     )
+}
+
+#[test]
+fn test_label() {
+    let props = LabelProps {
+        children: rsx!( "Hello" ),
+        class: Some("test".to_string()),
+        label_role: Some(LabelRole::Danger),
+        label_size: Some(LabelSize::Large),
+    };
+
+    let expected = r#"<button class="badge badge-danger badge-lg test">Hello</button>"#;
+    let result = dioxus_ssr::render_element(Label(props));
+    // println!("{}", result);
+    assert_eq!(result, expected);
 }

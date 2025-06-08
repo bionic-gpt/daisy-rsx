@@ -12,24 +12,14 @@ pub struct TimeLineProps {
 
 #[component]
 pub fn TimeLine(props: TimeLineProps) -> Element {
-    let class = if let Some(class) = props.class {
-        class
-    } else {
-        "".to_string()
-    };
-
-    let the_class = format!("timeline-item {}", class);
-
-    let class = if props.condensed.is_some() {
-        format!("timeline-condensed {}", the_class)
-    } else {
-        the_class
+    let condensed = match props.condensed {
+        Some(true) => "timeline-condensed",
+        _ => "",
     };
 
     rsx!(
-        div {
-            class: "{class}",
-            {{props.children}}
+        div { class: "{condensed} timeline-item {props.class.clone().unwrap_or_default()}",
+            {props.children}
         }
     )
 }
@@ -42,20 +32,9 @@ pub struct TimeLineBadgeProps {
 
 #[component]
 pub fn TimeLineBadge(props: TimeLineBadgeProps) -> Element {
-    let class = if let Some(class) = props.class {
-        class
-    } else {
-        "".to_string()
-    };
-
-    let class = format!("timeline-badge {}", class);
     rsx!(
-        div {
-            class: "{class}",
-            img {
-                src: "{props.image_src}",
-                width: "16"
-            }
+        div { class: "timeline-badge {props.class.clone().unwrap_or_default()}",
+            img { src: "{props.image_src}", width: "16" }
         }
     )
 }
@@ -68,18 +47,7 @@ pub struct TimeLineBodyProps {
 
 #[component]
 pub fn TimeLineBody(props: TimeLineBodyProps) -> Element {
-    let class = if let Some(class) = props.class {
-        class
-    } else {
-        "".to_string()
-    };
-
-    let class = format!("timeline-body {}", class);
-
     rsx!(
-        div {
-            class: "{class}",
-            {props.children}
-        }
+        div { class: "timeline-body {props.class.clone().unwrap_or_default()}", {props.children} }
     )
 }

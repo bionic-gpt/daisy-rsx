@@ -39,21 +39,9 @@ pub struct CardHeadersProps {
 
 #[component]
 pub fn CardHeader(props: CardHeadersProps) -> Element {
-    let class = if let Some(class) = props.class {
-        class
-    } else {
-        "".to_string()
-    };
-
-    let class = format!("card-header flex items-center {}", class);
-
     rsx!(
-        div {
-            class: "{class}",
-            h3 {
-                class: "card-title overflow-hidden",
-                "{props.title}"
-            }
+        div { class: "card-header flex items-center {props.class.clone().unwrap_or_default()}",
+            h3 { class: "card-title overflow-hidden", "{props.title}" }
             {props.children}
         }
     )
@@ -67,16 +55,7 @@ pub struct CardBodyProps {
 
 #[component]
 pub fn CardBody(props: CardBodyProps) -> Element {
-    let class = if let Some(class) = props.class {
-        format!("card-body {}", class)
-    } else {
-        "card-body".to_string()
-    };
-
     rsx!(
-        div {
-            class: "{class}",
-            {props.children}
-        }
+        div { class: "card-body {props.class.clone().unwrap_or_default()}", {props.children} }
     )
 }
