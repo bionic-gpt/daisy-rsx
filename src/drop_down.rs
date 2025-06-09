@@ -83,7 +83,7 @@ pub fn DropDownLink(props: DropDownLinkProps) -> Element {
             li {
                 a {
                     class: "{class}",
-                    "data-modal-target": "{trigger}",
+                    "data-target": "{trigger}",
                     target: props.target,
                     href: "{props.href}",
                     {props.children}

@@ -23,8 +23,7 @@ pub fn Card(props: CardProps) -> Element {
     rsx!(
         div {
             class: "{class}",
-            "data-drawer-target": props.popover_target,
-            "data-modal-target": props.modal_trigger,
+            "data-target": props.popover_target,
             {props.children}
         }
     )
