@@ -14,7 +14,7 @@ pub fn TabContainer(props: TabContainerProps) -> Element {
     rsx!(
         div {
             role: "tablist",
-            class: "tabs tabs-bordered {props.class.clone().unwrap_or_default()}",
+            class: "tabs tabs-border {props.class.clone().unwrap_or_default()}",
             {props.children}
         }
     )
