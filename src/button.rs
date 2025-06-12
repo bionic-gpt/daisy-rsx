@@ -154,14 +154,14 @@ pub fn Button(props: ButtonProps) -> Element {
                 if let Some(img_src) = props.prefix_image_src {
                         img {
                             src: "{img_src}",
-                            width: "60%"
+                            width: "16"
                         }
                 },
                 {props.children},
                 if let Some(img_src) = props.suffix_image_src {
                         img {
                             src: "{img_src}",
-                            width: "60%"
+                            width: "16"
                         }
                 }
             }
@@ -177,11 +177,11 @@ pub fn Button(props: ButtonProps) -> Element {
                 "type": "{button_type}",
                 "data-disabled-text": props.disabled_text,
                 if let Some(img_src) = props.prefix_image_src {
-                    img { src: "{img_src}", width: "60%" }
+                    img { src: "{img_src}", width: "16" }
                 }
                 {props.children}
                 if let Some(img_src) = props.suffix_image_src {
-                    img { src: "{img_src}", width: "60%" }
+                    img { src: "{img_src}", width: "16" }
                 }
             }
         )
@@ -236,7 +236,7 @@ fn test_button_with_images() {
         popover_target_action: None,
     };
 
-    let expected = r#"<button class="btn test btn-primary btn-lg  " id="id" type="button"><img src="prefix.png" width="60%"/>Hello<img src="suffix.png" width="60%"/></button>"#;
+    let expected = r#"<button class="btn test btn-primary btn-lg  " id="id" type="button"><img src="prefix.png" width="16"/>Hello<img src="suffix.png" width="16"/></button>"#;
     let result = dioxus_ssr::render_element(Button(props));
     // println!("{}", result);
     assert_eq!(expected, result);
