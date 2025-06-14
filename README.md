@@ -41,7 +41,7 @@ To see how they work in the real world, take a look at the pages in [https://git
 
 ![Bionic Example](show-case.png "Title")
 
-Below are two simple examples showing how to use the components.
+Below is an component used to build the cards in the screenshot.
 
 ```rust
 #![allow(non_snake_case)]
@@ -171,25 +171,6 @@ pub fn MyAssistantCard(team_id: i32, prompt: MyPrompt) -> Element {
             }
         }
     }
-}
-```
-
-With a button inside the card:
-
-```rust
-use dioxus::prelude::*;
-use daisy_rsx::{Button, Card, CardBody, CardHeader};
-
-fn App(cx: Scope) -> Element {
-    cx.render(rsx!(
-        Card {
-            class: "w-64 bg-base-100 shadow-xl",
-            CardHeader { title: "Actions" }
-            CardBody {
-                Button { class: "btn-primary", "Click me" }
-            }
-        }
-    ))
 }
 ```
 
