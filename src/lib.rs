@@ -23,6 +23,7 @@ pub mod select;
 pub mod tab_container;
 pub mod text_area;
 pub mod time_line;
+pub mod timeline;
 pub mod tooltip;
 
 pub use accordian::Accordian;
@@ -49,4 +50,5 @@ pub use select::{Select, SelectOption, SelectSize};
 pub use tab_container::{TabContainer, TabPanel};
 pub use text_area::{TextArea, TextAreaSize};
 pub use time_line::{TimeLine, TimeLineBadge, TimeLineBody};
+pub use timeline::{Timeline, TimelineItem, TimelineStart, TimelineMiddle, TimelineEnd};
 pub use tooltip::{ToolTip, ToolTipColor};
