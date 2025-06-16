@@ -122,6 +122,7 @@ pub struct ButtonProps {
     disabled: Option<bool>,
     class: Option<String>,
     href: Option<String>,
+    target: Option<String>,
     prefix_image_src: Option<String>,
     suffix_image_src: Option<String>,
     button_type: Option<ButtonType>,
@@ -151,6 +152,7 @@ pub fn Button(props: ButtonProps) -> Element {
                 class: "btn {class} {button_scheme} {button_size} {button_shape} {button_style}",
                 id: props.id,
                 href: props.href,
+                target: props.target,
                 if let Some(img_src) = props.prefix_image_src {
                         img {
                             src: "{img_src}",
@@ -194,6 +196,7 @@ fn test_button() {
         children: rsx!( "Hello" ),
         class: Some("test".to_string()),
         href: None,
+        target: None,
         button_scheme: Some(ButtonScheme::Primary),
         button_size: Some(ButtonSize::Large),
         button_type: Some(ButtonType::Button),
@@ -222,6 +225,7 @@ fn test_button_with_images() {
         children: rsx!( "Hello" ),
         class: Some("test".to_string()),
         href: None,
+        target: None,
         button_scheme: Some(ButtonScheme::Primary),
         button_size: Some(ButtonSize::Large),
         button_type: Some(ButtonType::Button),
@@ -261,6 +265,7 @@ fn test_all_button_schemes() {
             children: rsx!( "Test" ),
             class: None,
             href: None,
+            target: None,
             button_scheme: Some(scheme),
             button_size: None,
             button_type: None,
@@ -289,6 +294,7 @@ fn test_default_button_scheme() {
         children: rsx!( "Default" ),
         class: None,
         href: None,
+        target: None,
         button_scheme: None, // Should use default (Neutral)
         button_size: None,
         button_type: None,
