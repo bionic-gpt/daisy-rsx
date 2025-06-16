@@ -2,6 +2,45 @@
 #![allow(unused_braces)]
 use dioxus::prelude::*;
 
+/// DaisyUI color pairs for letter avatars. Each tuple contains the background
+/// color variable and its matching foreground color.
+const AVATAR_COLORS: [(&'static str, &'static str); 8] = [
+    (
+        "hsl(var(--color-primary))",
+        "hsl(var(--color-primary-content))",
+    ),
+    (
+        "hsl(var(--color-secondary))",
+        "hsl(var(--color-secondary-content))",
+    ),
+    (
+        "hsl(var(--color-accent))",
+        "hsl(var(--color-accent-content))",
+    ),
+    (
+        "hsl(var(--color-neutral))",
+        "hsl(var(--color-neutral-content))",
+    ),
+    ("hsl(var(--color-info))", "hsl(var(--color-info-content))"),
+    (
+        "hsl(var(--color-success))",
+        "hsl(var(--color-success-content))",
+    ),
+    (
+        "hsl(var(--color-warning))",
+        "hsl(var(--color-warning-content))",
+    ),
+    (
+        "hsl(var(--color-error))",
+        "hsl(var(--color-error-content))",
+    ),
+];
+
+fn letter_colors(ch: char) -> (&'static str, &'static str) {
+    let idx = (ch as usize) % AVATAR_COLORS.len();
+    AVATAR_COLORS[idx]
+}
+
 #[derive(Default, Copy, Clone, Debug, PartialEq, Eq)]
 pub enum AvatarType {
     Team,
@@ -50,6 +89,9 @@ pub fn Avatar(props: AvatarProps) -> Element {
         .as_deref()
         .and_then(|n| n.chars().next())
         .map_or("?".to_string(), |c| c.to_string());
+
+    let first_char = the_name.chars().next().unwrap_or('?');
+    let (bg_color, text_color) = letter_colors(first_char);
 
     if let Some(image) = props.image_src {
         rsx!(
@@ -100,12 +142,12 @@ pub fn Avatar(props: AvatarProps) -> Element {
                             height: avatar_size.0,
                             width: avatar_size.1,
                             rect {
-                                fill: "rgb(46, 77, 172)",
+                                fill: bg_color,
                                 height: "100%",
                                 width: "100%",
                             }
                             text {
-                                fill: "#fff",
+                                fill: text_color,
                                 "font-size": "26",
                                 "font-weight": "500",
                                 x: "50%",
@@ -128,12 +170,12 @@ pub fn Avatar(props: AvatarProps) -> Element {
                             height: avatar_size.0,
                             width: avatar_size.1,
                             rect {
-                                fill: "rgb(46, 77, 172)",
+                                fill: bg_color,
                                 height: "100%",
                                 width: "100%",
                             }
                             text {
-                                fill: "#fff",
+                                fill: text_color,
                                 "font-size": "26",
                                 "font-weight": "500",
                                 x: "50%",
