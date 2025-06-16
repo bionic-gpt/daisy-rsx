@@ -4,7 +4,7 @@ use dioxus::prelude::*;
 
 /// DaisyUI color pairs for letter avatars. Each tuple contains the background
 /// color variable and its matching foreground color.
-const AVATAR_COLORS: [(&'static str, &'static str); 8] = [
+const AVATAR_COLORS: [(&str, &str); 8] = [
     (
         "hsl(var(--color-primary))",
         "hsl(var(--color-primary-content))",
