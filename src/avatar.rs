@@ -6,33 +6,33 @@ use dioxus::prelude::*;
 /// color variable and its matching foreground color.
 const AVATAR_COLORS: [(&str, &str); 8] = [
     (
-        "hsl(var(--color-primary))",
-        "hsl(var(--color-primary-content))",
+        "var(--color-primary)",
+        "var(--color-primary-content)",
     ),
     (
-        "hsl(var(--color-secondary))",
-        "hsl(var(--color-secondary-content))",
+        "var(--color-secondary)",
+        "var(--color-secondary-content)",
     ),
     (
-        "hsl(var(--color-accent))",
-        "hsl(var(--color-accent-content))",
+        "var(--color-accent)",
+        "var(--color-accent-content)",
     ),
     (
-        "hsl(var(--color-neutral))",
-        "hsl(var(--color-neutral-content))",
+        "var(--color-neutral)",
+        "var(--color-neutral-content)",
     ),
-    ("hsl(var(--color-info))", "hsl(var(--color-info-content))"),
+    ("var(--color-info)", "var(--color-info-content)"),
     (
-        "hsl(var(--color-success))",
-        "hsl(var(--color-success-content))",
-    ),
-    (
-        "hsl(var(--color-warning))",
-        "hsl(var(--color-warning-content))",
+        "var(--color-success)",
+        "var(--color-success-content)",
     ),
     (
-        "hsl(var(--color-error))",
-        "hsl(var(--color-error-content))",
+        "var(--color-warning)",
+        "var(--color-warning-content)",
+    ),
+    (
+        "var(--color-error)",
+        "var(--color-error-content)",
     ),
 ];
 
