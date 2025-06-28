@@ -78,6 +78,7 @@ pub struct FileInputProps {
     name: Option<String>,
     accept: Option<String>,
     multiple: Option<bool>,
+    required: Option<bool>,
     disabled: Option<bool>,
     file_input_style: Option<FileInputStyle>,
     file_input_color: Option<FileInputColor>,
@@ -99,6 +100,7 @@ pub fn FileInput(props: FileInputProps) -> Element {
             name: props.name,
             accept: props.accept,
             multiple: props.multiple,
+            required: props.required,
             disabled,
             class: "file-input {class} {style} {color} {size}",
         }
@@ -117,6 +119,7 @@ mod tests {
             name: Some("name".to_string()),
             accept: Some("image/*".to_string()),
             multiple: Some(true),
+            required: Some(true),
             disabled: Some(false),
             file_input_style: Some(FileInputStyle::Ghost),
             file_input_color: Some(FileInputColor::Primary),
@@ -128,6 +131,7 @@ mod tests {
         assert!(result.contains("file-input-primary"));
         assert!(result.contains("file-input-lg"));
         assert!(result.contains("class=\"file-input custom"));
+        assert!(result.contains("required=true"));
     }
 
     #[test]
@@ -138,6 +142,7 @@ mod tests {
             name: None,
             accept: None,
             multiple: None,
+            required: None,
             disabled: None,
             file_input_style: None,
             file_input_color: None,
