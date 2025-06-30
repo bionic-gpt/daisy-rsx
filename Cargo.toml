@@ -1,6 +1,6 @@
 [package]
 name = "daisy_rsx"
-version = "0.1.41"
+version = "0.1.42"
 edition = "2021"
 description = "Daisy UI components for the Dioxus Rust library."
 license = "MIT"
