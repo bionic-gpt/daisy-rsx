@@ -6,8 +6,8 @@ use dioxus::prelude::*;
 pub struct CardProps {
     class: Option<String>,
     children: Element,
+    clickable_link: Option<String>,
     popover_target: Option<String>,
-    modal_trigger: Option<String>,
 }
 
 #[component]
@@ -24,6 +24,7 @@ pub fn Card(props: CardProps) -> Element {
         div {
             class: "{class}",
             "data-target": props.popover_target,
+            "data-clickable-link": props.clickable_link,
             {props.children}
         }
     )
