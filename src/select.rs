@@ -86,7 +86,7 @@ pub fn SelectOption(props: OptionProps) -> Element {
     rsx!(
         option {
             value: props.value.clone(),
-            selected: props.selected_value.as_ref().map_or(false, |s| s == &props.value),
+            selected: props.selected_value.as_ref() == Some(&props.value),
             {props.children}
         }
     )
