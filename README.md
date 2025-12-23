@@ -179,6 +179,7 @@ pub fn MyAssistantCard(team_id: i32, prompt: MyPrompt) -> Element {
 To create a new release, use the following command locally:
 
 ```sh
+cargo install cargo-release
 cargo release patch
 ```
 
