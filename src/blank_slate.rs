@@ -20,7 +20,8 @@ pub fn BlankSlate(props: BlankSlateProps) -> Element {
             img {
                 class: "mb-4 svg-icon",
                 src: "{props.visual}",
-                width: "100px"
+                width: "100px",
+                height: "100px"
             }
             h2 {
                 class: "text-center mb-4  max-w-prose",
