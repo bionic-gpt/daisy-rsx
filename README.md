@@ -176,18 +176,23 @@ pub fn MyAssistantCard(team_id: i32, prompt: MyPrompt) -> Element {
 
 ## To Create a Release
 
-To create a new release, use the following command locally:
+Release publishing is handled by the GitHub Actions workflow in `.github/workflows/release.yml`. The workflow runs when a tag that starts with `v` (for example, `v0.1.48`) is pushed and will:
+
+- Ensure the tag version matches `Cargo.toml`.
+- Run the test suite.
+- Publish the crate to crates.io using `secrets.CARGO_REGISTRY_TOKEN`.
+
+A typical release flow using [`cargo-release`](https://github.com/crate-ci/cargo-release) looks like this:
 
 ```sh
 cargo install cargo-release
 cargo release patch
 ```
 
-Once you are ready, pass the `--execute` flag.
+The command above performs a dry run. When you are ready to publish, run:
 
-This will:
+```sh
+cargo release patch --execute
+```
 
-- Bump the version number.
-- Create a git tag.
-- Push changes to the remote repository.
-- Trigger the GitHub Actions workflow to publish the crate.
+`cargo-release` will bump the version, create a matching `v*` tag, push the changes, and trigger the release workflow.
