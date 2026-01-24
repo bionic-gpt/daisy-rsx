@@ -50,6 +50,7 @@ pub enum AvatarType {
 
 #[derive(Default, Copy, Clone, Debug, PartialEq, Eq)]
 pub enum AvatarSize {
+    ExtraSmall,
     #[default]
     Small,
     Medium,
@@ -60,7 +61,8 @@ pub enum AvatarSize {
 impl AvatarSize {
     pub fn to_string(&self) -> (&'static str, &'static str, &'static str) {
         match self {
-            AvatarSize::Small => ("24", "24", "w-8 h-8"),
+            AvatarSize::ExtraSmall => ("24", "24", "w-8 h-8"),
+            AvatarSize::Small => ("48", "48", "w-12 h-12"),
             AvatarSize::Medium => ("64", "64", "w-16 h-16"),
             AvatarSize::Large => ("96", "96", "w-20 w-20"),
             AvatarSize::ExtraLarge => ("128", "128", "w-32 h-32"),
