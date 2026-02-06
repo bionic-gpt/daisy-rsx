@@ -192,6 +192,7 @@ cargo release patch
 The command above performs a dry run. When you are ready to publish, run:
 
 ```sh
+source .env
 cargo release patch --execute
 ```
 
