@@ -14,17 +14,17 @@ pub fn Benefits(
 ) -> Element {
     rsx! {
         section {
-            class: format!("lg:max-w-5xl {}", class.unwrap_or("".to_string())),
+            class: format!("{}", class.unwrap_or("".to_string())),
             div {
                 class: "container mx-auto",
                 div {
                     class: "flex flex-col text-center w-full mb-20",
                     h2 {
-                        class: "text-primary tracking-widest font-medium title-font mb-1",
+                        class: "font-display tracking-widest font-medium title-font mb-1",
                         "{title}"
                     }
                     h1 {
-                        class: "sm:text-3xl text-2xl font-medium title-font text-primary",
+                        class: "sm:text-3xl text-2xl font-medium title-font font-display",
                         "{subtitle}"
                     }
                 }
@@ -37,7 +37,7 @@ pub fn Benefits(
                             div {
                                 class: "flex items-center mb-3",
                                 div {
-                                    class: "w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full bg-indigo-500 text-white flex-shrink-0",
+                                    class: "w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full bg-indigo-500 text-white shrink-0",
                                     svg {
                                         fill: "none",
                                         stroke: "currentColor",
@@ -55,7 +55,7 @@ pub fn Benefits(
                                 }
                             }
                             div {
-                                class: "flex-grow",
+                                class: "grow",
                                 p {
                                     class: "leading-relaxed text-base",
                                     "{benefit1_desc}"
@@ -71,7 +71,7 @@ pub fn Benefits(
                             div {
                                 class: "flex items-center mb-3",
                                 div {
-                                    class: "w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full bg-indigo-500 text-white flex-shrink-0",
+                                    class: "w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full bg-indigo-500 text-white shrink-0",
                                     svg {
                                         fill: "none",
                                         stroke: "currentColor",
@@ -90,7 +90,7 @@ pub fn Benefits(
                                 }
                             }
                             div {
-                                class: "flex-grow",
+                                class: "grow",
                                 p {
                                     class: "leading-relaxed text-base",
                                     "{benefit2_desc}"
@@ -105,7 +105,7 @@ pub fn Benefits(
                             div {
                                 class: "flex items-center mb-3",
                                 div {
-                                    class: "w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full bg-indigo-500 text-white flex-shrink-0",
+                                    class: "w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full bg-indigo-500 text-white shrink-0",
                                     svg {
                                         fill: "none",
                                         stroke: "currentColor",
@@ -125,7 +125,7 @@ pub fn Benefits(
                                 }
                             }
                             div {
-                                class: "flex-grow",
+                                class: "grow",
                                 p {
                                     class: "leading-relaxed text-base",
                                     "{benefit3_desc}"

@@ -1,9 +1,17 @@
 use dioxus::prelude::*;
 
+use crate::routes::marketing;
+
 #[component]
-pub fn Hero(title: String, subtitle: String,
-    cta: String,
-    cta_link: String,) -> Element {
+pub fn Hero(
+    title: String,
+    subtitle: String,
+    cta_label: Option<String>,
+    cta_href: Option<String>,
+) -> Element {
+    let cta_label = cta_label.unwrap_or_else(|| "Book a Call".to_string());
+    let cta_href = cta_href.unwrap_or_else(|| marketing::Contact {}.to_string());
+
     rsx! {
         section {
             div {
@@ -22,8 +30,8 @@ pub fn Hero(title: String, subtitle: String,
                         class: "flex gap-2 justify-center",
                         a {
                             class: "btn btn-primary",
-                            href: cta_link,
-                            "{cta}"
+                            href: "{cta_href}",
+                            "{cta_label}"
                         }
                     }
                 }
