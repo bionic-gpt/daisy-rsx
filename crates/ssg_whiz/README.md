@@ -23,10 +23,12 @@ my-site/
 │   ├── docs/
 │   │   └── getting-started.md
 │   └── pages/
-│       └── pricing.md
+│       └── terms.md
 ├── src/
 │   ├── blog_summary.rs
 │   ├── docs_summary.rs
+│   ├── pages/
+│   │   └── index.rs
 │   ├── pages_summary.rs
 │   ├── generator.rs
 │   └── main.rs
@@ -94,10 +96,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
             name: "Marketing".to_string(),
             pages: vec![PageSummary {
                 date: "2026-01-20",
-                title: "Pricing",
-                description: "Plan comparison and features.",
-                folder: "pricing",
-                markdown: "pricing.md",
+                title: "Terms",
+                description: "Terms of service.",
+                folder: "terms",
+                markdown: "terms.md",
                 image: None,
                 author: None,
                 author_image: None,
@@ -117,6 +119,55 @@ async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
         .await?;
 
     Ok(())
+}
+```
+
+### Example `src/pages/index.rs`
+
+This is a small, component-driven page. It uses `daisy_rsx` components and returns HTML
+via Dioxus SSR.
+
+```rust
+use dioxus::prelude::*;
+use daisy_rsx::marketing::hero::Hero;
+
+pub fn page() -> String {
+    dioxus_ssr::render_element(rsx!(
+        main {
+            class: "container mx-auto px-6 py-16",
+            Hero {
+                title: "Welcome to Whiz".to_string(),
+                subtitle: "An opinionated static site generator.".to_string(),
+                cta_label: Some("Get Started".to_string()),
+                cta_href: Some("/docs".to_string()),
+            }
+        }
+    ))
+}
+```
+
+### Example `src/generator.rs`
+
+The generator collects your component-built pages and returns a list of `SitePage`
+values. `SiteBuilder` writes them to `dist/` and wires them into the site alongside
+your markdown summaries.
+
+```rust
+use ssg_whiz::SitePage;
+
+use crate::pages;
+
+fn output_page(path: &str, html: String) -> SitePage {
+    SitePage {
+        path: path.to_string(),
+        html,
+    }
+}
+
+pub async fn generate_static_pages() -> Vec<SitePage> {
+    vec![
+        output_page("", pages::index::page()),
+    ]
 }
 ```
 
