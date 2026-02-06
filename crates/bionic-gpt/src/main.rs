@@ -7,6 +7,7 @@ use ssg_whiz::{
 use bionic_gpt::{
     architect_course_summary, blog_summary, docs_summary, generator, pages_summary,
     ui_links::{footer_links, navigation_links},
+    site_header::site_header,
 };
 use daisy_rsx::marketing::navigation::Section;
 use ssg_whiz::summaries::DocumentSite;
@@ -45,6 +46,7 @@ async fn main() {
         navigation_links: navigation_links(),
         footer_links: footer_links(),
         site_meta: bionic_gpt::ui_links::site_meta(),
+        site_header: Some(site_header),
     };
 
     let input = WebsiteInput {

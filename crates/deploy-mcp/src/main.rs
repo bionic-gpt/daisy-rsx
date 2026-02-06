@@ -151,6 +151,7 @@ async fn main() {
         navigation_links: ui_links::navigation_links(),
         footer_links: ui_links::footer_links(),
         site_meta: ui_links::site_meta(),
+        site_header: None,
     };
 
     let input = WebsiteInput {

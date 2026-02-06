@@ -5,6 +5,7 @@ pub mod generator;
 pub mod pages;
 pub mod pages_summary;
 pub mod ui_links;
+pub mod site_header;
 
 pub mod routes {
     pub const SIGN_IN_UP: &str = "https://app.bionic-gpt.com";

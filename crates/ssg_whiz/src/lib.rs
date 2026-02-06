@@ -8,6 +8,7 @@ use axum::Router;
 use daisy_rsx::marketing::{
     footer::FooterLinks,
     navigation::{NavigationLinks, Section},
+    site_header::SiteHeader,
 };
 use dioxus::prelude::*;
 use tower_http::services::ServeDir;
@@ -22,6 +23,7 @@ pub mod summaries;
 
 static NAV_LINKS: OnceLock<NavigationLinks> = OnceLock::new();
 static SITE_META: OnceLock<SiteMeta> = OnceLock::new();
+static SITE_HEADER_FACTORY: OnceLock<Option<SiteHeaderFactory>> = OnceLock::new();
 
 pub fn set_navigation_links(links: NavigationLinks) {
     let _ = NAV_LINKS.set(links);
@@ -41,12 +43,22 @@ pub struct SiteMeta {
     pub goatcounter: String,
 }
 
+pub type SiteHeaderFactory = fn() -> SiteHeader;
+
 pub fn set_site_meta(meta: SiteMeta) {
     let _ = SITE_META.set(meta);
 }
 
 pub(crate) fn site_meta() -> &'static SiteMeta {
     SITE_META.get().expect("ssg_whiz site meta not set")
+}
+
+pub fn set_site_header(factory: Option<SiteHeaderFactory>) {
+    let _ = SITE_HEADER_FACTORY.set(factory);
+}
+
+pub(crate) fn site_header_factory() -> Option<SiteHeaderFactory> {
+    SITE_HEADER_FACTORY.get().cloned().unwrap_or(None)
 }
 
 pub fn absolute_url(value: &str) -> String {
@@ -75,6 +87,7 @@ pub struct SiteConfig {
     pub navigation_links: NavigationLinks,
     pub footer_links: FooterLinks,
     pub site_meta: SiteMeta,
+    pub site_header: Option<SiteHeaderFactory>,
 }
 
 impl Default for SiteConfig {
@@ -113,6 +126,7 @@ impl Default for SiteConfig {
                 brand_name: "Bionic".to_string(),
                 goatcounter: "https://bionicgpt.goatcounter.com/count".to_string(),
             },
+            site_header: None,
         }
     }
 }
@@ -137,6 +151,7 @@ pub async fn generate_website(
 ) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     set_navigation_links(config.navigation_links.clone());
     set_site_meta(config.site_meta.clone());
+    set_site_header(config.site_header);
 
     let mut pages = input.static_pages;
     pages.extend(render_blog_posts(&input.blog, config.footer_links.clone()));

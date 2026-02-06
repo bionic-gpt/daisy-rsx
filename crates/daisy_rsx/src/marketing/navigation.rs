@@ -1,23 +1,5 @@
 use dioxus::prelude::*;
-
-#[component]
-fn CourseBanner(href: String) -> Element {
-    rsx!(
-        div {
-            class: "bg-primary text-primary-content text-xs sm:text-sm px-3 sm:px-4 py-2 flex flex-wrap items-center justify-center gap-2 text-center",
-            span {
-                class: "font-semibold",
-                "🎉 Zero to Gen AI Architect Hero"
-            }
-            a {
-                class: "inline-flex items-center gap-1 underline font-semibold hover:text-base-200",
-                href: "{href}",
-                "Take the course"
-                span { "→" }
-            }
-        }
-    )
-}
+use crate::marketing::site_header::SiteHeader;
 
 #[derive(Clone, PartialEq, Eq, Debug)]
 pub struct NavigationLinks {
@@ -86,12 +68,15 @@ pub fn Navigation(
     section: Section,
     links: NavigationLinks,
     brand: Option<String>,
+    site_header: Option<SiteHeader>,
 ) -> Element {
     let brand = brand.unwrap_or_else(|| "Bionic".to_string());
     rsx! {
         header {
             class: "sticky top-0 z-50",
-            CourseBanner { href: links.architect_course.clone() }
+            if let Some(site_header) = site_header {
+                {site_header}
+            }
             div {
                 class: "backdrop-filter backdrop-blur-lg bg-base-100/80 border-b border-base-300",
                 div {

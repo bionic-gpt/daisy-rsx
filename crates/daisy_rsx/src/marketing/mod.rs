@@ -13,6 +13,7 @@ pub mod problem_solution;
 pub mod quad_feature;
 pub mod security;
 pub mod small_image_feature;
+pub mod site_header;
 pub mod team;
 pub mod testamonials;
 pub mod video_hero;
