@@ -1,7 +1,8 @@
 use std::{fs, net::SocketAddr, path::Path};
 
 use ssg_whiz::{
-    generate_website, set_navigation_links, set_site_meta, SiteConfig, WebsiteInput,
+    generate_website, set_navigation_links, set_site_header, set_site_meta, SiteConfig,
+    WebsiteInput,
 };
 
 use bionic_gpt::{
@@ -21,6 +22,7 @@ async fn main() {
     fs::create_dir_all("dist").expect("Couldn't create dist folder");
     set_navigation_links(navigation_links());
     set_site_meta(bionic_gpt::ui_links::site_meta());
+    set_site_header(Some(site_header));
 
     let docs_summary = docs_summary::summary();
     let architect_summary = architect_course_summary::summary();
