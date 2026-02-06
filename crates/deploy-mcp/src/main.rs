@@ -149,7 +149,8 @@ async fn main() {
             summary: docs_summary,
             section: daisy_rsx::marketing::navigation::Section::Docs,
         })
-        .build_with_static(generator::generate_static_pages)
+        .static_pages(generator::generate_static_pages)
+        .build()
         .await
         .expect("Failed to generate website");
 }

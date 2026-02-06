@@ -10,7 +10,6 @@ use crate::{
 };
 use crate::summaries::{BlogSummary, DocumentSite, PagesSummary, Summary};
 
-#[derive(Clone, Debug)]
 pub struct SiteBuilder {
     config: SiteConfig,
     blog: Option<BlogSummary>,
@@ -55,7 +54,7 @@ impl SiteBuilder {
 
     pub fn static_pages<F, Fut>(mut self, static_pages: F) -> Self
     where
-        F: FnOnce() -> Fut,
+        F: FnOnce() -> Fut + Send + 'static,
         Fut: Future<Output = Vec<SitePage>> + Send + 'static,
     {
         let boxed: StaticPagesFn = Box::new(move || Box::pin(static_pages()));
