@@ -1,0 +1,17 @@
+[package]
+name = "ssg_whiz"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+
+description = "Static site generation orchestration utilities."
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+axum = { workspace = true }
+tokio = { workspace = true, features = ["rt-multi-thread"] }
+tower-http = { workspace = true, features = ["fs", "trace"] }
+tower-livereload = { workspace = true }
+tracing = { workspace = true }

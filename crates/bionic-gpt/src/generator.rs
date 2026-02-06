@@ -1,10 +1,10 @@
-use std::fs::{self, File};
-use std::io::{self, Write};
+use std::fs;
 use std::path::Path;
 
 use dioxus::prelude::*;
 
 use daisy_rsx::marketing::navigation::Section;
+use ssg_whiz::Page as OutputPage;
 use crate::layouts::blog::{BlogList, BlogPost};
 use crate::layouts::docs::Document;
 use crate::layouts::pages::MarkdownPage;
@@ -40,58 +40,41 @@ impl Page {
     }
 }
 
-fn write_page(dest_folder: &str, html: String) -> io::Result<()> {
-    fs::create_dir_all(dest_folder)?;
-    let mut file = File::create(format!("{}/index.html", dest_folder))?;
-    file.write_all(html.as_bytes())
+fn output_page(path: &str, html: String) -> OutputPage {
+    OutputPage {
+        path: path.to_string(),
+        html,
+    }
 }
 
-pub async fn generate_product() {
-    let html = pages::product::assistants::page();
-    write_page("dist/product/assistants", html).expect("Unable to write page");
-
-    let html = pages::product::automations::page();
-    write_page("dist/product/automations", html).expect("Unable to write page");
-
-    let html = pages::product::chat::page();
-    write_page("dist/product/chat", html).expect("Unable to write page");
-
-    let html = pages::product::developers::page();
-    write_page("dist/product/developers", html).expect("Unable to write page");
-
-    let html = pages::product::integrations::page();
-    write_page("dist/product/integrations", html).expect("Unable to write page");
+pub async fn generate_product() -> Vec<OutputPage> {
+    vec![
+        output_page("product/assistants", pages::product::assistants::page()),
+        output_page("product/automations", pages::product::automations::page()),
+        output_page("product/chat", pages::product::chat::page()),
+        output_page("product/developers", pages::product::developers::page()),
+        output_page("product/integrations", pages::product::integrations::page()),
+    ]
 }
 
-pub async fn generate_solutions() {
-    let html = pages::solutions::education::page();
-    write_page("dist/solutions/education", html).expect("Unable to write page");
-
-    let html = pages::solutions::support::page();
-    write_page("dist/solutions/support", html).expect("Unable to write page");
+pub async fn generate_solutions() -> Vec<OutputPage> {
+    vec![
+        output_page("solutions/education", pages::solutions::education::page()),
+        output_page("solutions/support", pages::solutions::support::page()),
+    ]
 }
 
-pub async fn generate_marketing() {
-    let html = pages::pricing::pricing();
-    write_page("dist/pricing", html).expect("Unable to write page");
-
-    let html = pages::partners::partners_page();
-    write_page("dist/partners", html).expect("Unable to write page");
-
-    let html = pages::contact::contact_page();
-    write_page("dist/contact", html).expect("Unable to write page");
-
-    let html = pages::home::home_page();
-    write_page("dist", html).expect("Unable to write page");
+pub async fn generate_marketing() -> Vec<OutputPage> {
+    vec![
+        output_page("pricing", pages::pricing::pricing()),
+        output_page("partners", pages::partners::partners_page()),
+        output_page("contact", pages::contact::contact_page()),
+        output_page("", pages::home::home_page()),
+    ]
 }
 
-pub fn generate(summary: Summary) {
-    let src = format!("content/{}", summary.source_folder);
-    let src = Path::new(&src);
-    let dst = format!("dist/{}", summary.source_folder);
-    let dst = Path::new(&dst);
-    copy_folder(src, dst).unwrap();
-
+pub fn generate(summary: Summary) -> Vec<OutputPage> {
+    let mut pages_out = Vec::new();
     for category in summary.categories {
         for page in category.pages {
             let page_ele = rsx! {
@@ -101,18 +84,15 @@ pub fn generate(summary: Summary) {
             };
 
             let html = crate::render(page_ele);
-            write_page(&format!("dist/{}", page.folder), html).expect("Unable to write page");
+            pages_out.push(output_page(page.folder, html));
         }
     }
+
+    pages_out
 }
 
-pub fn generate_docs(summary: Summary, section: Section) {
-    let src = format!("content/{}", summary.source_folder);
-    let src = Path::new(&src);
-    let dst = format!("dist/{}", summary.source_folder);
-    let dst = Path::new(&dst);
-    copy_folder(src, dst).unwrap();
-
+pub fn generate_docs(summary: Summary, section: Section) -> Vec<OutputPage> {
+    let mut pages_out = Vec::new();
     for category in &summary.categories {
         for page in &category.pages {
             let page_ele = rsx! {
@@ -125,12 +105,15 @@ pub fn generate_docs(summary: Summary, section: Section) {
             };
 
             let html = crate::render(page_ele);
-            write_page(&format!("dist/{}", page.folder), html).expect("Unable to write page");
+            pages_out.push(output_page(page.folder, html));
         }
     }
+
+    pages_out
 }
 
-pub async fn generate_pages(summary: Summary) {
+pub async fn generate_pages(summary: Summary) -> Vec<OutputPage> {
+    let mut pages_out = Vec::new();
     for category in &summary.categories {
         for page in &category.pages {
             let page_ele = rsx! {
@@ -139,19 +122,21 @@ pub async fn generate_pages(summary: Summary) {
                 }
             };
             let html = crate::render(page_ele);
-            write_page(&format!("dist/{}", page.folder), html).expect("Unable to write page");
+            pages_out.push(output_page(page.folder, html));
         }
     }
+
+    pages_out
 }
 
-pub async fn generate_blog_list(summary: Summary) {
+pub async fn generate_blog_list(summary: Summary) -> Vec<OutputPage> {
     let page_ele = rsx! {
         BlogList {
             summary
         }
     };
     let html = crate::render(page_ele);
-    write_page("dist/blog", html).expect("Unable to write page");
+    vec![output_page("blog", html)]
 }
 
 pub fn copy_folder(src: &Path, dst: &Path) -> std::io::Result<()> {

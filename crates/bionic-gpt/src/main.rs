@@ -1,8 +1,6 @@
 use std::{fs, net::SocketAddr, path::Path};
 
-use axum::Router;
-use tower_http::services::ServeDir;
-use tower_livereload::LiveReloadLayer;
+use ssg_whiz::{generate_site, Page, SiteConfig};
 
 use bionic_gpt::{
     architect_course_summary, blog_summary, docs_summary, generator, pages_summary,
@@ -16,33 +14,48 @@ async fn main() {
         .init();
 
     fs::create_dir_all("dist").expect("Couldn't create dist folder");
-    generator::generate_marketing().await;
-    generator::generate_product().await;
-    generator::generate_solutions().await;
-    generator::generate_docs(docs_summary::summary(), Section::Docs);
-    generator::generate_docs(
-        architect_course_summary::summary(),
+
+    let docs_summary = docs_summary::summary();
+    let architect_summary = architect_course_summary::summary();
+    let blog_summary = blog_summary::summary();
+    let pages_summary = pages_summary::summary();
+
+    copy_summary_assets(&docs_summary);
+    copy_summary_assets(&architect_summary);
+    copy_summary_assets(&blog_summary);
+
+    let mut pages: Vec<Page> = Vec::new();
+    pages.extend(generator::generate_marketing().await);
+    pages.extend(generator::generate_product().await);
+    pages.extend(generator::generate_solutions().await);
+    pages.extend(generator::generate_docs(docs_summary, Section::Docs));
+    pages.extend(generator::generate_docs(
+        architect_summary,
         Section::ArchitectCourse,
-    );
-    generator::generate(blog_summary::summary());
-    generator::generate_pages(pages_summary::summary()).await;
-    generator::generate_blog_list(blog_summary::summary()).await;
+    ));
+    pages.extend(generator::generate(blog_summary.clone()));
+    pages.extend(generator::generate_pages(pages_summary).await);
+    pages.extend(generator::generate_blog_list(blog_summary).await);
+
     let src = Path::new("assets");
     let dst = Path::new("dist");
     generator::copy_folder(src, dst).expect("Couldn't copy folder");
 
-    if std::env::var("DO_NOT_RUN_SERVER").is_err() {
-        let addr = SocketAddr::from(([0, 0, 0, 0], 8080));
+    let run_server = std::env::var("DO_NOT_RUN_SERVER").is_err();
+    let config = SiteConfig {
+        dist_dir: "dist".into(),
+        run_server,
+        addr: SocketAddr::from(([0, 0, 0, 0], 8080)),
+        live_reload: true,
+    };
 
-        // build our application with a route
-        let app = Router::new()
-            .fallback_service(ServeDir::new("dist"))
-            .layer(LiveReloadLayer::new());
+    generate_site(config, pages)
+        .await
+        .expect("Failed to generate site");
+}
 
-        let listener = tokio::net::TcpListener::bind(&addr).await.unwrap();
-        tracing::info!("listening on http://{}", &addr);
-        axum::serve(listener, app.into_make_service())
-            .await
-            .unwrap();
-    }
+fn copy_summary_assets(summary: &generator::Summary) {
+    let src = Path::new("content").join(summary.source_folder);
+    let dst = Path::new("dist").join(summary.source_folder);
+    generator::copy_folder(&src, &dst).expect("Couldn't copy content folder");
 }
