@@ -1,5 +1,5 @@
 use super::layout::Layout;
-use crate::summaries::PageSummary;
+use crate::{page_permalink, summaries::PageSummary};
 use daisy_rsx::marketing::{footer::{Footer, FooterLinks}, navigation::Section};
 use dioxus::prelude::*;
 
@@ -10,6 +10,7 @@ pub fn MarkdownPage(post: PageSummary, footer_links: FooterLinks) -> Element {
         Layout {
             title: "{post.title}",
             description: "{post.description}",
+            url: Some(page_permalink(post.folder)),
             section: Section::None,
             article {
                 class: "mx-auto max-w-2xl p-5",

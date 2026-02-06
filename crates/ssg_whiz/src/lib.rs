@@ -21,6 +21,7 @@ pub mod markdown;
 pub mod summaries;
 
 static NAV_LINKS: OnceLock<NavigationLinks> = OnceLock::new();
+static SITE_META: OnceLock<SiteMeta> = OnceLock::new();
 
 pub fn set_navigation_links(links: NavigationLinks) {
     let _ = NAV_LINKS.set(links);
@@ -33,6 +34,39 @@ pub(crate) fn navigation_links() -> &'static NavigationLinks {
 }
 
 #[derive(Clone, Debug)]
+pub struct SiteMeta {
+    pub base_url: String,
+    pub site_name: String,
+    pub brand_name: String,
+    pub goatcounter: String,
+}
+
+pub fn set_site_meta(meta: SiteMeta) {
+    let _ = SITE_META.set(meta);
+}
+
+pub(crate) fn site_meta() -> &'static SiteMeta {
+    SITE_META.get().expect("ssg_whiz site meta not set")
+}
+
+pub fn absolute_url(value: &str) -> String {
+    let meta = site_meta();
+    let base = meta.base_url.trim_end_matches('/');
+    if value.starts_with("http://") || value.starts_with("https://") {
+        value.to_string()
+    } else if value.starts_with('/') {
+        format!("{base}{value}")
+    } else {
+        let trimmed = value.trim_start_matches('/');
+        format!("{base}/{trimmed}")
+    }
+}
+
+pub fn page_permalink(folder: &str) -> String {
+    absolute_url(folder)
+}
+
+#[derive(Clone, Debug)]
 pub struct SiteConfig {
     pub dist_dir: PathBuf,
     pub run_server: bool,
@@ -40,6 +74,7 @@ pub struct SiteConfig {
     pub live_reload: bool,
     pub navigation_links: NavigationLinks,
     pub footer_links: FooterLinks,
+    pub site_meta: SiteMeta,
 }
 
 impl Default for SiteConfig {
@@ -72,6 +107,12 @@ impl Default for SiteConfig {
                 privacy: "/privacy".to_string(),
                 about: None,
             },
+            site_meta: SiteMeta {
+                base_url: "https://bionic-gpt.com".to_string(),
+                site_name: "Bionic GPT".to_string(),
+                brand_name: "Bionic".to_string(),
+                goatcounter: "https://bionicgpt.goatcounter.com/count".to_string(),
+            },
         }
     }
 }
@@ -95,6 +136,7 @@ pub async fn generate_website(
     input: WebsiteInput,
 ) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     set_navigation_links(config.navigation_links.clone());
+    set_site_meta(config.site_meta.clone());
 
     let mut pages = input.static_pages;
     pages.extend(render_blog_posts(&input.blog, config.footer_links.clone()));

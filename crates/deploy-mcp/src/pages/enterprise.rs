@@ -1,14 +1,16 @@
 use dioxus::prelude::*;
 
-use crate::components::customer_logos::Customers;
-use crate::components::features::{Feature, Features};
-use crate::components::hero::Hero;
-use crate::components::security::Security;
-use crate::components::{
+use daisy_rsx::marketing::{
+    customer_logos::Customers,
     extra_footer::{ExtraFooter, EXTRA_FOOTER_TITLE},
+    features::{Feature, Features},
     footer::Footer,
+    hero::Hero,
+    navigation::Section,
+    security::Security,
 };
-use crate::layouts::layout::Layout;
+use ssg_whiz::layouts::layout::Layout;
+use crate::ui_links::footer_links;
 
 pub fn enterprise_page() -> String {
     let features = vec![
@@ -145,7 +147,7 @@ pub fn enterprise_page() -> String {
             cta: "Open installation docs".to_string(),
             cta_url: "/docs/on-premise/".to_string(),
         }
-        Footer { margin_top: "mt-0" }
+        Footer { margin_top: "mt-0", links: footer_links() }
     };
 
     let page = rsx! {
@@ -153,7 +155,7 @@ pub fn enterprise_page() -> String {
             title: "Deploy MCP for Enterprise".to_string(),
             description: "Run Deploy MCP on premise or in your private cloud with hardened supply chains and enterprise controls.".to_string(),
             url: Some("https://deploy.run/enterprise".to_string()),
-            section: crate::components::navigation::Section::Enterprise,
+            section: Section::Enterprise,
             mobile_menu: None,
             image: Some("/docs/mcp-servers.png".to_string()),
             children: body,

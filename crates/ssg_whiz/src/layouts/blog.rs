@@ -1,5 +1,5 @@
 use super::layout::Layout;
-use crate::summaries::{PageSummary, Summary};
+use crate::{page_permalink, summaries::{PageSummary, Summary}};
 use daisy_rsx::marketing::{
     extra_footer::{ExtraFooter, EXTRA_FOOTER_TITLE},
     footer::{Footer, FooterLinks},
@@ -19,6 +19,7 @@ pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
         Layout {
             title: "{post.title}",
             description: "{post.description}",
+            url: Some(page_permalink(post.folder)),
             image: "{image}",
             section: Section::Blog,
             article {
@@ -57,7 +58,7 @@ pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
                     div {
                         class: "not-prose flex flex-row gap-1",
                         a {
-                            href: "https://twitter.com/intent/tweet?url={post.permalink()}",
+                            href: "https://twitter.com/intent/tweet?url={page_permalink(post.folder)}",
                             img {
                                 width: "16",
                                 height: "16",
@@ -65,7 +66,7 @@ pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
                             }
                         }
                         a {
-                            href: "https://www.linkedin.com/sharing/share-offsite/?url={post.permalink()}",
+                            href: "https://www.linkedin.com/sharing/share-offsite/?url={page_permalink(post.folder)}",
                             img {
                                 width: "16",
                                 height: "16",

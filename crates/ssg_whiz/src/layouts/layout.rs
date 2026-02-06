@@ -1,6 +1,6 @@
 #![allow(non_snake_case)]
 
-use crate::navigation_links;
+use crate::{absolute_url, navigation_links, site_meta};
 use daisy_rsx::marketing::navigation::{Navigation, Section};
 use dioxus::prelude::*;
 
@@ -10,13 +10,21 @@ pub struct LayoutProps {
     title: String,
     description: String,
     image: Option<String>,
+    url: Option<String>,
     children: Element,
     mobile_menu: Option<Element>,
     section: Section,
 }
 
 pub fn Layout(props: LayoutProps) -> Element {
+    let meta = site_meta();
+    let page_url = props
+        .url
+        .clone()
+        .unwrap_or_else(|| meta.base_url.clone());
+    let page_url = absolute_url(&page_url);
     let image = props.image.unwrap_or("/open-graph.png".to_string());
+    let image_meta = absolute_url(&image);
     rsx!(
         head {
             title {
@@ -42,9 +50,10 @@ pub fn Layout(props: LayoutProps) -> Element {
             meta { property: "og:title", content: "{props.title}" }
             meta { property: "og:description", content: "{props.description}" }
             meta { property: "og:type", content: "article" }
-            meta { property: "og:site_name", content: "Bionic GPT" }
-            meta { property: "og:image", content: "{image}" }
-            meta { property: "twitter:image", content: "{image}" }
+            meta { property: "og:site_name", content: "{meta.site_name}" }
+            meta { property: "og:url", content: "{page_url}" }
+            meta { property: "og:image", content: "{image_meta}" }
+            meta { property: "twitter:image", content: "{image_meta}" }
 
             link {
                 rel: "stylesheet",
@@ -58,7 +67,7 @@ pub fn Layout(props: LayoutProps) -> Element {
             }
             script {
                 "async": "true",
-                "data-goatcounter": "https://bionicgpt.goatcounter.com/count",
+                "data-goatcounter": "{meta.goatcounter}",
                 src: "/goat-counter.js"
 
             }
@@ -77,7 +86,8 @@ pub fn Layout(props: LayoutProps) -> Element {
             Navigation {
                 mobile_menu: props.mobile_menu,
                 section: props.section,
-                links: navigation_links().clone()
+                links: navigation_links().clone(),
+                brand: Some(meta.brand_name.clone())
             }
             {props.children}
             script {

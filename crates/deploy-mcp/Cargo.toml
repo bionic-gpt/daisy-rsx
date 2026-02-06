@@ -11,11 +11,9 @@ tokio = { workspace = true, features = ["rt-multi-thread"] }
 tracing.workspace = true
 tracing-subscriber = { workspace = true, features = ["env-filter"] }
 dioxus.workspace = true
-dioxus-ssr.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 tower-http = { workspace = true, features = ["fs", "trace"] }
-syntect.workspace = true
-pulldown-cmark.workspace = true
 tower-livereload.workspace = true
-static-website = { path = "../static-website" }
+daisy_rsx = { path = "../daisy_rsx" }
+ssg_whiz = { path = "../ssg_whiz" }

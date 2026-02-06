@@ -1,4 +1,4 @@
-use crate::generator::*;
+use ssg_whiz::summaries::*;
 
 pub fn summary() -> Summary {
     Summary {
@@ -6,7 +6,7 @@ pub fn summary() -> Summary {
         categories: vec![Category {
             name: "Company".to_string(),
             pages: vec![
-                Page {
+                PageSummary {
                     date: "2024-05-07",
                     title: "Privacy Policy",
                     description: "Deploy privacy commitments",
@@ -16,7 +16,7 @@ pub fn summary() -> Summary {
                     author_image: None,
                     author: None,
                 },
-                Page {
+                PageSummary {
                     date: "2024-05-07",
                     title: "Terms of Service",
                     description: "Deploy terms of service",

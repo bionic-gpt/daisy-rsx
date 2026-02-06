@@ -81,7 +81,13 @@ pub fn NavItem(
 }
 
 #[component]
-pub fn Navigation(mobile_menu: Option<Element>, section: Section, links: NavigationLinks) -> Element {
+pub fn Navigation(
+    mobile_menu: Option<Element>,
+    section: Section,
+    links: NavigationLinks,
+    brand: Option<String>,
+) -> Element {
+    let brand = brand.unwrap_or_else(|| "Bionic".to_string());
     rsx! {
         header {
             class: "sticky top-0 z-50",
@@ -100,7 +106,7 @@ pub fn Navigation(mobile_menu: Option<Element>, section: Section, links: Navigat
                             href: links.home.clone(),
                             span {
                                 class: "pl-3 flex flex-row gap-2",
-                                strong { "Bionic" }
+                                strong { "{brand}" }
                             }
                         }
 

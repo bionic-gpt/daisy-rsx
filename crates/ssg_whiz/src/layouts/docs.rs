@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 
 use super::layout::Layout;
-use crate::summaries::{Category, PageSummary, Summary};
+use crate::{page_permalink, summaries::{Category, PageSummary, Summary}};
 use daisy_rsx::marketing::navigation::Section;
 
 #[component]
@@ -15,6 +15,7 @@ pub fn Document(
         Layout {
             title: "{doc.title}",
             description: "{doc.description}",
+            url: Some(page_permalink(doc.folder)),
             section: current_section,
             mobile_menu: rsx! (MobileMenu {
                 summary: summary.clone()

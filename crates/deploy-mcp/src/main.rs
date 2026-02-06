@@ -1,17 +1,16 @@
 pub mod blog_summary;
 pub mod docs_summary;
 pub mod generator;
-pub mod layouts;
 pub mod mcp_specs;
 pub mod pages;
 pub mod pages_summary;
+pub mod ui_links;
 
-pub use static_website::{components, markdown, render};
+pub use ssg_whiz::render;
 
-use axum::Router;
 use std::{fs, net::SocketAddr, path::Path};
-use tower_http::services::ServeDir;
-use tower_livereload::LiveReloadLayer;
+use ssg_whiz::{generate_website, WebsiteInput, SiteConfig};
+use ssg_whiz::summaries::DocumentSite;
 
 pub mod routes {
     pub const SIGN_IN_UP: &str = "https://app.deploy-mcp.com";
@@ -114,7 +113,7 @@ pub mod routes {
         use serde::Deserialize;
 
         #[derive(TypedPath, Deserialize)]
-        #[typed_path("/mcp-servers/{slug}/")]
+        #[typed_path("/mcp-servers/:slug/")]
         pub struct Detail {
             pub slug: String,
         }
@@ -128,27 +127,47 @@ async fn main() {
         .init();
 
     fs::create_dir_all("dist").expect("Couldn't create dist folder");
-    generator::generate_marketing();
-    generator::generate_mcp_servers();
-    generator::generate_docs(docs_summary::summary());
-    generator::generate_blog_posts(blog_summary::summary());
-    generator::generate_pages(pages_summary::summary());
+
+    let docs_summary = docs_summary::summary();
+    let blog_summary = blog_summary::summary();
+    let pages_summary = pages_summary::summary();
+
+    copy_summary_assets(&docs_summary);
+    copy_summary_assets(&blog_summary);
+    copy_summary_assets(&pages_summary);
 
     let src = Path::new("assets");
     let dst = Path::new("dist");
     generator::copy_folder(src, dst).expect("Couldn't copy assets");
 
-    if std::env::var("DO_NOT_RUN_SERVER").is_err() {
-        let addr = SocketAddr::from(([0, 0, 0, 0], 8080));
+    let run_server = std::env::var("DO_NOT_RUN_SERVER").is_err();
+    let config = SiteConfig {
+        dist_dir: "dist".into(),
+        run_server,
+        addr: SocketAddr::from(([0, 0, 0, 0], 8080)),
+        live_reload: true,
+        navigation_links: ui_links::navigation_links(),
+        footer_links: ui_links::footer_links(),
+        site_meta: ui_links::site_meta(),
+    };
 
-        let app = Router::new()
-            .fallback_service(ServeDir::new("dist"))
-            .layer(LiveReloadLayer::new());
+    let input = WebsiteInput {
+        blog: blog_summary,
+        documents: vec![DocumentSite {
+            summary: docs_summary,
+            section: daisy_rsx::marketing::navigation::Section::Docs,
+        }],
+        pages: pages_summary,
+        static_pages: generator::generate_static_pages().await,
+    };
 
-        let listener = tokio::net::TcpListener::bind(&addr).await.unwrap();
-        tracing::info!("listening on http://{}", &addr);
-        axum::serve(listener, app.into_make_service())
-            .await
-            .unwrap();
-    }
+    generate_website(config, input)
+        .await
+        .expect("Failed to generate website");
+}
+
+fn copy_summary_assets(summary: &ssg_whiz::summaries::Summary) {
+    let src = Path::new("content").join(summary.source_folder);
+    let dst = Path::new("dist").join(summary.source_folder);
+    generator::copy_folder(&src, &dst).expect("Couldn't copy content folder");
 }

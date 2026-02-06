@@ -43,6 +43,7 @@ async fn main() {
         live_reload: true,
         navigation_links: navigation_links(),
         footer_links: footer_links(),
+        site_meta: bionic_gpt::ui_links::site_meta(),
     };
 
     let input = WebsiteInput {

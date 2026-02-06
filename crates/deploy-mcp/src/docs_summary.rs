@@ -1,4 +1,4 @@
-use crate::generator::*;
+use ssg_whiz::summaries::*;
 
 pub fn summary() -> Summary {
     Summary {
@@ -6,7 +6,7 @@ pub fn summary() -> Summary {
         categories: vec![
             Category {
                 name: "Getting Started".to_string(),
-                pages: vec![Page {
+                pages: vec![PageSummary {
                     date: "2025-09-30",
                     title: "Run Your First MCP Server",
                     description: "Launch your first AI assistant with Deploy in four steps.",
@@ -20,7 +20,7 @@ pub fn summary() -> Summary {
             Category {
                 name: "Secure On-Premise".to_string(),
                 pages: vec![
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Secure On-Premise Overview",
                         description: "Why Deploy MCP runs on Kubernetes and how we harden it for enterprise use.",
@@ -30,7 +30,7 @@ pub fn summary() -> Summary {
                         author: None,
                         author_image: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Install with the Deploy MCP Kubernetes Operator",
                         description: "Use the Kubernetes operator to manage Deploy MCP clusters on your infrastructure.",
@@ -42,7 +42,7 @@ pub fn summary() -> Summary {
                         author: None,
                         author_image: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Install on AWS",
                         description: "Provision Deploy MCP on Amazon EKS.",
@@ -52,7 +52,7 @@ pub fn summary() -> Summary {
                         author: None,
                         author_image: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Install on Google Cloud",
                         description: "Bring Deploy MCP online on Google Kubernetes Engine.",
@@ -62,7 +62,7 @@ pub fn summary() -> Summary {
                         author: None,
                         author_image: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Upgrading Deploy MCP",
                         description: "Upgrade the Deploy MCP operator and services.",
@@ -72,7 +72,7 @@ pub fn summary() -> Summary {
                         author: None,
                         author_image: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Single Sign On",
                         description: "Integrate Deploy MCP with your identity provider.",
@@ -82,7 +82,7 @@ pub fn summary() -> Summary {
                         author: None,
                         author_image: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Role Based Access Control",
                         description: "Manage Deploy MCP permissions with RBAC.",
@@ -92,7 +92,7 @@ pub fn summary() -> Summary {
                         author: None,
                         author_image: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Database Backups",
                         description: "Protect Deploy MCP data with automated backups.",
@@ -102,7 +102,7 @@ pub fn summary() -> Summary {
                         author: None,
                         author_image: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Apply Your Licence",
                         description: "Activate Deploy MCP with a licence key.",

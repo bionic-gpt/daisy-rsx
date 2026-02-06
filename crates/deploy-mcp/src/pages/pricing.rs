@@ -1,10 +1,12 @@
 use dioxus::prelude::*;
 
-use crate::components::{
+use daisy_rsx::marketing::{
     extra_footer::{ExtraFooter, EXTRA_FOOTER_TITLE},
     footer::Footer,
+    navigation::Section,
 };
-use crate::layouts::layout::Layout;
+use ssg_whiz::layouts::layout::Layout;
+use crate::ui_links::footer_links;
 
 pub fn pricing_page() -> String {
     let body = rsx! {
@@ -61,7 +63,7 @@ pub fn pricing_page() -> String {
             cta: "Get Started".to_string(),
             cta_url: crate::routes::marketing::Index {}.to_string(),
         }
-        Footer { margin_top: "mt-0" }
+        Footer { margin_top: "mt-0", links: footer_links() }
     };
 
     let page = rsx! {
@@ -69,7 +71,7 @@ pub fn pricing_page() -> String {
             title: "Deploy Pricing".to_string(),
             description: "Choose a Deploy plan that fits your automation roadmap.".to_string(),
             url: Some("https://deploy.run/pricing".to_string()),
-            section: crate::components::navigation::Section::Pricing,
+            section: Section::Pricing,
             mobile_menu: None,
             image: None,
             children: body,

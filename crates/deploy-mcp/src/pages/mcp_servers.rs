@@ -4,10 +4,13 @@ use tracing::warn;
 
 use crate::mcp_specs::all_specs;
 
-use crate::components::extra_footer::{ExtraFooter, EXTRA_FOOTER_TITLE};
-use crate::components::footer::Footer;
-use crate::components::navigation::Section;
-use crate::layouts::layout::Layout;
+use daisy_rsx::marketing::{
+    extra_footer::{ExtraFooter, EXTRA_FOOTER_TITLE},
+    footer::Footer,
+    navigation::Section,
+};
+use ssg_whiz::layouts::layout::Layout;
+use crate::ui_links::footer_links;
 
 #[derive(Clone, PartialEq, Eq)]
 pub struct IntegrationSpec {
@@ -323,7 +326,7 @@ pub fn index_page(integrations: &[IntegrationSpec]) -> String {
             cta: "Get Started".to_string(),
             cta_url: crate::routes::marketing::Index {}.to_string(),
         }
-        Footer { margin_top: "mt-0" }
+            Footer { margin_top: "mt-0", links: footer_links() }
     };
 
     let page = rsx! {
@@ -391,7 +394,7 @@ pub fn detail_page(integration: &IntegrationSpec) -> String {
             cta: "Get Started".to_string(),
             cta_url: crate::routes::marketing::Index {}.to_string(),
         }
-        Footer { margin_top: "mt-0" }
+            Footer { margin_top: "mt-0", links: footer_links() }
     };
 
     let page = rsx! {

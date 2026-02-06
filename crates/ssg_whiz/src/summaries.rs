@@ -24,12 +24,6 @@ pub struct PageSummary {
     pub author_image: Option<&'static str>,
 }
 
-impl PageSummary {
-    pub fn permalink(&self) -> String {
-        format!("https://bionic-gpt.com/{}", self.folder)
-    }
-}
-
 pub type BlogSummary = Summary;
 pub type PagesSummary = Summary;
 pub type DocumentSummary = Summary;

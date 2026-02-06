@@ -1,14 +1,16 @@
 use dioxus::prelude::*;
 
-use crate::components::customer_logos::Customers;
-use crate::components::features::{Feature, Features};
-use crate::components::hero::Hero;
-use crate::components::testamonials::Testamonials;
-use crate::components::{
+use daisy_rsx::marketing::{
+    customer_logos::Customers,
     extra_footer::{ExtraFooter, EXTRA_FOOTER_TITLE},
+    features::{Feature, Features},
     footer::Footer,
+    hero::Hero,
+    navigation::Section,
+    testamonials::Testamonials,
 };
-use crate::layouts::layout::Layout;
+use ssg_whiz::layouts::layout::Layout;
+use crate::ui_links::footer_links;
 use crate::routes;
 
 pub fn home_page() -> String {
@@ -103,7 +105,7 @@ pub fn home_page() -> String {
             cta: "Open the docs".to_string(),
             cta_url: routes::docs::Index {}.to_string(),
         }
-        Footer { margin_top: "mt-0" }
+        Footer { margin_top: "mt-0", links: footer_links() }
     };
 
     let page = rsx! {
@@ -111,7 +113,7 @@ pub fn home_page() -> String {
             title: "Deploy".to_string(),
             description: "Deploy MCP hosts Model Context Protocol servers with managed auth and shareable URLs.".to_string(),
             url: Some("https://deploy.run/".to_string()),
-            section: crate::components::navigation::Section::Home,
+            section: Section::Home,
             mobile_menu: None,
             image: Some("/docs/mcp-servers.png".to_string()),
             children: body,

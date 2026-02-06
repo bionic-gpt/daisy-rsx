@@ -1,13 +1,15 @@
 use dioxus::prelude::*;
 
-use crate::components::{
+use daisy_rsx::marketing::{
     customer_logos::Customers,
     extra_footer::{ExtraFooter, EXTRA_FOOTER_TITLE},
     footer::Footer,
+    navigation::Section,
     security::Security,
     testamonials::Testamonials,
 };
-use crate::layouts::layout::Layout;
+use ssg_whiz::layouts::layout::Layout;
+use crate::ui_links::footer_links;
 
 pub fn contact_page() -> String {
     let testimonials = rsx! {
@@ -63,7 +65,7 @@ pub fn contact_page() -> String {
             cta: "Open deployment docs".to_string(),
             cta_url: "/docs/on-premise/".to_string(),
         }
-        Footer { margin_top: "mt-0" }
+        Footer { margin_top: "mt-0", links: footer_links() }
     };
 
     let page = rsx! {
@@ -71,7 +73,7 @@ pub fn contact_page() -> String {
             title: "Contact Deploy".to_string(),
             description: "Connect with the Deploy team to design your AI automation rollout.".to_string(),
             url: Some("https://deploy.run/contact".to_string()),
-            section: crate::components::navigation::Section::Contact,
+            section: Section::Contact,
             mobile_menu: None,
             image: None,
             children: body,

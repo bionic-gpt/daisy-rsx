@@ -1,133 +1,50 @@
-use std::fs::{self, File};
-use std::io::{self, Write};
+use std::fs;
 use std::path::Path;
 
-use dioxus::prelude::*;
+use ssg_whiz::SitePage;
 
-use crate::layouts::blog::{BlogList, BlogPost};
-use crate::layouts::docs::Document;
-use crate::layouts::pages::MarkdownPage;
 use crate::pages;
 
-#[derive(PartialEq, Eq, Clone)]
-pub struct Summary {
-    pub source_folder: &'static str,
-    pub categories: Vec<Category>,
-}
-
-#[derive(PartialEq, Eq, Clone)]
-pub struct Category {
-    pub name: String,
-    pub pages: Vec<Page>,
-}
-
-#[derive(PartialEq, Eq, Clone, Copy)]
-pub struct Page {
-    pub date: &'static str,
-    pub title: &'static str,
-    pub description: &'static str,
-    pub folder: &'static str,
-    pub markdown: &'static str,
-    pub image: Option<&'static str>,
-    pub author: Option<&'static str>,
-    pub author_image: Option<&'static str>,
-}
-
-impl Page {
-    pub fn permalink(&self) -> String {
-        format!("https://deploy.run/{}", self.folder)
+fn output_page(path: &str, html: String) -> SitePage {
+    SitePage {
+        path: path.to_string(),
+        html,
     }
 }
 
-fn write_page(dest_folder: &str, html: String) -> io::Result<()> {
-    fs::create_dir_all(dest_folder)?;
-    let mut file = File::create(format!("{}/index.html", dest_folder))?;
-    file.write_all(html.as_bytes())
+pub async fn generate_static_pages() -> Vec<SitePage> {
+    let mut pages = Vec::new();
+    pages.extend(generate_marketing().await);
+    pages.extend(generate_mcp_servers());
+    pages
 }
 
-pub fn generate_marketing() {
-    write_page("dist", pages::home::home_page()).expect("Unable to write home page");
-    write_page("dist/pricing", pages::pricing::pricing_page())
-        .expect("Unable to write pricing page");
-    write_page("dist/contact", pages::contact::contact_page())
-        .expect("Unable to write contact page");
-    write_page("dist/enterprise", pages::enterprise::enterprise_page())
-        .expect("Unable to write enterprise page");
+pub async fn generate_marketing() -> Vec<SitePage> {
+    vec![
+        output_page("", pages::home::home_page()),
+        output_page("pricing", pages::pricing::pricing_page()),
+        output_page("contact", pages::contact::contact_page()),
+        output_page("enterprise", pages::enterprise::enterprise_page()),
+    ]
 }
 
-pub fn generate_mcp_servers() {
+pub fn generate_mcp_servers() -> Vec<SitePage> {
     let integrations = pages::mcp_servers::load_integration_specs();
+    let mut pages_out = Vec::new();
 
-    write_page(
-        "dist/mcp-servers",
+    pages_out.push(output_page(
+        "mcp-servers",
         pages::mcp_servers::index_page(&integrations),
-    )
-    .expect("Unable to write MCP servers page");
+    ));
 
     for integration in integrations {
-        let folder = format!("dist/{}", integration.folder_name());
-        write_page(&folder, pages::mcp_servers::detail_page(&integration))
-            .expect("Unable to write MCP server detail page");
-    }
-}
-
-pub fn generate_docs(summary: Summary) {
-    let src = format!("content/{}", summary.source_folder);
-    let src = Path::new(&src);
-    let dst = format!("dist/{}", summary.source_folder);
-    let dst = Path::new(&dst);
-    copy_folder(src, dst).expect("Unable to copy docs assets");
-
-    for category in &summary.categories {
-        for page in &category.pages {
-            let page_ele = rsx! {
-                Document {
-                    summary: summary.clone(),
-                    category: category.clone(),
-                    doc: *page,
-                }
-            };
-            let html = crate::render(page_ele);
-            write_page(&format!("dist/{}", page.folder), html).expect("Unable to write doc page");
-        }
-    }
-}
-
-pub fn generate_pages(summary: Summary) {
-    for category in &summary.categories {
-        for page in &category.pages {
-            let page_ele = rsx! {
-                MarkdownPage {
-                    post: *page
-                }
-            };
-            let html = crate::render(page_ele);
-            write_page(&format!("dist/{}", page.folder), html).expect("Unable to write page");
-        }
-    }
-}
-pub fn generate_blog_posts(summary: Summary) {
-    let src = format!("content/{}", summary.source_folder);
-    let src = Path::new(&src);
-    let dst = format!("dist/{}", summary.source_folder);
-    let dst = Path::new(&dst);
-    copy_folder(src, dst).expect("Unable to copy blog assets");
-
-    for category in &summary.categories {
-        for page in &category.pages {
-            let page_ele = rsx! {
-                BlogPost { post: *page }
-            };
-            let html = crate::render(page_ele);
-            write_page(&format!("dist/{}", page.folder), html).expect("Unable to write blog page");
-        }
+        pages_out.push(output_page(
+            &integration.folder_name(),
+            pages::mcp_servers::detail_page(&integration),
+        ));
     }
 
-    let list_ele = rsx! {
-        BlogList { summary: summary.clone() }
-    };
-    let html = crate::render(list_ele);
-    write_page("dist/blog", html).expect("Unable to write blog index");
+    pages_out
 }
 
 pub fn copy_folder(src: &Path, dst: &Path) -> std::io::Result<()> {

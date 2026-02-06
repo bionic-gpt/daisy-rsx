@@ -1,4 +1,4 @@
-use crate::generator::*;
+use ssg_whiz::summaries::*;
 
 pub fn summary() -> Summary {
     Summary {
@@ -6,7 +6,7 @@ pub fn summary() -> Summary {
         categories: vec![Category {
             name: "Launches".to_string(),
             pages: vec![
-                Page {
+                PageSummary {
                     date: "2025-11-08",
                     title: "Transform your Legacy Enterprise Systems with Agentic AI",
                     description:
@@ -17,7 +17,7 @@ pub fn summary() -> Summary {
                     author: Some("Alex Rivera"),
                     author_image: Some("/blog-authors/alex-rivera.png"),
                 },
-                Page {
+                PageSummary {
                     date: "2025-11-05",
                     title: "Agentic RAG for Engineers: What Changed and Why It Matters",
                     description:
@@ -28,7 +28,7 @@ pub fn summary() -> Summary {
                     author: Some("Alex Rivera"),
                     author_image: Some("/blog-authors/alex-rivera.png"),
                 },
-                Page {
+                PageSummary {
                     date: "2025-10-21",
                     title: "Vibe Engineering: How does it fit into the SDLC?",
                     description:
@@ -39,7 +39,7 @@ pub fn summary() -> Summary {
                     author: Some("Alex Rivera"),
                     author_image: Some("/blog-authors/alex-rivera.png"),
                 },
-                Page {
+                PageSummary {
                     date: "2025-10-01",
                     title: "Deep Dive: Understanding the MCP protocol using curl",
                     description:

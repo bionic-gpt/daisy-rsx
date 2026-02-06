@@ -293,6 +293,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "deploy-mcp"
+version = "0.1.0"
+dependencies = [
+ "axum",
+ "axum-extra",
+ "daisy_rsx",
+ "dioxus",
+ "serde",
+ "serde_json",
+ "ssg_whiz",
+ "tokio",
+ "tower-http",
+ "tower-livereload",
+ "tracing",
+ "tracing-subscriber",
+]
+
+[[package]]
 name = "deranged"
 version = "0.5.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
