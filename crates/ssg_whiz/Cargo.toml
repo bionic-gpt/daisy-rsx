@@ -15,3 +15,8 @@ tokio = { workspace = true, features = ["rt-multi-thread"] }
 tower-http = { workspace = true, features = ["fs", "trace"] }
 tower-livereload = { workspace = true }
 tracing = { workspace = true }
+dioxus = { workspace = true }
+dioxus-ssr = { workspace = true }
+daisy_rsx = { path = "../daisy_rsx" }
+pulldown-cmark = { workspace = true }
+syntect = { workspace = true }

@@ -1,10 +1,10 @@
 use super::layout::Layout;
-use crate::{generator::Page, ui_links::footer_links};
-use daisy_rsx::marketing::{footer::Footer, navigation::Section};
+use crate::summaries::PageSummary;
+use daisy_rsx::marketing::{footer::{Footer, FooterLinks}, navigation::Section};
 use dioxus::prelude::*;
 
 #[component]
-pub fn MarkdownPage(post: Page) -> Element {
+pub fn MarkdownPage(post: PageSummary, footer_links: FooterLinks) -> Element {
     let content = crate::markdown::markdown_to_html(post.markdown);
     rsx! {
         Layout {
@@ -19,7 +19,7 @@ pub fn MarkdownPage(post: Page) -> Element {
                 }
             }
             Footer {
-                links: footer_links()
+                links: footer_links
             }
         }
     }

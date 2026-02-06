@@ -1,16 +1,14 @@
 use dioxus::prelude::*;
 
 use super::layout::Layout;
-use crate::{
-    generator::{Category, Page, Summary},
-};
+use crate::summaries::{Category, PageSummary, Summary};
 use daisy_rsx::marketing::navigation::Section;
 
 #[component]
 pub fn Document(
     summary: Summary,
     category: Category,
-    doc: Page,
+    doc: PageSummary,
     current_section: Section,
 ) -> Element {
     rsx! {
@@ -131,7 +129,7 @@ fn LeftNav(summary: Summary, active_folder: &'static str, scroll_key: &'static s
 }
 
 #[component]
-fn Content(doc: Page) -> Element {
+fn Content(doc: PageSummary) -> Element {
     let content = crate::markdown::markdown_to_html(doc.markdown);
     rsx! {
         section {

@@ -169,11 +169,8 @@ dependencies = [
  "axum-extra",
  "daisy_rsx",
  "dioxus",
- "dioxus-ssr",
- "pulldown-cmark",
  "serde",
  "ssg_whiz",
- "syntect",
  "tokio",
  "tower-http",
  "tower-livereload",
@@ -1333,6 +1330,11 @@ name = "ssg_whiz"
 version = "0.1.0"
 dependencies = [
  "axum",
+ "daisy_rsx",
+ "dioxus",
+ "dioxus-ssr",
+ "pulldown-cmark",
+ "syntect",
  "tokio",
  "tower-http",
  "tower-livereload",

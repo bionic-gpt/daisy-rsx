@@ -2,10 +2,35 @@ use std::fs;
 use std::io;
 use std::net::SocketAddr;
 use std::path::{Path, PathBuf};
+use std::sync::OnceLock;
 
 use axum::Router;
+use daisy_rsx::marketing::{
+    footer::FooterLinks,
+    navigation::{NavigationLinks, Section},
+};
+use dioxus::prelude::*;
 use tower_http::services::ServeDir;
 use tower_livereload::LiveReloadLayer;
+
+use layouts::{BlogList, BlogPost, Document, MarkdownPage};
+use summaries::{BlogSummary, DocumentSite, PagesSummary, Summary};
+
+pub mod layouts;
+pub mod markdown;
+pub mod summaries;
+
+static NAV_LINKS: OnceLock<NavigationLinks> = OnceLock::new();
+
+pub fn set_navigation_links(links: NavigationLinks) {
+    let _ = NAV_LINKS.set(links);
+}
+
+pub(crate) fn navigation_links() -> &'static NavigationLinks {
+    NAV_LINKS
+        .get()
+        .expect("ssg_whiz navigation links not set")
+}
 
 #[derive(Clone, Debug)]
 pub struct SiteConfig {
@@ -13,6 +38,8 @@ pub struct SiteConfig {
     pub run_server: bool,
     pub addr: SocketAddr,
     pub live_reload: bool,
+    pub navigation_links: NavigationLinks,
+    pub footer_links: FooterLinks,
 }
 
 impl Default for SiteConfig {
@@ -22,19 +49,74 @@ impl Default for SiteConfig {
             run_server: true,
             addr: SocketAddr::from(([0, 0, 0, 0], 8080)),
             live_reload: true,
+            navigation_links: NavigationLinks {
+                home: "/".to_string(),
+                pricing: "/pricing".to_string(),
+                blog: "/blog".to_string(),
+                docs: "/docs".to_string(),
+                architect_course: "/architect-course".to_string(),
+                partners: "/partners".to_string(),
+                contact: "/contact".to_string(),
+                product_chat: "/product/chat".to_string(),
+                product_assistants: "/product/assistants".to_string(),
+                product_integrations: "/product/integrations".to_string(),
+                product_automations: "/product/automations".to_string(),
+                product_developers: "/product/developers".to_string(),
+                sign_in_up: "#".to_string(),
+            },
+            footer_links: FooterLinks {
+                blog: "/blog".to_string(),
+                pricing: "/pricing".to_string(),
+                contact: "/contact".to_string(),
+                terms: "/terms".to_string(),
+                privacy: "/privacy".to_string(),
+                about: None,
+            },
         }
     }
 }
 
 #[derive(Clone, Debug)]
-pub struct Page {
+pub struct SitePage {
     pub path: String,
     pub html: String,
 }
 
+#[derive(Clone, Debug)]
+pub struct WebsiteInput {
+    pub blog: BlogSummary,
+    pub documents: Vec<DocumentSite>,
+    pub pages: PagesSummary,
+    pub static_pages: Vec<SitePage>,
+}
+
+pub async fn generate_website(
+    config: SiteConfig,
+    input: WebsiteInput,
+) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
+    set_navigation_links(config.navigation_links.clone());
+
+    let mut pages = input.static_pages;
+    pages.extend(render_blog_posts(&input.blog, config.footer_links.clone()));
+    pages.push(render_blog_list(&input.blog, config.footer_links.clone()));
+
+    for doc_site in input.documents {
+        pages.extend(render_document_site(&doc_site.summary, doc_site.section));
+    }
+
+    pages.extend(render_pages_summary(&input.pages, config.footer_links.clone()));
+
+    generate_site(config, pages).await
+}
+
+pub fn render(page: Element) -> String {
+    let html = dioxus_ssr::render_element(page);
+    format!("<!DOCTYPE html><html lang='en'>{}</html>", html)
+}
+
 pub async fn generate_site(
     config: SiteConfig,
-    pages: Vec<Page>,
+    pages: Vec<SitePage>,
 ) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     fs::create_dir_all(&config.dist_dir)?;
 
@@ -57,7 +139,7 @@ pub async fn generate_site(
     Ok(())
 }
 
-fn write_pages(dist_dir: &Path, pages: Vec<Page>) -> io::Result<()> {
+fn write_pages(dist_dir: &Path, pages: Vec<SitePage>) -> io::Result<()> {
     for page in pages {
         let dir = normalized_page_dir(dist_dir, &page.path);
         fs::create_dir_all(&dir)?;
@@ -74,4 +156,90 @@ fn normalized_page_dir(dist_dir: &Path, path: &str) -> PathBuf {
     } else {
         dist_dir.join(trimmed)
     }
+}
+
+fn render_blog_posts(summary: &BlogSummary, footer_links: FooterLinks) -> Vec<SitePage> {
+    let mut pages = Vec::new();
+
+    for category in &summary.categories {
+        for page in &category.pages {
+            let page_ele = rsx! {
+                BlogPost {
+                    post: *page,
+                    footer_links: footer_links.clone()
+                }
+            };
+
+            let html = render(page_ele);
+            pages.push(SitePage {
+                path: page.folder.to_string(),
+                html,
+            });
+        }
+    }
+
+    pages
+}
+
+fn render_blog_list(summary: &BlogSummary, footer_links: FooterLinks) -> SitePage {
+    let page_ele = rsx! {
+        BlogList {
+            summary: summary.clone(),
+            footer_links
+        }
+    };
+
+    let html = render(page_ele);
+    SitePage {
+        path: "blog".to_string(),
+        html,
+    }
+}
+
+fn render_document_site(summary: &Summary, section: Section) -> Vec<SitePage> {
+    let mut pages = Vec::new();
+
+    for category in &summary.categories {
+        for page in &category.pages {
+            let page_ele = rsx! {
+                Document {
+                    summary: summary.clone(),
+                    category: category.clone(),
+                    doc: *page,
+                    current_section: section.clone(),
+                }
+            };
+
+            let html = render(page_ele);
+            pages.push(SitePage {
+                path: page.folder.to_string(),
+                html,
+            });
+        }
+    }
+
+    pages
+}
+
+fn render_pages_summary(summary: &PagesSummary, footer_links: FooterLinks) -> Vec<SitePage> {
+    let mut pages = Vec::new();
+
+    for category in &summary.categories {
+        for page in &category.pages {
+            let page_ele = rsx! {
+                MarkdownPage {
+                    post: *page,
+                    footer_links: footer_links.clone()
+                }
+            };
+
+            let html = render(page_ele);
+            pages.push(SitePage {
+                path: page.folder.to_string(),
+                html,
+            });
+        }
+    }
+
+    pages
 }

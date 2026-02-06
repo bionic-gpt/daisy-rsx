@@ -1,4 +1,4 @@
-use crate::generator::*;
+use ssg_whiz::summaries::*;
 
 pub fn summary() -> Summary {
     Summary {
@@ -6,7 +6,7 @@ pub fn summary() -> Summary {
         categories: vec![
             Category {
                 name: "Gen AI Architect Course".to_string(),
-                pages: vec![Page {
+                pages: vec![PageSummary {
                     date: "",
                     title: "Course Overview",
                     description: "Introduction to the architect curriculum.",
@@ -20,7 +20,7 @@ pub fn summary() -> Summary {
             Category {
                 name: "Setting up a Lab".to_string(),
                 pages: vec![
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Choosing a Model",
                         description: "Pick the Granite baseline used throughout the lab.",
@@ -32,7 +32,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Running an Inference Engine (Ollama)",
                         description: "Connecting to Ollam",
@@ -42,7 +42,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Running the Bionic Agentic AI Platform",
                         description: "Try it on a Laptop",
@@ -54,7 +54,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Testing Your Model",
                         description: "Run sanity checks to validate prompts and responses.",
@@ -71,7 +71,7 @@ pub fn summary() -> Summary {
             Category {
                 name: "Basics of Tool Calls".to_string(),
                 pages: vec![
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Understanding Tool Calls",
                         description: "When and how to wire structured tool executions.",
@@ -83,7 +83,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Tool Calls in the UI",
                         description: "Follow tool invocation state transitions inside the console.",
@@ -100,7 +100,7 @@ pub fn summary() -> Summary {
             Category {
                 name: "Agentic Integrations".to_string(),
                 pages: vec![
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Connecting LLMs to External Systems",
                         description: "Conceptual overview of connecting external services.",
@@ -112,7 +112,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Connecting an Assistant to Our Integrations",
                         description: "Enable built-in integrations and wire them to an assistant from the console.",
@@ -124,7 +124,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Using Our Integration",
                         description: "Hands-on walkthrough with the generic integration connector.",
@@ -136,7 +136,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Custom Integrations",
                         description: "Use OpenAPI specs to wire in-house APIs into assistants.",
@@ -148,7 +148,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Create an Integration",
                         description: "Steps for granting secure Gmail access to assistants.",
@@ -165,7 +165,7 @@ pub fn summary() -> Summary {
             Category {
                 name: "Agentic RAG (Coming Soon)".to_string(),
                 pages: vec![
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Agentic RAG Introduction",
                         description: "Core concepts behind our Agentic RAG pattern.",
@@ -177,7 +177,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Loading Agentic RAG Datasets",
                         description: "Ingestion patterns and guardrails for Agentic RAG datasets.",
@@ -189,7 +189,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Testing an Agentic RAG Pipeline in the UI (Use Case)",
                         description: "Guided validation scenario for Agentic RAG pipelines in the console.",
@@ -206,7 +206,7 @@ pub fn summary() -> Summary {
             Category {
                 name: "Deployment and Operations".to_string(),
                 pages: vec![
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Why Kubernetes",
                         description: "Why the platform relies on Kubernetes instead of standalone Docker setups.",
@@ -218,7 +218,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Running Kubernetes Lab",
                         description: "Install a local K3s cluster that mirrors production topologies.",

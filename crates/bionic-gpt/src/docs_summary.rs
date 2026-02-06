@@ -1,4 +1,4 @@
-use crate::generator::*;
+use ssg_whiz::summaries::*;
 
 pub fn summary() -> Summary {
     Summary {
@@ -6,7 +6,7 @@ pub fn summary() -> Summary {
         categories: vec![
             Category {
                 name: "Introducing Bionic".to_string(),
-                pages: vec![Page {
+                pages: vec![PageSummary {
                     date: "",
                     title: "Introduction",
                     description: "Introducing Bionic",
@@ -20,7 +20,7 @@ pub fn summary() -> Summary {
             Category {
                 name: "Learn Bionic".to_string(),
                 pages: vec![
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "The Console",
                         description: "The Console",
@@ -30,7 +30,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Datasets",
                         description: "Datasets",
@@ -40,7 +40,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "AI Assistants (Agentic RAG)",
                         description: "AI Assistants (Agentic RAG)",
@@ -50,7 +50,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Teams",
                         description: "Teams",
@@ -65,7 +65,7 @@ pub fn summary() -> Summary {
             Category {
                 name: "Local Bionic".to_string(),
                 pages: vec![
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Docker Compose",
                         description: "Docker Compose",
@@ -77,7 +77,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Kubernetes",
                         description: "Kubernetes",
@@ -89,7 +89,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Connecting to Ollama",
                         description: "Connecting to Ollam",
@@ -104,7 +104,7 @@ pub fn summary() -> Summary {
             Category {
                 name: "Private Cloud".to_string(),
                 pages: vec![
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Installation Prerequisite",
                         description: "Install Bionic with Stack CLI",
@@ -116,7 +116,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Install on a VM (K3s)",
                         description: "Install on a VM (K3s)",
@@ -128,7 +128,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Digital Ocean",
                         description: "Digital Ocean",
@@ -140,7 +140,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "AWS",
                         description: "AWS",
@@ -150,7 +150,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Google Cloud",
                         description: "Google Cloud",
@@ -164,7 +164,7 @@ pub fn summary() -> Summary {
             },
             Category {
                 name: "Authentication".to_string(),
-                pages: vec![Page {
+                pages: vec![PageSummary {
                     date: "",
                     title: "Single Sign On",
                     description: "Single Sign O",
@@ -178,7 +178,7 @@ pub fn summary() -> Summary {
             Category {
                 name: "Configuring Bionic".to_string(),
                 pages: vec![
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Cloudflare as Ingress",
                         description: "Cloudflare as Ingress",
@@ -188,7 +188,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Connecting Airbyte",
                         description: "Connecting Airbyte",
@@ -198,7 +198,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Configure Email",
                         description: "Configure Email",
@@ -208,7 +208,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Upgrading Bionic",
                         description: "Upgrading Bionic",
@@ -218,7 +218,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Role Based Access Control",
                         description: "Role Based Access Control",
@@ -228,7 +228,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Database Backups",
                         description: "Database Backups",
@@ -238,7 +238,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Licencing Bionic",
                         description: "Licencing Bioni",
@@ -248,7 +248,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Runtime Encryption",
                         description: "Runtime Encryption",
@@ -260,7 +260,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Automating Document Upload",
                         description: "Automating Document Upload",
@@ -272,7 +272,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Using the API",
                         description: "Using the API",
@@ -287,7 +287,7 @@ pub fn summary() -> Summary {
             Category {
                 name: "Administration".to_string(),
                 pages: vec![
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Managing Models",
                         description: "Managing Models",
@@ -297,7 +297,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Guard Models",
                         description: "Guard Models",
@@ -312,7 +312,7 @@ pub fn summary() -> Summary {
             /***Category {
                 name: "How-To".to_string(),
                 pages: vec![
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Deploying Jupyter Notebook",
                         description: "Deploying Jupyter Notebook",
@@ -322,7 +322,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Visualising Agentic RAG",
                         description: "Visualising Agentic RAG",
@@ -332,7 +332,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Coding CoPilot",
                         description: "Coding CoPilot",
@@ -342,7 +342,7 @@ pub fn summary() -> Summary {
                         author_image: None,
                         author: None,
                     },
-                    Page {
+                    PageSummary {
                         date: "",
                         title: "Credit Card Categorising Assistant",
                         description: "Credit Card Categorising Assistan",
@@ -356,7 +356,7 @@ pub fn summary() -> Summary {
             },
             Category {
                 name: "Reference".to_string(),
-                pages: vec![Page {
+                pages: vec![PageSummary {
                     date: "",
                     title: "Glossary",
                     description: "Glossary",

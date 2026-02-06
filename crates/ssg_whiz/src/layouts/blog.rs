@@ -1,14 +1,14 @@
 use super::layout::Layout;
-use crate::{generator::{Page, Summary}, ui_links::footer_links};
+use crate::summaries::{PageSummary, Summary};
 use daisy_rsx::marketing::{
     extra_footer::{ExtraFooter, EXTRA_FOOTER_TITLE},
-    footer::Footer,
+    footer::{Footer, FooterLinks},
     navigation::Section,
 };
 use dioxus::prelude::*;
 
 #[component]
-pub fn BlogPost(post: Page) -> Element {
+pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
     let image = if post.image.is_some() {
         post.image.unwrap()
     } else {
@@ -91,14 +91,14 @@ pub fn BlogPost(post: Page) -> Element {
             }
             Footer {
                 margin_top: "mt-0",
-                links: footer_links()
+                links: footer_links.clone()
             }
         }
     }
 }
 
 #[component]
-pub fn BlogList(summary: Summary) -> Element {
+pub fn BlogList(summary: Summary, footer_links: FooterLinks) -> Element {
     rsx! {
         Layout {
             title: "Blog",
@@ -158,7 +158,7 @@ pub fn BlogList(summary: Summary) -> Element {
                 }
             }
             Footer {
-                links: footer_links()
+                links: footer_links
             }
         }
     }

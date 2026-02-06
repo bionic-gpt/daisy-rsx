@@ -1,11 +1,15 @@
 use std::{fs, net::SocketAddr, path::Path};
 
-use ssg_whiz::{generate_site, Page, SiteConfig};
+use ssg_whiz::{
+    generate_website, set_navigation_links, SiteConfig, WebsiteInput,
+};
 
 use bionic_gpt::{
     architect_course_summary, blog_summary, docs_summary, generator, pages_summary,
+    ui_links::{footer_links, navigation_links},
 };
 use daisy_rsx::marketing::navigation::Section;
+use ssg_whiz::summaries::DocumentSite;
 
 #[tokio::main]
 async fn main() {
@@ -14,6 +18,7 @@ async fn main() {
         .init();
 
     fs::create_dir_all("dist").expect("Couldn't create dist folder");
+    set_navigation_links(navigation_links());
 
     let docs_summary = docs_summary::summary();
     let architect_summary = architect_course_summary::summary();
@@ -24,18 +29,7 @@ async fn main() {
     copy_summary_assets(&architect_summary);
     copy_summary_assets(&blog_summary);
 
-    let mut pages: Vec<Page> = Vec::new();
-    pages.extend(generator::generate_marketing().await);
-    pages.extend(generator::generate_product().await);
-    pages.extend(generator::generate_solutions().await);
-    pages.extend(generator::generate_docs(docs_summary, Section::Docs));
-    pages.extend(generator::generate_docs(
-        architect_summary,
-        Section::ArchitectCourse,
-    ));
-    pages.extend(generator::generate(blog_summary.clone()));
-    pages.extend(generator::generate_pages(pages_summary).await);
-    pages.extend(generator::generate_blog_list(blog_summary).await);
+    let static_pages = generator::generate_static_pages().await;
 
     let src = Path::new("assets");
     let dst = Path::new("dist");
@@ -47,14 +41,32 @@ async fn main() {
         run_server,
         addr: SocketAddr::from(([0, 0, 0, 0], 8080)),
         live_reload: true,
+        navigation_links: navigation_links(),
+        footer_links: footer_links(),
     };
 
-    generate_site(config, pages)
+    let input = WebsiteInput {
+        blog: blog_summary,
+        documents: vec![
+            DocumentSite {
+                summary: docs_summary,
+                section: Section::Docs,
+            },
+            DocumentSite {
+                summary: architect_summary,
+                section: Section::ArchitectCourse,
+            },
+        ],
+        pages: pages_summary,
+        static_pages,
+    };
+
+    generate_website(config, input)
         .await
-        .expect("Failed to generate site");
+        .expect("Failed to generate website");
 }
 
-fn copy_summary_assets(summary: &generator::Summary) {
+fn copy_summary_assets(summary: &ssg_whiz::summaries::Summary) {
     let src = Path::new("content").join(summary.source_folder);
     let dst = Path::new("dist").join(summary.source_folder);
     generator::copy_folder(&src, &dst).expect("Couldn't copy content folder");

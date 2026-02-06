@@ -1,4 +1,4 @@
-use crate::layouts::layout::Layout;
+use ssg_whiz::layouts::layout::Layout;
 use crate::ui_links::footer_links;
 use daisy_rsx::marketing::{
     extra_footer::{ExtraFooter, EXTRA_FOOTER_TITLE},

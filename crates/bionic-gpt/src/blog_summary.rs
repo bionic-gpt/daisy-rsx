@@ -1,4 +1,4 @@
-use crate::generator::*;
+use ssg_whiz::summaries::*;
 
 pub fn summary() -> Summary {
     Summary {
@@ -6,7 +6,7 @@ pub fn summary() -> Summary {
         categories: vec![Category {
             name: "TOFU".to_string(),
             pages: vec![
-                Page {
+                PageSummary {
                     date: "2026-01-16",
                     title: "Evaluating Self-Hosted LLM Platforms: From Front Ends to Enterprise GenAI",
                     description: "A practical framework for comparing self-hosted LLM platforms across UI, orchestration, security, and enterprise readiness.",
@@ -16,7 +16,7 @@ pub fn summary() -> Summary {
                     author_image: Some("/blog-authors/dio.jpeg"),
                     author: Some("Kulbinder Dio")
                 },
-                Page {
+                PageSummary {
                     date: "2025-07-23",
                     title: "Beyond MCP: The Future of Enterprise AI Integrations with OpenAPI",
                     description: "Explore how Bionic have introduced Integrations and slid stepped the limitations of MCP",
@@ -26,7 +26,7 @@ pub fn summary() -> Summary {
                     author_image: Some("/blog-authors/dio.jpeg"),
                     author: Some("Kulbinder Dio")
                 },
-                Page {
+                PageSummary {
                     date: "2025-02-08",
                     title: "The Future Opportunities for Junior Developers in the Age of AI Coding",
                     description: "Explore how AI coding tools create new opportunities for junior developers, from an architect's perspective on career growth.",
@@ -36,7 +36,7 @@ pub fn summary() -> Summary {
                     author_image: Some("/blog-authors/ian-purton.jpeg"),
                     author: Some("Ian Purton")
                 },
-                Page {
+                PageSummary {
                     date: "2024-10-10",
                     title: "Real-Time Content Alerting: A Smarter Approach to Monitoring Harmful Content in Large Language Models",
                     description: "Learn how to implement real-time content monitoring and alerting systems for harmful content in large language models.",
@@ -46,7 +46,7 @@ pub fn summary() -> Summary {
                     author_image: Some("/blog-authors/dio.jpeg"),
                     author: Some("Kulbinder Dio")
                 },
-                Page  {
+                PageSummary  {
                     date: "2024-10-10",
                     title: "The Road to Autonomy: How AI in Software Development Mirrors Autonomous Driving Levels",
                     description: "Discover how AI in software development follows autonomous driving levels, from basic assistance to full automation.",
@@ -56,7 +56,7 @@ pub fn summary() -> Summary {
                     author_image: Some("/blog-authors/ian-purton.jpeg"),
                     author: Some("Ian Purton")
                 },
-                Page {
+                PageSummary {
                     date: "2024-10-09",
                     title: "Create a Data Lakehouse with Trino, Iceberg, S3, Parquet and Kubernetes",
                     description: "Build a modern data lakehouse architecture using Trino, Iceberg, S3, Parquet and Kubernetes for scalable analytics.",
@@ -66,7 +66,7 @@ pub fn summary() -> Summary {
                     author_image: Some("/blog-authors/ian-purton.jpeg"),
                     author: Some("Ian Purton")
                 },
-                Page {
+                PageSummary {
                     date: "2024-09-26",
                     title: "AI Agents: Transforming Business Operations",
                     description: "A detailed guide to AI agents, what they are, how they can be used and how they will shape the future",
@@ -76,7 +76,7 @@ pub fn summary() -> Summary {
                     author_image: Some("/blog-authors/dio.jpeg"),
                     author: Some("Kulbinder Dio")
                 },
-                Page {
+                PageSummary {
                     date: "2024-09-20",
                     title: "What Are Guardrails",
                     description: "Comprehensive guide to AI guardrails: what they are, how they work, and the different types you can implement for safety.",
@@ -86,7 +86,7 @@ pub fn summary() -> Summary {
                     author_image: Some("/blog-authors/dio.jpeg"),
                     author: Some("Kulbinder Dio")
                 },
-                Page {
+                PageSummary {
                     date: "2024-08-21",
                     title: "How Enterprises Can Prepare for Generative AI",
                     description: "Strategic guide for enterprises to integrate Generative AI effectively, covering planning, governance, and risk management.",
@@ -96,7 +96,7 @@ pub fn summary() -> Summary {
                     author_image: Some("/blog-authors/dio.jpeg"),
                     author: Some("Kulbinder Dio")
                 },
-                Page {
+                PageSummary {
                     date: "2024-07-16",
                     title: "Create A ChatBot On Your Data",
                     description: "Step-by-step tutorial to build a custom chatbot using your own data with practical examples and implementation tips.",
@@ -106,7 +106,7 @@ pub fn summary() -> Summary {
                     author_image: Some("/blog-authors/dio.jpeg"),
                     author: Some("Kulbinder Dio")
                 },
-                Page {
+                PageSummary {
                     date: "2024-07-12",
                     title: "The Perfect Agentic RAG Use Case?",
                     description: "Explore the ideal use case for Retrieval Augmented Generation (Agentic RAG) and why code-based applications might be perfect.",
@@ -116,7 +116,7 @@ pub fn summary() -> Summary {
                     author_image: Some("/blog-authors/dio.jpeg"),
                     author: Some("Kulbinder Dio")
                 },
-                Page {
+                PageSummary {
                     date: "2024-07-11",
                     title: "Building SaaS applications for highly regulated industries using Confidential Computing",
                     description: "Learn how to build secure SaaS applications for regulated industries using confidential computing and privacy-preserving tech.",
@@ -126,7 +126,7 @@ pub fn summary() -> Summary {
                     author_image: Some("/blog-authors/ian-purton.jpeg"),
                     author: Some("Ian Purton")
                 },
-                Page {
+                PageSummary {
                     date: "2024-05-28",
                     title: "Why companies are banning Chat-GPT",
                     description: "Understand why companies are banning ChatGPT and the security, privacy, and compliance concerns driving these decisions.",
@@ -136,7 +136,7 @@ pub fn summary() -> Summary {
                     author_image: Some("/blog-authors/ian-purton.jpeg"),
                     author: Some("Ian Purton")
                 },
-                Page {
+                PageSummary {
                     date: "2024-04-10",
                     title: "Model Denial of Service prevention for  production LLM applications",
                     description: "Protect your production LLM applications from model denial of service attacks with effective prevention strategies.",
@@ -146,7 +146,7 @@ pub fn summary() -> Summary {
                     author_image: Some("/blog-authors/ian-purton.jpeg"),
                     author: Some("Ian Purton")
                 },
-                Page {
+                PageSummary {
                     date: "2023-12-04",
                     title: "Bionic Integration with Jupyter",
                     description: "Integrate Bionic with Jupyter notebooks for enhanced data science workflows and AI-powered analysis capabilities.",
@@ -156,7 +156,7 @@ pub fn summary() -> Summary {
                     author_image: Some("/blog-authors/dio.jpeg"),
                     author: Some("Kulbinder Dio")
                 },
-                Page {
+                PageSummary {
                     date: "2023-10-30",
                     title: "Hardware requirements for LLM's in production",
                     description: "Complete guide to hardware requirements for deploying large language models in production environments effectively.",
@@ -166,7 +166,7 @@ pub fn summary() -> Summary {
                     author_image: Some("/blog-authors/ian-purton.jpeg"),
                     author: Some("Ian Purton")
                 },
-                Page {
+                PageSummary {
                     date: "2023-10-13",
                     title: "Why you don't need a specialist Vector Database",
                     description: "Why PostgreSQL with vector extensions might be better than specialized vector databases for most AI applications.",
@@ -176,7 +176,7 @@ pub fn summary() -> Summary {
                     author_image: Some("/blog-authors/ian-purton.jpeg"),
                     author: Some("Ian Purton")
                 },
-                Page {
+                PageSummary {
                     date: "2023-10-01",
                     title: "Understanding Quantisation in Large Language Models (LLMs)",
                     description: "Deep dive into quantization techniques for large language models, reducing memory usage while maintaining performance.",
@@ -186,7 +186,7 @@ pub fn summary() -> Summary {
                     author_image: Some("/blog-authors/dio.jpeg"),
                     author: Some("Kulbinder Dio")
                 },
-                Page {
+                PageSummary {
                     date: "2023-09-21",
                     title: "What is Retrieval Augmented Generation?",
                     description: "Technical deep-dive into Retrieval Augmented Generation (Agentic RAG) architecture, implementation details, and best practices.",

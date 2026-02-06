@@ -1,53 +1,18 @@
 use std::fs;
 use std::path::Path;
 
-use dioxus::prelude::*;
+use ssg_whiz::SitePage;
 
-use daisy_rsx::marketing::navigation::Section;
-use ssg_whiz::Page as OutputPage;
-use crate::layouts::blog::{BlogList, BlogPost};
-use crate::layouts::docs::Document;
-use crate::layouts::pages::MarkdownPage;
 use crate::pages;
 
-#[derive(PartialEq, Eq, Clone)]
-pub struct Summary {
-    pub source_folder: &'static str,
-    pub categories: Vec<Category>,
-}
-
-#[derive(PartialEq, Eq, Clone)]
-pub struct Category {
-    pub name: String,
-    pub pages: Vec<Page>,
-}
-
-#[derive(PartialEq, Eq, Clone, Copy)]
-pub struct Page {
-    pub date: &'static str,
-    pub title: &'static str,
-    pub description: &'static str,
-    pub folder: &'static str,
-    pub markdown: &'static str,
-    pub image: Option<&'static str>,
-    pub author: Option<&'static str>,
-    pub author_image: Option<&'static str>,
-}
-
-impl Page {
-    pub fn permalink(&self) -> String {
-        format!("https://bionic-gpt.com/{}", self.folder)
-    }
-}
-
-fn output_page(path: &str, html: String) -> OutputPage {
-    OutputPage {
+fn output_page(path: &str, html: String) -> SitePage {
+    SitePage {
         path: path.to_string(),
         html,
     }
 }
 
-pub async fn generate_product() -> Vec<OutputPage> {
+pub async fn generate_product() -> Vec<SitePage> {
     vec![
         output_page("product/assistants", pages::product::assistants::page()),
         output_page("product/automations", pages::product::automations::page()),
@@ -57,14 +22,14 @@ pub async fn generate_product() -> Vec<OutputPage> {
     ]
 }
 
-pub async fn generate_solutions() -> Vec<OutputPage> {
+pub async fn generate_solutions() -> Vec<SitePage> {
     vec![
         output_page("solutions/education", pages::solutions::education::page()),
         output_page("solutions/support", pages::solutions::support::page()),
     ]
 }
 
-pub async fn generate_marketing() -> Vec<OutputPage> {
+pub async fn generate_marketing() -> Vec<SitePage> {
     vec![
         output_page("pricing", pages::pricing::pricing()),
         output_page("partners", pages::partners::partners_page()),
@@ -73,70 +38,12 @@ pub async fn generate_marketing() -> Vec<OutputPage> {
     ]
 }
 
-pub fn generate(summary: Summary) -> Vec<OutputPage> {
-    let mut pages_out = Vec::new();
-    for category in summary.categories {
-        for page in category.pages {
-            let page_ele = rsx! {
-                BlogPost {
-                    post: page
-                }
-            };
-
-            let html = crate::render(page_ele);
-            pages_out.push(output_page(page.folder, html));
-        }
-    }
-
-    pages_out
-}
-
-pub fn generate_docs(summary: Summary, section: Section) -> Vec<OutputPage> {
-    let mut pages_out = Vec::new();
-    for category in &summary.categories {
-        for page in &category.pages {
-            let page_ele = rsx! {
-                Document {
-                    summary: summary.clone(),
-                    category: category.clone(),
-                    doc: *page,
-                    current_section: section.clone(),
-                }
-            };
-
-            let html = crate::render(page_ele);
-            pages_out.push(output_page(page.folder, html));
-        }
-    }
-
-    pages_out
-}
-
-pub async fn generate_pages(summary: Summary) -> Vec<OutputPage> {
-    let mut pages_out = Vec::new();
-    for category in &summary.categories {
-        for page in &category.pages {
-            let page_ele = rsx! {
-                MarkdownPage {
-                    post: *page
-                }
-            };
-            let html = crate::render(page_ele);
-            pages_out.push(output_page(page.folder, html));
-        }
-    }
-
-    pages_out
-}
-
-pub async fn generate_blog_list(summary: Summary) -> Vec<OutputPage> {
-    let page_ele = rsx! {
-        BlogList {
-            summary
-        }
-    };
-    let html = crate::render(page_ele);
-    vec![output_page("blog", html)]
+pub async fn generate_static_pages() -> Vec<SitePage> {
+    let mut pages = Vec::new();
+    pages.extend(generate_marketing().await);
+    pages.extend(generate_product().await);
+    pages.extend(generate_solutions().await);
+    pages
 }
 
 pub fn copy_folder(src: &Path, dst: &Path) -> std::io::Result<()> {

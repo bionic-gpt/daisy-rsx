@@ -2,8 +2,6 @@ pub mod architect_course_summary;
 pub mod blog_summary;
 pub mod docs_summary;
 pub mod generator;
-pub mod layouts;
-pub mod markdown;
 pub mod pages;
 pub mod pages_summary;
 pub mod ui_links;
@@ -113,6 +111,5 @@ pub mod routes {
 use dioxus::prelude::Element;
 
 pub fn render(page: Element) -> String {
-    let html = dioxus_ssr::render_element(page);
-    format!("<!DOCTYPE html><html lang='en'>{}</html>", html)
+    ssg_whiz::render(page)
 }

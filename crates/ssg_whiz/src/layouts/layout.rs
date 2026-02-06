@@ -1,6 +1,6 @@
 #![allow(non_snake_case)]
 
-use crate::ui_links::navigation_links;
+use crate::navigation_links;
 use daisy_rsx::marketing::navigation::{Navigation, Section};
 use dioxus::prelude::*;
 
@@ -77,7 +77,7 @@ pub fn Layout(props: LayoutProps) -> Element {
             Navigation {
                 mobile_menu: props.mobile_menu,
                 section: props.section,
-                links: navigation_links()
+                links: navigation_links().clone()
             }
             {props.children}
             script {
