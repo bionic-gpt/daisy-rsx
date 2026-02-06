@@ -1,5 +1,5 @@
 [package]
-name = "static-website"
+name = "bionic-gpt"
 version = "0.1.0"
 authors = ["Bionic Dev <dev@bionic-gpt.com>"]
 edition = "2021"
@@ -21,3 +21,4 @@ tower-http = { workspace = true, features = ["fs", "trace"] }
 syntect.workspace = true
 pulldown-cmark.workspace = true
 tower-livereload.workspace = true
+daisy_rsx = { path = "../daisy_rsx" }

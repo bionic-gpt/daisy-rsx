@@ -1,7 +1,10 @@
-use crate::components::extra_footer::{ExtraFooter, EXTRA_FOOTER_TITLE};
-use crate::components::footer::Footer;
-use crate::components::navigation::Section;
 use crate::layouts::layout::Layout;
+use crate::ui_links::footer_links;
+use daisy_rsx::marketing::{
+    extra_footer::{ExtraFooter, EXTRA_FOOTER_TITLE},
+    footer::Footer,
+    navigation::Section,
+};
 use dioxus::prelude::*;
 
 pub fn pricing() -> String {
@@ -134,7 +137,8 @@ pub fn pricing() -> String {
                 cta_url: crate::routes::marketing::Index {}.to_string()
             }
             Footer {
-                margin_top: "mt-0"
+                margin_top: "mt-0",
+                links: footer_links()
             }
         }
     };

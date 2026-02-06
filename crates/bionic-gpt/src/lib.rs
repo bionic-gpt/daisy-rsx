@@ -1,12 +1,12 @@
 pub mod architect_course_summary;
 pub mod blog_summary;
-pub mod components;
 pub mod docs_summary;
 pub mod generator;
 pub mod layouts;
 pub mod markdown;
 pub mod pages;
 pub mod pages_summary;
+pub mod ui_links;
 
 pub mod routes {
     pub const SIGN_IN_UP: &str = "https://app.bionic-gpt.com";

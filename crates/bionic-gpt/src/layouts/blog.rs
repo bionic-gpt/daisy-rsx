@@ -1,11 +1,9 @@
 use super::layout::Layout;
-use crate::{
-    components::{
-        extra_footer::{ExtraFooter, EXTRA_FOOTER_TITLE},
-        footer::Footer,
-        navigation::Section,
-    },
-    generator::{Page, Summary},
+use crate::{generator::{Page, Summary}, ui_links::footer_links};
+use daisy_rsx::marketing::{
+    extra_footer::{ExtraFooter, EXTRA_FOOTER_TITLE},
+    footer::Footer,
+    navigation::Section,
 };
 use dioxus::prelude::*;
 
@@ -92,7 +90,8 @@ pub fn BlogPost(post: Page) -> Element {
                 cta_url: "/"
             }
             Footer {
-                margin_top: "mt-0"
+                margin_top: "mt-0",
+                links: footer_links()
             }
         }
     }
@@ -159,6 +158,7 @@ pub fn BlogList(summary: Summary) -> Element {
                 }
             }
             Footer {
+                links: footer_links()
             }
         }
     }

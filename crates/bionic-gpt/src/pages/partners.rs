@@ -1,10 +1,13 @@
-use crate::components::benefits::Benefits;
-use crate::components::features::BionicFeatures;
-use crate::components::footer::Footer;
-use crate::components::hero::Hero;
-use crate::components::navigation::Section;
-use crate::components::testamonials::Testamonial2;
 use crate::layouts::layout::Layout;
+use crate::ui_links::footer_links;
+use daisy_rsx::marketing::{
+    benefits::Benefits,
+    features::BionicFeatures,
+    footer::Footer,
+    hero::Hero,
+    navigation::Section,
+    testamonials::Testamonial2,
+};
 use dioxus::prelude::*;
 
 pub fn partners_page() -> String {
@@ -18,7 +21,9 @@ pub fn partners_page() -> String {
 
                 Hero {
                     title: "Become a Bionic Partner",
-                    subtitle: "Unlock Revenue with Secure, Enterprise-Grade AI Solutions"
+                    subtitle: "Unlock Revenue with Secure, Enterprise-Grade AI Solutions",
+                    cta_label: "Book a Call",
+                    cta_href: crate::routes::marketing::Contact {}.to_string()
                 }
 
                 Benefits {
@@ -53,6 +58,7 @@ pub fn partners_page() -> String {
             }
         }
         Footer {
+            links: footer_links()
         }
     };
 

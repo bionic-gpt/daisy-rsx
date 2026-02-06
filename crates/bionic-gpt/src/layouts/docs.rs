@@ -2,9 +2,9 @@ use dioxus::prelude::*;
 
 use super::layout::Layout;
 use crate::{
-    components::navigation::Section,
     generator::{Category, Page, Summary},
 };
+use daisy_rsx::marketing::navigation::Section;
 
 #[component]
 pub fn Document(

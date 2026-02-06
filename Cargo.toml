@@ -1,3 +1,17 @@
 [workspace]
-members = ["crates/daisy_rsx"]
+members = ["crates/daisy_rsx", "crates/bionic-gpt"]
 resolver = "2"
+
+[workspace.dependencies]
+axum = "0.7"
+axum-extra = "0.9"
+tokio = "1"
+tracing = "0.1"
+tracing-subscriber = "0.3"
+dioxus = { version = "0.7", default-features = false, features = ["macro", "html", "signals"] }
+dioxus-ssr = { version = "0.7", default-features = false }
+serde = { version = "1", features = ["derive"] }
+tower-http = "0.5"
+syntect = "5"
+pulldown-cmark = "0.11"
+tower-livereload = "0.9"

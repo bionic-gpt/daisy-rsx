@@ -4,10 +4,10 @@ use axum::Router;
 use tower_http::services::ServeDir;
 use tower_livereload::LiveReloadLayer;
 
-use static_website::{
-    architect_course_summary, blog_summary, components::navigation::Section, docs_summary,
-    generator, pages_summary,
+use bionic_gpt::{
+    architect_course_summary, blog_summary, docs_summary, generator, pages_summary,
 };
+use daisy_rsx::marketing::navigation::Section;
 
 #[tokio::main]
 async fn main() {

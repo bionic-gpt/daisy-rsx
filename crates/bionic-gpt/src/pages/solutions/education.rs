@@ -1,12 +1,15 @@
-use crate::components::customer_logos::Customers;
-use crate::components::extra_footer::{ExtraFooter, EXTRA_FOOTER_TITLE};
-use crate::components::features::BionicFeatures;
-use crate::components::footer::Footer;
-use crate::components::hero::Hero;
-use crate::components::navigation::Section;
-use crate::components::small_image_feature::SmallImageFeature;
-use crate::components::testamonials::Testamonial2;
 use crate::layouts::layout::Layout;
+use crate::ui_links::footer_links;
+use daisy_rsx::marketing::{
+    customer_logos::Customers,
+    extra_footer::{ExtraFooter, EXTRA_FOOTER_TITLE},
+    features::BionicFeatures,
+    footer::Footer,
+    hero::Hero,
+    navigation::Section,
+    small_image_feature::SmallImageFeature,
+    testamonials::Testamonial2,
+};
 use dioxus::prelude::*;
 
 pub fn page() -> String {
@@ -22,7 +25,9 @@ pub fn page() -> String {
 
                 Hero {
                     title: "Responsible and safe AI in education".to_string(),
-                    subtitle: "At Bionic we believe AI has the power to fundamentally transform education for the better. We develop Bionic with powerful safeguards to ensure it remains a beneficial tool for students, educators, and administrators.".to_string()
+                    subtitle: "At Bionic we believe AI has the power to fundamentally transform education for the better. We develop Bionic with powerful safeguards to ensure it remains a beneficial tool for students, educators, and administrators.".to_string(),
+                    cta_label: "Book a Call",
+                    cta_href: crate::routes::marketing::Contact {}.to_string()
                 }
 
                 Customers {
@@ -72,7 +77,8 @@ pub fn page() -> String {
                 cta_url: crate::routes::marketing::Index {}.to_string()
             }
             Footer {
-                margin_top: "mt-0"
+                margin_top: "mt-0",
+                links: footer_links()
             }
         }
     };

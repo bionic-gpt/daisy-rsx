@@ -1,12 +1,15 @@
-use crate::components::customer_logos::Customers;
-use crate::components::extra_footer::{ExtraFooter, EXTRA_FOOTER_TITLE};
-use crate::components::features::BionicFeatures;
-use crate::components::footer::Footer;
-use crate::components::image_hero::ImageHero;
-use crate::components::navigation::Section;
-use crate::components::small_image_feature::SmallImageFeature;
-use crate::components::testamonials::Testamonial2;
 use crate::layouts::layout::Layout;
+use crate::ui_links::footer_links;
+use daisy_rsx::marketing::{
+    customer_logos::Customers,
+    extra_footer::{ExtraFooter, EXTRA_FOOTER_TITLE},
+    features::BionicFeatures,
+    footer::Footer,
+    image_hero::ImageHero,
+    navigation::Section,
+    small_image_feature::SmallImageFeature,
+    testamonials::Testamonial2,
+};
 use dioxus::prelude::*;
 
 pub fn page() -> String {
@@ -23,7 +26,9 @@ pub fn page() -> String {
                 ImageHero {
                     title: "The fastest way to build an AI assistant on your technical content.".to_string(),
                     image: "/solutions/chat-bot.png",
-                    subtitle: "Add AI to your docs, product, and support flows to answer technical questions—in days, not months. ".to_string()
+                    subtitle: "Add AI to your docs, product, and support flows to answer technical questions—in days, not months. ".to_string(),
+                    cta_label: "Book a Call",
+                    cta_href: crate::routes::marketing::Contact {}.to_string()
                 }
 
                 Customers {
@@ -73,7 +78,8 @@ pub fn page() -> String {
                 cta_url: crate::routes::marketing::Index {}.to_string()
             }
             Footer {
-                margin_top: "mt-0"
+                margin_top: "mt-0",
+                links: footer_links()
             }
         }
     };

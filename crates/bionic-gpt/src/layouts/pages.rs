@@ -1,5 +1,6 @@
 use super::layout::Layout;
-use crate::{components::footer::Footer, components::navigation::Section, generator::Page};
+use crate::{generator::Page, ui_links::footer_links};
+use daisy_rsx::marketing::{footer::Footer, navigation::Section};
 use dioxus::prelude::*;
 
 #[component]
@@ -18,6 +19,7 @@ pub fn MarkdownPage(post: Page) -> Element {
                 }
             }
             Footer {
+                links: footer_links()
             }
         }
     }

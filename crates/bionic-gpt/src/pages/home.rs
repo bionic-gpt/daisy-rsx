@@ -1,14 +1,17 @@
-use crate::components::benefits::Benefits;
-use crate::components::customer_logos::Customers;
-use crate::components::faq_accordian::{Faq, FaqText};
-use crate::components::features::BionicFeatures;
-use crate::components::footer::Footer;
-use crate::components::navigation::Section;
-use crate::components::security::Security;
-use crate::components::small_image_feature::SmallImageFeature;
-use crate::components::testamonials::Testamonial1;
-use crate::components::video_hero::VideoHero;
 use crate::layouts::layout::Layout;
+use crate::ui_links::footer_links;
+use daisy_rsx::marketing::{
+    benefits::Benefits,
+    customer_logos::Customers,
+    faq_accordian::{Faq, FaqText},
+    features::BionicFeatures,
+    footer::Footer,
+    navigation::Section,
+    security::Security,
+    small_image_feature::SmallImageFeature,
+    testamonials::Testamonial1,
+    video_hero::VideoHero,
+};
 use dioxus::prelude::*;
 
 pub fn home_page() -> String {
@@ -25,7 +28,9 @@ pub fn home_page() -> String {
                     video_id: "slRiOOM17tM",
                     title: "The all-in-one platform for private and secure AI",
                     subtitle: "Deploy anywhere — on-prem, private cloud, or fully managed by us",
-                    claim: "Join hundreds of teams already powering AI with Bionic"
+                    claim: "Join hundreds of teams already powering AI with Bionic",
+                    cta_label: "Book a Call",
+                    cta_href: crate::routes::marketing::Contact {}.to_string()
                 }
 
                 Customers {
@@ -110,6 +115,7 @@ pub fn home_page() -> String {
                 }
             }
             Footer {
+                links: footer_links()
             }
         }
     };

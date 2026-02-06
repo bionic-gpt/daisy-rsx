@@ -1,6 +1,7 @@
 #![allow(non_snake_case)]
 
-use crate::components::navigation::{Navigation, Section};
+use crate::ui_links::navigation_links;
+use daisy_rsx::marketing::navigation::{Navigation, Section};
 use dioxus::prelude::*;
 
 // Remember: owned props must implement PartialEq!
@@ -75,7 +76,8 @@ pub fn Layout(props: LayoutProps) -> Element {
             //WebinarHeader {}
             Navigation {
                 mobile_menu: props.mobile_menu,
-                section: props.section
+                section: props.section,
+                links: navigation_links()
             }
             {props.children}
             script {

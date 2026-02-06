@@ -4,7 +4,7 @@ use std::path::Path;
 
 use dioxus::prelude::*;
 
-use crate::components::navigation::Section;
+use daisy_rsx::marketing::navigation::Section;
 use crate::layouts::blog::{BlogList, BlogPost};
 use crate::layouts::docs::Document;
 use crate::layouts::pages::MarkdownPage;
