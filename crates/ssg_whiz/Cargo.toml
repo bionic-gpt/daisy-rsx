@@ -3,6 +3,7 @@ name = "ssg_whiz"
 version = "0.1.0"
 edition = "2024"
 license = "MIT"
+publish = false
 
 description = "Static site generation orchestration utilities."
 
