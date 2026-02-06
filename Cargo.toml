@@ -1,5 +1,11 @@
 [workspace]
-members = ["crates/daisy_rsx", "crates/bionic-gpt", "crates/ssg_whiz", "crates/deploy-mcp"]
+members = [
+    "crates/daisy_rsx",
+    "crates/bionic-gpt",
+    "crates/ssg_whiz",
+    "crates/deploy-mcp",
+    "crates/decision"
+]
 resolver = "2"
 
 [workspace.dependencies]

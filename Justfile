@@ -12,3 +12,9 @@ deploy:
 
 deploy-tw:
     cd /workspace/crates/bionic-gpt && tailwind-extra -i ./input.css -o ./dist/tailwind.css --watch
+
+decision:
+    cd /workspace/crates/decision && cargo watch --workdir /workspace/crates/decision -w ./content -w ./src --no-gitignore -x "run --bin decision"
+
+decision-tw:
+    cd /workspace/crates/decision && tailwind-extra -i ./input.css -o ./dist/tailwind.css --watch

@@ -9,18 +9,13 @@ use dioxus::prelude::*;
 
 #[component]
 pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
-    let image = if post.image.is_some() {
-        post.image.unwrap()
-    } else {
-        ""
-    };
     let content = crate::markdown::markdown_to_html(post.markdown);
     rsx! {
         Layout {
             title: "{post.title}",
             description: "{post.description}",
             url: Some(page_permalink(post.folder)),
-            image: "{image}",
+            image: post.image.map(|image| image.to_string()),
             section: Section::Blog,
             article {
                 class: "mt-24 mx-auto prose lg:prose-xl p-5",
@@ -29,11 +24,13 @@ pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
                 }
                 div {
                     class: "not-prose flex flex-row mt-8 mb-4",
-                    img {
-                        width: "44",
-                        height: "44",
-                        src: post.author_image,
-                        alt: "Author"
+                    if let Some(author_image) = post.author_image {
+                        img {
+                            width: "44",
+                            height: "44",
+                            src: author_image,
+                            alt: "Author"
+                        }
                     }
                     div {
                         class: "not-prose flex flex-col pl-2",
@@ -75,10 +72,12 @@ pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
                         }
                     }
                 }
-                img {
-                    class: "mb-8 object-cover h-96 w-full",
-                    src: "{post.image.unwrap()}",
-                    alt: "{post.title}"
+                if let Some(image) = post.image {
+                    img {
+                        class: "mb-8 object-cover h-96 w-full",
+                        src: image,
+                        alt: "{post.title}"
+                    }
                 }
                 div {
                     dangerous_inner_html: "{content}"
@@ -128,9 +127,11 @@ pub fn BlogList(summary: Summary, footer_links: FooterLinks) -> Element {
                                     class: "border p-4",
                                     a {
                                         href: "/{page.folder}",
-                                        img {
-                                            class: "object-cover h-24 w-full",
-                                            src: page.image
+                                        if let Some(image) = page.image {
+                                            img {
+                                                class: "object-cover h-24 w-full",
+                                                src: image
+                                            }
                                         }
                                     }
                                     div {

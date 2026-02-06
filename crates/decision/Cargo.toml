@@ -1,0 +1,13 @@
+[package]
+name = "decision"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+ssg_whiz = { path = "../ssg_whiz" }
+daisy_rsx = { path = "../daisy_rsx" }
+dioxus = { workspace = true }
+dioxus-ssr = { workspace = true }
+tokio = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }

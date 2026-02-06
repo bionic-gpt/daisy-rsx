@@ -293,6 +293,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "decision"
+version = "0.1.0"
+dependencies = [
+ "daisy_rsx",
+ "dioxus",
+ "dioxus-ssr",
+ "ssg_whiz",
+ "tokio",
+ "tracing",
+ "tracing-subscriber",
+]
+
+[[package]]
 name = "deploy-mcp"
 version = "0.1.0"
 dependencies = [
