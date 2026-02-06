@@ -1,6 +1,3 @@
-use std::fs;
-use std::path::Path;
-
 use ssg_whiz::SitePage;
 
 use crate::pages;
@@ -44,22 +41,4 @@ pub async fn generate_static_pages() -> Vec<SitePage> {
     pages.extend(generate_product().await);
     pages.extend(generate_solutions().await);
     pages
-}
-
-pub fn copy_folder(src: &Path, dst: &Path) -> std::io::Result<()> {
-    fs::create_dir_all(dst)?;
-
-    for entry in fs::read_dir(src)? {
-        let entry = entry?;
-        let src_path = entry.path();
-        let dst_path = dst.join(entry.file_name());
-
-        if src_path.is_dir() {
-            copy_folder(&src_path, &dst_path)?;
-        } else {
-            fs::copy(&src_path, &dst_path)?;
-        }
-    }
-
-    Ok(())
 }

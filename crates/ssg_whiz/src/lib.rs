@@ -20,6 +20,9 @@ use summaries::{BlogSummary, DocumentSite, PagesSummary, Summary};
 pub mod layouts;
 pub mod markdown;
 pub mod summaries;
+pub mod builder;
+
+pub use builder::SiteBuilder;
 
 static NAV_LINKS: OnceLock<NavigationLinks> = OnceLock::new();
 static SITE_META: OnceLock<SiteMeta> = OnceLock::new();

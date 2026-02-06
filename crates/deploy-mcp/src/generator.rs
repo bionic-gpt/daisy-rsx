@@ -1,6 +1,3 @@
-use std::fs;
-use std::path::Path;
-
 use ssg_whiz::SitePage;
 
 use crate::pages;
@@ -45,26 +42,4 @@ pub fn generate_mcp_servers() -> Vec<SitePage> {
     }
 
     pages_out
-}
-
-pub fn copy_folder(src: &Path, dst: &Path) -> std::io::Result<()> {
-    if !src.exists() {
-        return Ok(());
-    }
-
-    fs::create_dir_all(dst)?;
-
-    for entry in fs::read_dir(src)? {
-        let entry = entry?;
-        let src_path = entry.path();
-        let dst_path = dst.join(entry.file_name());
-
-        if src_path.is_dir() {
-            copy_folder(&src_path, &dst_path)?;
-        } else {
-            fs::copy(&src_path, &dst_path)?;
-        }
-    }
-
-    Ok(())
 }

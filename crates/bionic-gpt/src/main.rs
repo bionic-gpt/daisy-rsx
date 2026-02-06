@@ -1,9 +1,6 @@
-use std::{fs, net::SocketAddr, path::Path};
+use std::net::SocketAddr;
 
-use ssg_whiz::{
-    generate_website, set_navigation_links, set_site_header, set_site_meta, SiteConfig,
-    WebsiteInput,
-};
+use ssg_whiz::{SiteBuilder, SiteConfig};
 
 use bionic_gpt::{
     architect_course_summary, blog_summary, docs_summary, generator, pages_summary,
@@ -19,25 +16,10 @@ async fn main() {
         .with_max_level(tracing::Level::INFO)
         .init();
 
-    fs::create_dir_all("dist").expect("Couldn't create dist folder");
-    set_navigation_links(navigation_links());
-    set_site_meta(bionic_gpt::ui_links::site_meta());
-    set_site_header(Some(site_header));
-
     let docs_summary = docs_summary::summary();
     let architect_summary = architect_course_summary::summary();
     let blog_summary = blog_summary::summary();
     let pages_summary = pages_summary::summary();
-
-    copy_summary_assets(&docs_summary);
-    copy_summary_assets(&architect_summary);
-    copy_summary_assets(&blog_summary);
-
-    let static_pages = generator::generate_static_pages().await;
-
-    let src = Path::new("assets");
-    let dst = Path::new("dist");
-    generator::copy_folder(src, dst).expect("Couldn't copy folder");
 
     let run_server = std::env::var("DO_NOT_RUN_SERVER").is_err();
     let config = SiteConfig {
@@ -51,9 +33,10 @@ async fn main() {
         site_header: Some(site_header),
     };
 
-    let input = WebsiteInput {
-        blog: blog_summary,
-        documents: vec![
+    SiteBuilder::new(config)
+        .blog(blog_summary)
+        .pages(pages_summary)
+        .documents(vec![
             DocumentSite {
                 summary: docs_summary,
                 section: Section::Docs,
@@ -62,18 +45,9 @@ async fn main() {
                 summary: architect_summary,
                 section: Section::ArchitectCourse,
             },
-        ],
-        pages: pages_summary,
-        static_pages,
-    };
-
-    generate_website(config, input)
+        ])
+        .static_pages(generator::generate_static_pages)
+        .build()
         .await
         .expect("Failed to generate website");
-}
-
-fn copy_summary_assets(summary: &ssg_whiz::summaries::Summary) {
-    let src = Path::new("content").join(summary.source_folder);
-    let dst = Path::new("dist").join(summary.source_folder);
-    generator::copy_folder(&src, &dst).expect("Couldn't copy content folder");
 }

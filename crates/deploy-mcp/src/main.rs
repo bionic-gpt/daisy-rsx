@@ -8,8 +8,8 @@ pub mod ui_links;
 
 pub use ssg_whiz::render;
 
-use std::{fs, net::SocketAddr, path::Path};
-use ssg_whiz::{generate_website, set_navigation_links, set_site_meta, WebsiteInput, SiteConfig};
+use std::net::SocketAddr;
+use ssg_whiz::{SiteBuilder, SiteConfig};
 use ssg_whiz::summaries::DocumentSite;
 
 pub mod routes {
@@ -126,21 +126,9 @@ async fn main() {
         .with_max_level(tracing::Level::INFO)
         .init();
 
-    fs::create_dir_all("dist").expect("Couldn't create dist folder");
-    set_navigation_links(ui_links::navigation_links());
-    set_site_meta(ui_links::site_meta());
-
     let docs_summary = docs_summary::summary();
     let blog_summary = blog_summary::summary();
     let pages_summary = pages_summary::summary();
-
-    copy_summary_assets(&docs_summary);
-    copy_summary_assets(&blog_summary);
-    copy_summary_assets(&pages_summary);
-
-    let src = Path::new("assets");
-    let dst = Path::new("dist");
-    generator::copy_folder(src, dst).expect("Couldn't copy assets");
 
     let run_server = std::env::var("DO_NOT_RUN_SERVER").is_err();
     let config = SiteConfig {
@@ -154,23 +142,14 @@ async fn main() {
         site_header: None,
     };
 
-    let input = WebsiteInput {
-        blog: blog_summary,
-        documents: vec![DocumentSite {
+    SiteBuilder::new(config)
+        .blog(blog_summary)
+        .pages(pages_summary)
+        .document(DocumentSite {
             summary: docs_summary,
             section: daisy_rsx::marketing::navigation::Section::Docs,
-        }],
-        pages: pages_summary,
-        static_pages: generator::generate_static_pages().await,
-    };
-
-    generate_website(config, input)
+        })
+        .build_with_static(generator::generate_static_pages)
         .await
         .expect("Failed to generate website");
-}
-
-fn copy_summary_assets(summary: &ssg_whiz::summaries::Summary) {
-    let src = Path::new("content").join(summary.source_folder);
-    let dst = Path::new("dist").join(summary.source_folder);
-    generator::copy_folder(&src, &dst).expect("Couldn't copy content folder");
 }
