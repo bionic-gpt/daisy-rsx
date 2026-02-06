@@ -1,8 +1,7 @@
-use crate::routes::{architect_course, blog, docs, marketing, product, SIGN_IN_UP};
 use dioxus::prelude::*;
 
 #[component]
-fn CourseBanner() -> Element {
+fn CourseBanner(href: String) -> Element {
     rsx!(
         div {
             class: "bg-primary text-primary-content text-xs sm:text-sm px-3 sm:px-4 py-2 flex flex-wrap items-center justify-center gap-2 text-center",
@@ -12,12 +11,29 @@ fn CourseBanner() -> Element {
             }
             a {
                 class: "inline-flex items-center gap-1 underline font-semibold hover:text-base-200",
-                href: architect_course::Index {}.to_string(),
+                href: "{href}",
                 "Take the course"
                 span { "→" }
             }
         }
     )
+}
+
+#[derive(Clone, PartialEq, Eq, Debug)]
+pub struct NavigationLinks {
+    pub home: String,
+    pub pricing: String,
+    pub blog: String,
+    pub docs: String,
+    pub architect_course: String,
+    pub partners: String,
+    pub contact: String,
+    pub product_chat: String,
+    pub product_assistants: String,
+    pub product_integrations: String,
+    pub product_automations: String,
+    pub product_developers: String,
+    pub sign_in_up: String,
 }
 
 #[derive(PartialEq, Clone, Eq, Debug)]
@@ -65,11 +81,11 @@ pub fn NavItem(
 }
 
 #[component]
-pub fn Navigation(mobile_menu: Option<Element>, section: Section) -> Element {
+pub fn Navigation(mobile_menu: Option<Element>, section: Section, links: NavigationLinks) -> Element {
     rsx! {
         header {
             class: "sticky top-0 z-50",
-            CourseBanner {}
+            CourseBanner { href: links.architect_course.clone() }
             div {
                 class: "backdrop-filter backdrop-blur-lg bg-base-100/80 border-b border-base-300",
                 div {
@@ -81,7 +97,7 @@ pub fn Navigation(mobile_menu: Option<Element>, section: Section) -> Element {
 
                         // Logo
                         a {
-                            href: marketing::Index {}.to_string(),
+                            href: links.home.clone(),
                             span {
                                 class: "pl-3 flex flex-row gap-2",
                                 strong { "Bionic" }
@@ -100,31 +116,31 @@ pub fn Navigation(mobile_menu: Option<Element>, section: Section) -> Element {
                                             class: "p-2",
                                             li {
                                                 a {
-                                                    href: product::Chat {}.to_string(),
+                                                    href: links.product_chat.clone(),
                                                     "Chat"
                                                 }
                                             }
                                             li {
                                                 a {
-                                                    href: product::Assistants {}.to_string(),
+                                                    href: links.product_assistants.clone(),
                                                     "Assistants"
                                                 }
                                             }
                                             li {
                                                 a {
-                                                    href: product::Integrations {}.to_string(),
+                                                    href: links.product_integrations.clone(),
                                                     "Integrations"
                                                 }
                                             }
                                             li {
                                                 a {
-                                                    href: product::Automations {}.to_string(),
+                                                    href: links.product_automations.clone(),
                                                     "Automations"
                                                 }
                                             }
                                             li {
                                                 a {
-                                                    href: product::Developers {}.to_string(),
+                                                    href: links.product_developers.clone(),
                                                     "Developers"
                                                 }
                                             }
@@ -132,7 +148,7 @@ pub fn Navigation(mobile_menu: Option<Element>, section: Section) -> Element {
                                     }
                                 }
                                 NavItem {
-                                    link: marketing::Pricing {}.to_string(),
+                                    link: links.pricing.clone(),
                                     name: "Pricing".to_string(),
                                     section: Section::Pricing,
                                     current_section: section.clone(),
@@ -146,19 +162,19 @@ pub fn Navigation(mobile_menu: Option<Element>, section: Section) -> Element {
                                             class: "p-2",
                                             li {
                                                 a {
-                                                    href: blog::Index {}.to_string(),
+                                                    href: links.blog.clone(),
                                                     "Blog"
                                                 }
                                             }
                                             li {
                                                 a {
-                                                    href: docs::Index {}.to_string(),
+                                                    href: links.docs.clone(),
                                                     "Documentation"
                                                 }
                                             }
                                             li {
                                                 a {
-                                                    href: architect_course::Index {}.to_string(),
+                                                    href: links.architect_course.clone(),
                                                     "Gen AI Architect Course"
                                                 }
                                             }
@@ -166,7 +182,7 @@ pub fn Navigation(mobile_menu: Option<Element>, section: Section) -> Element {
                                     }
                                 }
                                 NavItem {
-                                    link: marketing::PartnersPage {}.to_string(),
+                                    link: links.partners.clone(),
                                     name: "Partners".to_string(),
                                     section: Section::Partners,
                                     current_section: section.clone(),
@@ -188,11 +204,11 @@ pub fn Navigation(mobile_menu: Option<Element>, section: Section) -> Element {
                                 }
                             }
                             li {
-                                a { href: SIGN_IN_UP, "Login" }
+                                a { href: links.sign_in_up.clone(), "Login" }
                             }
                             NavItem {
                                 class: "btn btn-primary btn-sm",
-                                link: marketing::Contact {}.to_string(),
+                                link: links.contact.clone(),
                                 name: "Book a Call".to_string(),
                                 section: Section::Contact,
                                 current_section: section.clone(),
@@ -223,43 +239,43 @@ pub fn Navigation(mobile_menu: Option<Element>, section: Section) -> Element {
                         ul {
                             class: "menu menu-sm dropdown-content mt-3 z-1 p-2 shadow-sm bg-base-100 rounded-box w-52",
                             NavItem {
-                                link: marketing::Index {}.to_string(),
+                                link: links.home.clone(),
                                 name: "Home".to_string(),
                                 section: Section::Home,
                                 current_section: section.clone(),
                             }
                             NavItem {
-                                link: marketing::Pricing {}.to_string(),
+                                link: links.pricing.clone(),
                                 name: "Pricing".to_string(),
                                 section: Section::Pricing,
                                 current_section: section.clone(),
                             }
                             NavItem {
-                                link: blog::Index {}.to_string(),
+                                link: links.blog.clone(),
                                 name: "Blog".to_string(),
                                 section: Section::Blog,
                                 current_section: section.clone(),
                             }
                             NavItem {
-                                link: docs::Index {}.to_string(),
+                                link: links.docs.clone(),
                                 name: "Documentation".to_string(),
                                 section: Section::Docs,
                                 current_section: section.clone(),
                             }
                             NavItem {
-                                link: architect_course::Index {}.to_string(),
+                                link: links.architect_course.clone(),
                                 name: "Architect Course".to_string(),
                                 section: Section::ArchitectCourse,
                                 current_section: section.clone(),
                             }
                             NavItem {
-                                link: marketing::PartnersPage {}.to_string(),
+                                link: links.partners.clone(),
                                 name: "Partners".to_string(),
                                 section: Section::Partners,
                                 current_section: section.clone(),
                             }
                             NavItem {
-                                link: marketing::Contact {}.to_string(),
+                                link: links.contact.clone(),
                                 name: "Book a Call".to_string(),
                                 section: Section::Contact,
                                 current_section: section.clone(),

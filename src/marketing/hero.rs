@@ -1,7 +1,5 @@
 use dioxus::prelude::*;
 
-use crate::routes::marketing;
-
 #[component]
 pub fn Hero(
     title: String,
@@ -10,7 +8,6 @@ pub fn Hero(
     cta_href: Option<String>,
 ) -> Element {
     let cta_label = cta_label.unwrap_or_else(|| "Book a Call".to_string());
-    let cta_href = cta_href.unwrap_or_else(|| marketing::Contact {}.to_string());
 
     rsx! {
         section {
@@ -28,10 +25,12 @@ pub fn Hero(
                     }
                     div {
                         class: "flex gap-2 justify-center",
-                        a {
-                            class: "btn btn-primary",
-                            href: "{cta_href}",
-                            "{cta_label}"
+                        if let Some(cta_href) = cta_href {
+                            a {
+                                class: "btn btn-primary",
+                                href: cta_href,
+                                "{cta_label}"
+                            }
                         }
                     }
                 }

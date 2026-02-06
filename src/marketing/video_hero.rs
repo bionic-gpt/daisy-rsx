@@ -1,12 +1,18 @@
 use dioxus::prelude::*;
 
-use crate::routes::marketing;
-
 /// Requires the following to drastically improve google page insights performance.
 /// <script type="module" src="https://cdn.jsdelivr.net/npm/@justinribeiro/lite-youtube@1/lite-youtube.min.js"></script>
 
 #[component]
-pub fn VideoHero(title: String, subtitle: String, video_id: String, claim: String) -> Element {
+pub fn VideoHero(
+    title: String,
+    subtitle: String,
+    video_id: String,
+    claim: String,
+    cta_label: Option<String>,
+    cta_href: Option<String>,
+) -> Element {
+    let cta_label = cta_label.unwrap_or_else(|| "Book a Call".to_string());
     rsx! {
         section {
             div {
@@ -34,10 +40,12 @@ pub fn VideoHero(title: String, subtitle: String, video_id: String, claim: Strin
                     "{subtitle}"
                 }
                 div {
-                    a {
-                        class: "btn btn-secondary",
-                        href: marketing::Contact {}.to_string(),
-                        "Book a Call"
+                    if let Some(cta_href) = cta_href {
+                        a {
+                            class: "btn btn-secondary",
+                            href: cta_href,
+                            "{cta_label}"
+                        }
                     }
                     strong {
                         class: "hidden md:inline ml-4",

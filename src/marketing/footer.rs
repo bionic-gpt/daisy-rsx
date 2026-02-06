@@ -1,7 +1,17 @@
 use dioxus::prelude::*;
 
+#[derive(Clone, PartialEq, Eq, Debug)]
+pub struct FooterLinks {
+    pub blog: String,
+    pub pricing: String,
+    pub contact: String,
+    pub terms: String,
+    pub privacy: String,
+    pub about: Option<String>,
+}
+
 #[component]
-pub fn Footer(margin_top: Option<String>) -> Element {
+pub fn Footer(margin_top: Option<String>, links: FooterLinks) -> Element {
     let extra_class = if let Some(extra_class) = margin_top {
         extra_class
     } else {
@@ -18,12 +28,12 @@ pub fn Footer(margin_top: Option<String>) -> Element {
                         "Resources"
                     }
                     a {
-                        href: crate::routes::blog::Index {}.to_string(),
+                        href: links.blog.clone(),
                         class: "block link-hover",
                         "Blog"
                     }
                     a {
-                        href: crate::routes::marketing::Pricing {}.to_string(),
+                        href: links.pricing.clone(),
                         class: "block link-hover",
                         "Pricing"
                     }
@@ -33,12 +43,20 @@ pub fn Footer(margin_top: Option<String>) -> Element {
                         class: "footer-title",
                         "Company"
                     }
-                    a {
-                        class: "block link-hover",
-                        "About Us"
+                    if let Some(about) = links.about.clone() {
+                        a {
+                            class: "block link-hover",
+                            href: about,
+                            "About Us"
+                        }
+                    } else {
+                        a {
+                            class: "block link-hover",
+                            "About Us"
+                        }
                     }
                     a {
-                        href: crate::routes::marketing::Contact {}.to_string(),
+                        href: links.contact.clone(),
                         class: "block link-hover",
                         "Contact"
                     }
@@ -49,12 +67,12 @@ pub fn Footer(margin_top: Option<String>) -> Element {
                         "Legal"
                     }
                     a {
-                        href: crate::routes::marketing::Terms {}.to_string(),
+                        href: links.terms.clone(),
                         class: "block link-hover",
                         "Terms of Use"
                     }
                     a {
-                        href: crate::routes::marketing::Privacy {}.to_string(),
+                        href: links.privacy.clone(),
                         class: "block link-hover",
                         "Privacy Policy"
                     }

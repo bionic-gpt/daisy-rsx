@@ -1,9 +1,14 @@
 use dioxus::prelude::*;
 
-use crate::routes::marketing;
-
 #[component]
-pub fn ImageHero(title: String, subtitle: String, image: String) -> Element {
+pub fn ImageHero(
+    title: String,
+    subtitle: String,
+    image: String,
+    cta_label: Option<String>,
+    cta_href: Option<String>,
+) -> Element {
+    let cta_label = cta_label.unwrap_or_else(|| "Book a Call".to_string());
     rsx! {
         section {
             div {
@@ -31,10 +36,12 @@ pub fn ImageHero(title: String, subtitle: String, image: String) -> Element {
                     "{subtitle}"
                 }
                 div {
-                    a {
-                        class: "btn btn-secondary",
-                        href: marketing::Contact {}.to_string(),
-                        "Book a Call"
+                    if let Some(cta_href) = cta_href {
+                        a {
+                            class: "btn btn-secondary",
+                            href: cta_href,
+                            "{cta_label}"
+                        }
                     }
                 }
             }
