@@ -1,0 +1,17 @@
+[package]
+name = "daisy_rsx"
+version = "0.1.50"
+edition = "2024"
+description = "Daisy UI components for the Dioxus Rust library."
+license = "MIT"
+repository = "https://github.com/bionic-gpt/daisy-rsx/"
+homepage = "https://github.com/bionic-gpt/daisy-rsx"
+
+[lib]
+path = "src/lib.rs"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+dioxus = { version = "0.7", default-features = false, features = ["macro", "html", "signals"] }
+dioxus-ssr = { version = "0.7", default-features = false }
