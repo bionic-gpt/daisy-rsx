@@ -1,0 +1,13 @@
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
+@plugin "daisyui";
+@source "./src/**/*.{rs,html}";
+@source "../daisy_rsx/src/**/*.{rs,html}";
+@source "../ssg_whiz/src/**/*.{rs,html}";
+
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) { animation: none; }
