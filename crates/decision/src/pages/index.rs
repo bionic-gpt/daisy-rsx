@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 use daisy_rsx::marketing::footer::Footer;
-use daisy_rsx::marketing::hero::Hero;
+use daisy_rsx::marketing::split_video_hero::SplitVideoHero;
 use daisy_rsx::marketing::navigation::Section;
 use ssg_whiz::layouts::layout::Layout;
 
@@ -13,9 +13,10 @@ pub fn page() -> String {
             section: Section::Home,
             main {
                 class: "container mx-auto px-6 py-20",
-                Hero {
+                SplitVideoHero {
                     title: "Speed to decision is a weapons system".to_string(),
                     subtitle: "Our adversaries are not waiting. AI agents for decision advantage.".to_string(),
+                    video_src: "/european_flag.mp4".to_string(),
                     cta_label: None,
                     cta_href: None,
                 }

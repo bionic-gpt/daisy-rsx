@@ -14,6 +14,7 @@ pub mod quad_feature;
 pub mod security;
 pub mod small_image_feature;
 pub mod site_header;
+pub mod split_video_hero;
 pub mod team;
 pub mod testamonials;
 pub mod video_hero;
