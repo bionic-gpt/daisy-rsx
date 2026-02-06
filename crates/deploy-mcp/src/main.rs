@@ -9,7 +9,7 @@ pub mod ui_links;
 pub use ssg_whiz::render;
 
 use std::{fs, net::SocketAddr, path::Path};
-use ssg_whiz::{generate_website, WebsiteInput, SiteConfig};
+use ssg_whiz::{generate_website, set_navigation_links, set_site_meta, WebsiteInput, SiteConfig};
 use ssg_whiz::summaries::DocumentSite;
 
 pub mod routes {
@@ -127,6 +127,8 @@ async fn main() {
         .init();
 
     fs::create_dir_all("dist").expect("Couldn't create dist folder");
+    set_navigation_links(ui_links::navigation_links());
+    set_site_meta(ui_links::site_meta());
 
     let docs_summary = docs_summary::summary();
     let blog_summary = blog_summary::summary();
@@ -144,7 +146,7 @@ async fn main() {
     let config = SiteConfig {
         dist_dir: "dist".into(),
         run_server,
-        addr: SocketAddr::from(([0, 0, 0, 0], 8080)),
+        addr: SocketAddr::from(([0, 0, 0, 0], 8081)),
         live_reload: true,
         navigation_links: ui_links::navigation_links(),
         footer_links: ui_links::footer_links(),
