@@ -7,7 +7,7 @@ TIMESTAMP=$(date +%s)
 mv ./dist/tailwind.css ./dist/tailwind-${TIMESTAMP}.css
 
 # Update the reference in the source code
-sed -i "s|/tailwind\.css|/tailwind-${TIMESTAMP}.css|g" src/layouts/layout.rs
+sed -i "s|/tailwind\.css|/tailwind-${TIMESTAMP}.css|g" ../ssg_whiz/src/layouts/layout.rs
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 . $HOME/.cargo/env
