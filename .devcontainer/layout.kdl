@@ -1,0 +1,19 @@
+layout {
+    tab {
+        pane split_direction="vertical" {
+            pane
+            pane split_direction="horizontal" {
+                pane {
+                    command "cargo"
+                    args "watch" "-w" "./content" "-w" "./src" "--no-gitignore" "-x" "run --bin decision"
+                    cwd "/workspace/crates/decision"
+                }
+                pane {
+                    cwd "/workspace/crates/decision"
+                    command "tailwind-extra"
+                    args "-i" "./input.css" "-o" "./dist/tailwind.css" "--watch"
+                }
+            }
+        }
+    }
+}
