@@ -28,8 +28,3 @@
 .site-nav-header .site-nav-bar .btn-ghost {
   color: white;
 }
-
-.site-nav-header .dropdown-content {
-  background: var(--airbus-blue-dark);
-  color: white;
-}

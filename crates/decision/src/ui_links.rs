@@ -1,5 +1,5 @@
 use daisy_rsx::marketing::footer::FooterLinks;
-use daisy_rsx::marketing::navigation::{NavigationEntry, NavigationLink, NavigationModel, Section};
+use daisy_rsx::marketing::navigation::{NavigationLink, NavigationModel, Section};
 use ssg_whiz::SiteMeta;
 
 pub fn navigation_links() -> NavigationModel {
@@ -7,12 +7,8 @@ pub fn navigation_links() -> NavigationModel {
         home: "/".to_string(),
         logo_src: Some("/logo.svg".to_string()),
         logo_alt: Some("Airbus Decision logo".to_string()),
-        desktop_left: vec![NavigationEntry::Link(NavigationLink::new(
-            "Blog",
-            "/blog",
-            Section::Blog,
-        ))],
-        desktop_right: vec![],
+        desktop_left: vec![],
+        desktop_right: vec![NavigationLink::new("Blog", "/blog", Section::Blog)],
         mobile: vec![
             NavigationLink::new("Home", "/", Section::Home),
             NavigationLink::new("Blog", "/blog", Section::Blog),
