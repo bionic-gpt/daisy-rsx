@@ -1,5 +1,39 @@
 use dioxus::prelude::*;
 
+#[derive(Clone, PartialEq, Eq, Debug)]
+pub struct CustomerLogo {
+    pub src: String,
+    pub alt: String,
+}
+
+#[component]
+pub fn CustomersConfigured(
+    title: String,
+    logos: Vec<CustomerLogo>,
+    class: Option<String>,
+) -> Element {
+    rsx! {
+        section {
+            class: format!("flex flex-col items-center {}", class.unwrap_or_default()),
+            span {
+                class: "badge badge-outline",
+                "{title}"
+            }
+            div {
+                class: "mt-6 flex flex-wrap justify-center items-center gap-6",
+                for logo in logos {
+                    img {
+                        class: "h-10 w-auto object-contain rounded-sm",
+                        src: logo.src,
+                        alt: logo.alt,
+                        loading: "lazy",
+                    }
+                }
+            }
+        }
+    }
+}
+
 #[component]
 pub fn Customers(class: Option<String>) -> Element {
     rsx! {

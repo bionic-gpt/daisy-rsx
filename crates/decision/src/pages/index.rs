@@ -1,6 +1,7 @@
 use dioxus::prelude::*;
 use daisy_rsx::marketing::{
     benefits::Benefits,
+    customer_logos::{CustomerLogo, CustomersConfigured},
     faq_accordian::{Faq, FaqText},
     footer::Footer,
     image_feature::ImageFeature,
@@ -29,18 +30,22 @@ pub fn page() -> String {
                     cta_href: Some("/contact".to_string()),
                 }
 
-                QuadFeature {
-                    title: "Core Capabilities".to_string(),
-                    sub_title: "Built for contested, data-dense environments".to_string(),
-                    text: "Decision Advantage turns information overload into prioritized, explainable actions for military operators.".to_string(),
-                    title1: "Human-on-the-loop".to_string(),
-                    text1: "Operators approve every high-impact action with full provenance.".to_string(),
-                    title2: "Secure by Design".to_string(),
-                    text2: "Deploy in controlled environments with auditable model and data access.".to_string(),
-                    title3: "Continuous Adaptation".to_string(),
-                    text3: "Agents re-plan as mission context and threat indicators change.".to_string(),
-                    title4: "After-Action Intelligence".to_string(),
-                    text4: "Replay decisions, capture lessons learned, and improve doctrine.".to_string(),
+                CustomersConfigured {
+                    title: "Trusted by allied innovation teams".to_string(),
+                    logos: vec![
+                        CustomerLogo {
+                            src: "/customer-logos/logo-1.svg".to_string(),
+                            alt: "Customer logo one".to_string(),
+                        },
+                        CustomerLogo {
+                            src: "/customer-logos/logo-2.svg".to_string(),
+                            alt: "Customer logo two".to_string(),
+                        },
+                        CustomerLogo {
+                            src: "/customer-logos/logo-3.svg".to_string(),
+                            alt: "Customer logo three".to_string(),
+                        },
+                    ],
                 }
 
                 SmallImageFeature {
@@ -71,6 +76,20 @@ pub fn page() -> String {
                     title: "Command Timeline & Scenario Replay".to_string(),
                     sub_title: "Understand why decisions were made and how outcomes evolved".to_string(),
                     image: "https://placehold.co/1280x720/1B4B9B/FFFFFF?text=Timeline+Replay".to_string(),
+                }
+
+                QuadFeature {
+                    title: "Core Capabilities".to_string(),
+                    sub_title: "Built for contested, data-dense environments".to_string(),
+                    text: "Decision Advantage turns information overload into prioritized, explainable actions for military operators.".to_string(),
+                    title1: "Human-on-the-loop".to_string(),
+                    text1: "Operators approve every high-impact action with full provenance.".to_string(),
+                    title2: "Secure by Design".to_string(),
+                    text2: "Deploy in controlled environments with auditable model and data access.".to_string(),
+                    title3: "Continuous Adaptation".to_string(),
+                    text3: "Agents re-plan as mission context and threat indicators change.".to_string(),
+                    title4: "After-Action Intelligence".to_string(),
+                    text4: "Replay decisions, capture lessons learned, and improve doctrine.".to_string(),
                 }
 
                 Benefits {
