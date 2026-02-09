@@ -86,7 +86,7 @@ pub fn Layout(props: LayoutProps) -> Element {
             Navigation {
                 mobile_menu: props.mobile_menu,
                 section: props.section,
-                links: navigation_links().clone(),
+                model: navigation_links().clone(),
                 brand: Some(meta.brand_name.clone()),
                 site_header: crate::site_header_factory().map(|factory| factory())
             }

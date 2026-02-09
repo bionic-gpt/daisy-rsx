@@ -1,22 +1,5 @@
-use dioxus::prelude::*;
 use crate::marketing::site_header::SiteHeader;
-
-#[derive(Clone, PartialEq, Eq, Debug)]
-pub struct NavigationLinks {
-    pub home: String,
-    pub pricing: String,
-    pub blog: String,
-    pub docs: String,
-    pub architect_course: String,
-    pub partners: String,
-    pub contact: String,
-    pub product_chat: String,
-    pub product_assistants: String,
-    pub product_integrations: String,
-    pub product_automations: String,
-    pub product_developers: String,
-    pub sign_in_up: String,
-}
+use dioxus::prelude::*;
 
 #[derive(PartialEq, Clone, Eq, Debug)]
 pub enum Section {
@@ -32,45 +15,157 @@ pub enum Section {
     Contact,
 }
 
+#[derive(Clone, PartialEq, Eq, Debug)]
+pub struct NavigationLink {
+    pub href: String,
+    pub label: String,
+    pub section: Section,
+    pub class: Option<String>,
+    pub hx_boost: bool,
+    pub badge_image: Option<String>,
+    pub badge_alt: Option<String>,
+}
+
+impl NavigationLink {
+    pub fn new(label: impl Into<String>, href: impl Into<String>, section: Section) -> Self {
+        Self {
+            href: href.into(),
+            label: label.into(),
+            section,
+            class: None,
+            hx_boost: true,
+            badge_image: None,
+            badge_alt: None,
+        }
+    }
+
+    pub fn external(label: impl Into<String>, href: impl Into<String>, section: Section) -> Self {
+        Self {
+            href: href.into(),
+            label: label.into(),
+            section,
+            class: None,
+            hx_boost: false,
+            badge_image: None,
+            badge_alt: None,
+        }
+    }
+
+    pub fn with_class(mut self, class: impl Into<String>) -> Self {
+        self.class = Some(class.into());
+        self
+    }
+
+    pub fn with_badge_image(mut self, src: impl Into<String>, alt: impl Into<String>) -> Self {
+        self.badge_image = Some(src.into());
+        self.badge_alt = Some(alt.into());
+        self
+    }
+}
+
+#[derive(Clone, PartialEq, Eq, Debug)]
+pub struct NavigationMenu {
+    pub label: String,
+    pub links: Vec<NavigationLink>,
+}
+
+impl NavigationMenu {
+    pub fn new(label: impl Into<String>, links: Vec<NavigationLink>) -> Self {
+        Self {
+            label: label.into(),
+            links,
+        }
+    }
+}
+
+#[derive(Clone, PartialEq, Eq, Debug)]
+pub enum NavigationEntry {
+    Link(NavigationLink),
+    Menu(NavigationMenu),
+}
+
+#[derive(Clone, PartialEq, Eq, Debug, Default)]
+pub struct NavigationModel {
+    pub home: String,
+    pub desktop_left: Vec<NavigationEntry>,
+    pub desktop_right: Vec<NavigationLink>,
+    pub mobile: Vec<NavigationLink>,
+}
+
 #[component]
-pub fn NavItem(
-    link: String,
-    name: String,
-    section: Section,
-    current_section: Section,
-    class: Option<String>,
-) -> Element {
+pub fn NavItem(link: NavigationLink, current_section: Section) -> Element {
     let mut added_class = "";
-    if section == current_section {
+    if link.section == current_section {
         added_class = "underline";
     }
-    let class = if let Some(class) = class {
-        class
-    } else {
-        "".to_string()
-    };
-    let class = format!("{} {}", class, added_class);
-    rsx!(
+
+    let mut class = link.class.unwrap_or_default();
+    if !added_class.is_empty() {
+        if !class.is_empty() {
+            class.push(' ');
+        }
+        class.push_str(added_class);
+    }
+
+    rsx! {
         li {
             a {
-                class: format!("{}", class),
-                "hx-boost": "true",
-                href: link,
-                "{name}"
+                class: class,
+                "hx-boost": if link.hx_boost { "true" } else { "false" },
+                href: link.href,
+                if let Some(src) = link.badge_image {
+                    img {
+                        src: src,
+                        alt: link.badge_alt.unwrap_or_default()
+                    }
+                } else {
+                    "{link.label}"
+                }
             }
         }
-    )
+    }
+}
+
+#[component]
+fn DesktopEntry(entry: NavigationEntry, current_section: Section) -> Element {
+    match entry {
+        NavigationEntry::Link(link) => rsx!(
+            NavItem {
+                link,
+                current_section,
+            }
+        ),
+        NavigationEntry::Menu(menu) => rsx!(
+            li {
+                details {
+                    summary {
+                        "{menu.label}"
+                    }
+                    ul {
+                        class: "p-2",
+                        for link in menu.links {
+                            NavItem {
+                                link,
+                                current_section: current_section.clone(),
+                            }
+                        }
+                    }
+                }
+            }
+        ),
+    }
 }
 
 #[component]
 pub fn Navigation(
     mobile_menu: Option<Element>,
     section: Section,
-    links: NavigationLinks,
+    model: NavigationModel,
     brand: Option<String>,
     site_header: Option<SiteHeader>,
 ) -> Element {
     let brand = brand.unwrap_or_else(|| "Bionic".to_string());
+
     rsx! {
         header {
             class: "sticky top-0 z-50",
@@ -82,132 +177,39 @@ pub fn Navigation(
                 div {
                     class: "navbar justify-between",
 
-                    // Left side: logo + menu
                     div {
                         class: "flex items-center gap-4",
-
-                        // Logo
                         a {
-                            href: links.home.clone(),
+                            href: model.home.clone(),
                             span {
                                 class: "pl-3 flex flex-row gap-2",
                                 strong { "{brand}" }
                             }
                         }
 
-                        // Desktop menu (left aligned)
                         div { class: "hidden lg:flex",
                             ul { class: "menu menu-horizontal px-1 dropdown-content",
-                                li {
-                                    details {
-                                        summary {
-                                            "Product"
-                                        }
-                                        ul {
-                                            class: "p-2",
-                                            li {
-                                                a {
-                                                    href: links.product_chat.clone(),
-                                                    "Chat"
-                                                }
-                                            }
-                                            li {
-                                                a {
-                                                    href: links.product_assistants.clone(),
-                                                    "Assistants"
-                                                }
-                                            }
-                                            li {
-                                                a {
-                                                    href: links.product_integrations.clone(),
-                                                    "Integrations"
-                                                }
-                                            }
-                                            li {
-                                                a {
-                                                    href: links.product_automations.clone(),
-                                                    "Automations"
-                                                }
-                                            }
-                                            li {
-                                                a {
-                                                    href: links.product_developers.clone(),
-                                                    "Developers"
-                                                }
-                                            }
-                                        }
+                                for entry in model.desktop_left {
+                                    DesktopEntry {
+                                        entry,
+                                        current_section: section.clone(),
                                     }
-                                }
-                                NavItem {
-                                    link: links.pricing.clone(),
-                                    name: "Pricing".to_string(),
-                                    section: Section::Pricing,
-                                    current_section: section.clone(),
-                                }
-                                li {
-                                    details {
-                                        summary {
-                                            "Resources"
-                                        }
-                                        ul {
-                                            class: "p-2",
-                                            li {
-                                                a {
-                                                    href: links.blog.clone(),
-                                                    "Blog"
-                                                }
-                                            }
-                                            li {
-                                                a {
-                                                    href: links.docs.clone(),
-                                                    "Documentation"
-                                                }
-                                            }
-                                            li {
-                                                a {
-                                                    href: links.architect_course.clone(),
-                                                    "Gen AI Architect Course"
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                NavItem {
-                                    link: links.partners.clone(),
-                                    name: "Partners".to_string(),
-                                    section: Section::Partners,
-                                    current_section: section.clone(),
                                 }
                             }
                         }
                     }
 
-                    // Right side: GitHub + login + CTA
                     div { class: "hidden lg:flex items-center",
                         ul { class: "menu menu-horizontal px-3",
-                            li {
-                                a {
-                                    href: "https://github.com/bionic-gpt/bionic-gpt",
-                                    img {
-                                        src: "https://img.shields.io/github/stars/bionic-gpt/bionic-gpt",
-                                        alt: "Github"
-                                    }
+                            for link in model.desktop_right {
+                                NavItem {
+                                    link,
+                                    current_section: section.clone(),
                                 }
-                            }
-                            li {
-                                a { href: links.sign_in_up.clone(), "Login" }
-                            }
-                            NavItem {
-                                class: "btn btn-primary btn-sm",
-                                link: links.contact.clone(),
-                                name: "Book a Call".to_string(),
-                                section: Section::Contact,
-                                current_section: section.clone(),
                             }
                         }
                     }
 
-                    // Mobile menu (hamburger)
                     div { class: "dropdown lg:hidden dropdown-end",
                         div {
                             tabindex: "0",
@@ -229,53 +231,10 @@ pub fn Navigation(
                         }
                         ul {
                             class: "menu menu-sm dropdown-content mt-3 z-1 p-2 shadow-sm bg-base-100 rounded-box w-52",
-                            NavItem {
-                                link: links.home.clone(),
-                                name: "Home".to_string(),
-                                section: Section::Home,
-                                current_section: section.clone(),
-                            }
-                            NavItem {
-                                link: links.pricing.clone(),
-                                name: "Pricing".to_string(),
-                                section: Section::Pricing,
-                                current_section: section.clone(),
-                            }
-                            NavItem {
-                                link: links.blog.clone(),
-                                name: "Blog".to_string(),
-                                section: Section::Blog,
-                                current_section: section.clone(),
-                            }
-                            NavItem {
-                                link: links.docs.clone(),
-                                name: "Documentation".to_string(),
-                                section: Section::Docs,
-                                current_section: section.clone(),
-                            }
-                            NavItem {
-                                link: links.architect_course.clone(),
-                                name: "Architect Course".to_string(),
-                                section: Section::ArchitectCourse,
-                                current_section: section.clone(),
-                            }
-                            NavItem {
-                                link: links.partners.clone(),
-                                name: "Partners".to_string(),
-                                section: Section::Partners,
-                                current_section: section.clone(),
-                            }
-                            NavItem {
-                                link: links.contact.clone(),
-                                name: "Book a Call".to_string(),
-                                section: Section::Contact,
-                                current_section: section.clone(),
-                            }
-                            li {
-                                a {
-                                    class: "shrink-0 flex gap-1 items-center underline pl-4",
-                                    href: "https://github.com/bionic-gpt/bionic-gpt",
-                                    "Star us on GitHub"
+                            for link in model.mobile {
+                                NavItem {
+                                    link,
+                                    current_section: section.clone(),
                                 }
                             }
                             {mobile_menu}

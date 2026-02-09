@@ -1,22 +1,20 @@
 use daisy_rsx::marketing::footer::FooterLinks;
-use daisy_rsx::marketing::navigation::NavigationLinks;
+use daisy_rsx::marketing::navigation::{NavigationEntry, NavigationLink, NavigationModel, Section};
 use ssg_whiz::SiteMeta;
 
-pub fn navigation_links() -> NavigationLinks {
-    NavigationLinks {
+pub fn navigation_links() -> NavigationModel {
+    NavigationModel {
         home: "/".to_string(),
-        pricing: "/pricing".to_string(),
-        blog: "/blog".to_string(),
-        docs: "/docs".to_string(),
-        architect_course: "/architect-course".to_string(),
-        partners: "/partners".to_string(),
-        contact: "/contact".to_string(),
-        product_chat: "/product/chat".to_string(),
-        product_assistants: "/product/assistants".to_string(),
-        product_integrations: "/product/integrations".to_string(),
-        product_automations: "/product/automations".to_string(),
-        product_developers: "/product/developers".to_string(),
-        sign_in_up: "#".to_string(),
+        desktop_left: vec![NavigationEntry::Link(NavigationLink::new(
+            "Blog",
+            "/blog",
+            Section::Blog,
+        ))],
+        desktop_right: vec![],
+        mobile: vec![
+            NavigationLink::new("Home", "/", Section::Home),
+            NavigationLink::new("Blog", "/blog", Section::Blog),
+        ],
     }
 }
 

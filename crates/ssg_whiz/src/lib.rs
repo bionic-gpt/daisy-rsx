@@ -7,7 +7,7 @@ use std::sync::OnceLock;
 use axum::Router;
 use daisy_rsx::marketing::{
     footer::FooterLinks,
-    navigation::{NavigationLinks, Section},
+    navigation::{NavigationModel, Section},
     site_header::SiteHeader,
 };
 use dioxus::prelude::*;
@@ -24,15 +24,15 @@ pub mod builder;
 
 pub use builder::SiteBuilder;
 
-static NAV_LINKS: OnceLock<NavigationLinks> = OnceLock::new();
+static NAV_LINKS: OnceLock<NavigationModel> = OnceLock::new();
 static SITE_META: OnceLock<SiteMeta> = OnceLock::new();
 static SITE_HEADER_FACTORY: OnceLock<Option<SiteHeaderFactory>> = OnceLock::new();
 
-pub fn set_navigation_links(links: NavigationLinks) {
+pub fn set_navigation_links(links: NavigationModel) {
     let _ = NAV_LINKS.set(links);
 }
 
-pub(crate) fn navigation_links() -> &'static NavigationLinks {
+pub(crate) fn navigation_links() -> &'static NavigationModel {
     NAV_LINKS
         .get()
         .expect("ssg_whiz navigation links not set")
@@ -87,7 +87,7 @@ pub struct SiteConfig {
     pub run_server: bool,
     pub addr: SocketAddr,
     pub live_reload: bool,
-    pub navigation_links: NavigationLinks,
+    pub navigation_links: NavigationModel,
     pub footer_links: FooterLinks,
     pub site_meta: SiteMeta,
     pub site_header: Option<SiteHeaderFactory>,
@@ -100,20 +100,11 @@ impl Default for SiteConfig {
             run_server: true,
             addr: SocketAddr::from(([0, 0, 0, 0], 8080)),
             live_reload: true,
-            navigation_links: NavigationLinks {
+            navigation_links: NavigationModel {
                 home: "/".to_string(),
-                pricing: "/pricing".to_string(),
-                blog: "/blog".to_string(),
-                docs: "/docs".to_string(),
-                architect_course: "/architect-course".to_string(),
-                partners: "/partners".to_string(),
-                contact: "/contact".to_string(),
-                product_chat: "/product/chat".to_string(),
-                product_assistants: "/product/assistants".to_string(),
-                product_integrations: "/product/integrations".to_string(),
-                product_automations: "/product/automations".to_string(),
-                product_developers: "/product/developers".to_string(),
-                sign_in_up: "#".to_string(),
+                desktop_left: vec![],
+                desktop_right: vec![],
+                mobile: vec![],
             },
             footer_links: FooterLinks {
                 blog: "/blog".to_string(),

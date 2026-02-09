@@ -1,21 +1,55 @@
-use daisy_rsx::marketing::{footer::FooterLinks, navigation::NavigationLinks};
+use daisy_rsx::marketing::{
+    footer::FooterLinks,
+    navigation::{NavigationEntry, NavigationLink, NavigationMenu, NavigationModel, Section},
+};
 use ssg_whiz::SiteMeta;
 
-pub fn navigation_links() -> NavigationLinks {
-    NavigationLinks {
+pub fn navigation_links() -> NavigationModel {
+    let pricing = crate::routes::marketing::Pricing {}.to_string();
+    let blog = crate::routes::blog::Index {}.to_string();
+    let docs = crate::routes::docs::Index {}.to_string();
+    let enterprise = crate::routes::marketing::Enterprise {}.to_string();
+    let mcp_servers = crate::routes::marketing::McpServers {}.to_string();
+    let contact = crate::routes::marketing::Contact {}.to_string();
+    let sign_in = crate::routes::SIGN_IN_UP.to_string();
+
+    NavigationModel {
         home: crate::routes::marketing::Index {}.to_string(),
-        pricing: crate::routes::marketing::Pricing {}.to_string(),
-        blog: crate::routes::blog::Index {}.to_string(),
-        docs: crate::routes::docs::Index {}.to_string(),
-        architect_course: crate::routes::docs::Index {}.to_string(),
-        partners: crate::routes::marketing::Enterprise {}.to_string(),
-        contact: crate::routes::marketing::Contact {}.to_string(),
-        product_chat: crate::routes::marketing::McpServers {}.to_string(),
-        product_assistants: crate::routes::marketing::McpServers {}.to_string(),
-        product_integrations: crate::routes::marketing::McpServers {}.to_string(),
-        product_automations: crate::routes::marketing::McpServers {}.to_string(),
-        product_developers: crate::routes::marketing::McpServers {}.to_string(),
-        sign_in_up: crate::routes::SIGN_IN_UP.to_string(),
+        desktop_left: vec![
+            NavigationEntry::Link(NavigationLink::new("Pricing", pricing.clone(), Section::Pricing)),
+            NavigationEntry::Menu(NavigationMenu::new(
+                "Resources",
+                vec![
+                    NavigationLink::new("Blog", blog.clone(), Section::Blog),
+                    NavigationLink::new("Documentation", docs.clone(), Section::Docs),
+                ],
+            )),
+            NavigationEntry::Link(NavigationLink::new(
+                "Enterprise",
+                enterprise.clone(),
+                Section::Enterprise,
+            )),
+            NavigationEntry::Link(NavigationLink::new(
+                "MCP Servers",
+                mcp_servers.clone(),
+                Section::McpServers,
+            )),
+        ],
+        desktop_right: vec![
+            NavigationLink::new("Login", sign_in.clone(), Section::None),
+            NavigationLink::new("Contact", contact.clone(), Section::Contact)
+                .with_class("btn btn-primary btn-sm"),
+        ],
+        mobile: vec![
+            NavigationLink::new("Home", crate::routes::marketing::Index {}.to_string(), Section::Home),
+            NavigationLink::new("Pricing", pricing, Section::Pricing),
+            NavigationLink::new("Blog", blog, Section::Blog),
+            NavigationLink::new("Documentation", docs, Section::Docs),
+            NavigationLink::new("Enterprise", enterprise, Section::Enterprise),
+            NavigationLink::new("MCP Servers", mcp_servers, Section::McpServers),
+            NavigationLink::new("Contact", contact, Section::Contact),
+            NavigationLink::new("Login", sign_in, Section::None),
+        ],
     }
 }
 
