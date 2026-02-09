@@ -7,6 +7,14 @@ use daisy_rsx::marketing::{
 };
 use dioxus::prelude::*;
 
+fn image_variant_path(path: &str, width: u32, height: u32) -> String {
+    if let Some((base, ext)) = path.rsplit_once('.') {
+        format!("{base}-{width}x{height}.{ext}")
+    } else {
+        path.to_string()
+    }
+}
+
 #[component]
 pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
     let content = crate::markdown::markdown_to_html(post.markdown);
@@ -129,8 +137,14 @@ pub fn BlogList(summary: Summary, footer_links: FooterLinks) -> Element {
                                         href: "/{page.folder}",
                                         if let Some(image) = page.image {
                                             img {
-                                                class: "object-cover h-24 w-full",
-                                                src: image
+                                                class: "w-full aspect-[16/9] object-cover rounded-md",
+                                                src: image_variant_path(image, 384, 216),
+                                                srcset: "{image_variant_path(image, 384, 216)} 1x, {image_variant_path(image, 768, 432)} 2x",
+                                                sizes: "(min-width: 768px) 384px, 100vw",
+                                                width: "384",
+                                                height: "216",
+                                                loading: "lazy",
+                                                alt: "{page.title}",
                                             }
                                         }
                                     }

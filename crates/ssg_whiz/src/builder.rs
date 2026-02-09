@@ -1,7 +1,7 @@
 use std::error::Error;
 use std::future::Future;
 use std::io;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::pin::Pin;
 
 use image::{ImageFormat, ImageReader, imageops::FilterType};
@@ -154,7 +154,7 @@ fn copy_blog_folder_with_resizing(src: &Path, dst: &Path) -> io::Result<()> {
         if src_path.is_dir() {
             copy_blog_folder_with_resizing(&src_path, &dst_path)?;
         } else if is_resizable_blog_image(&src_path) {
-            resize_image_to_704px(&src_path, &dst_path)?;
+            copy_and_generate_blog_variants(&src_path, &dst_path)?;
         } else {
             std::fs::copy(&src_path, &dst_path)?;
         }
@@ -190,21 +190,36 @@ fn image_format_for(path: &Path) -> io::Result<ImageFormat> {
     }
 }
 
-fn resize_image_to_704px(src_path: &Path, dst_path: &Path) -> io::Result<()> {
+fn copy_and_generate_blog_variants(src_path: &Path, dst_path: &Path) -> io::Result<()> {
+    std::fs::copy(src_path, dst_path)?;
+
     let image = ImageReader::open(src_path)?
         .decode()
         .map_err(|err| io::Error::other(format!("failed to decode {}: {err}", src_path.display())))?;
 
-    let original_width = image.width().max(1);
-    let original_height = image.height().max(1);
-    let target_width = 704u32;
-    let target_height = ((original_height as u64 * target_width as u64) / original_width as u64)
-        .max(1) as u32;
-
-    let resized = image.resize_exact(target_width, target_height, FilterType::Lanczos3);
-    let format = image_format_for(dst_path)?;
-    resized
-        .save_with_format(dst_path, format)
-        .map_err(|err| io::Error::other(format!("failed to save {}: {err}", dst_path.display())))?;
+    for (width, height) in [(384u32, 216u32), (768u32, 432u32)] {
+        let variant_path = image_variant_path(dst_path, width, height)?;
+        let resized = image.resize_to_fill(width, height, FilterType::Lanczos3);
+        let format = image_format_for(&variant_path)?;
+        resized.save_with_format(&variant_path, format).map_err(|err| {
+            io::Error::other(format!("failed to save {}: {err}", variant_path.display()))
+        })?;
+    }
     Ok(())
+}
+
+fn image_variant_path(path: &Path, width: u32, height: u32) -> io::Result<PathBuf> {
+    let stem = path
+        .file_stem()
+        .ok_or_else(|| io::Error::new(io::ErrorKind::InvalidInput, "missing file stem"))?;
+    let ext = path
+        .extension()
+        .ok_or_else(|| io::Error::new(io::ErrorKind::InvalidInput, "missing extension"))?;
+
+    let mut filename = stem.to_os_string();
+    filename.push(format!("-{width}x{height}"));
+    filename.push(".");
+    filename.push(ext);
+
+    Ok(path.with_file_name(filename))
 }
