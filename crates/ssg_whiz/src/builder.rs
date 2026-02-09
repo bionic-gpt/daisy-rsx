@@ -4,6 +4,8 @@ use std::io;
 use std::path::Path;
 use std::pin::Pin;
 
+use image::{ImageFormat, ImageReader, imageops::FilterType};
+
 use crate::{
     generate_website, set_navigation_links, set_site_header, set_site_meta, SiteConfig, SitePage,
     WebsiteInput,
@@ -114,7 +116,11 @@ fn copy_summary_assets(dist_dir: &Path, summary: &Summary) -> io::Result<()> {
     let src = Path::new("content").join(summary.source_folder);
     if src.exists() {
         let dst = dist_dir.join(summary.source_folder);
-        copy_folder(&src, &dst)?;
+        if summary.source_folder == "blog" {
+            copy_blog_folder_with_resizing(&src, &dst)?;
+        } else {
+            copy_folder(&src, &dst)?;
+        }
     }
     Ok(())
 }
@@ -134,5 +140,71 @@ fn copy_folder(src: &Path, dst: &Path) -> io::Result<()> {
         }
     }
 
+    Ok(())
+}
+
+fn copy_blog_folder_with_resizing(src: &Path, dst: &Path) -> io::Result<()> {
+    std::fs::create_dir_all(dst)?;
+
+    for entry in std::fs::read_dir(src)? {
+        let entry = entry?;
+        let src_path = entry.path();
+        let dst_path = dst.join(entry.file_name());
+
+        if src_path.is_dir() {
+            copy_blog_folder_with_resizing(&src_path, &dst_path)?;
+        } else if is_resizable_blog_image(&src_path) {
+            resize_image_to_704px(&src_path, &dst_path)?;
+        } else {
+            std::fs::copy(&src_path, &dst_path)?;
+        }
+    }
+
+    Ok(())
+}
+
+fn is_resizable_blog_image(path: &Path) -> bool {
+    matches!(
+        path.extension()
+            .and_then(|ext| ext.to_str())
+            .map(|ext| ext.to_ascii_lowercase())
+            .as_deref(),
+        Some("png") | Some("jpg") | Some("jpeg") | Some("webp")
+    )
+}
+
+fn image_format_for(path: &Path) -> io::Result<ImageFormat> {
+    match path
+        .extension()
+        .and_then(|ext| ext.to_str())
+        .map(|ext| ext.to_ascii_lowercase())
+        .as_deref()
+    {
+        Some("png") => Ok(ImageFormat::Png),
+        Some("jpg") | Some("jpeg") => Ok(ImageFormat::Jpeg),
+        Some("webp") => Ok(ImageFormat::WebP),
+        _ => Err(io::Error::new(
+            io::ErrorKind::InvalidInput,
+            format!("unsupported image format for {}", path.display()),
+        )),
+    }
+}
+
+fn resize_image_to_704px(src_path: &Path, dst_path: &Path) -> io::Result<()> {
+    let image = ImageReader::open(src_path)?
+        .decode()
+        .map_err(|err| io::Error::other(format!("failed to decode {}: {err}", src_path.display())))?;
+
+    let original_width = image.width().max(1);
+    let original_height = image.height().max(1);
+    let target_width = 704u32;
+    let target_height = ((original_height as u64 * target_width as u64) / original_width as u64)
+        .max(1) as u32;
+
+    let resized = image.resize_exact(target_width, target_height, FilterType::Lanczos3);
+    let format = image_format_for(dst_path)?;
+    resized
+        .save_with_format(dst_path, format)
+        .map_err(|err| io::Error::other(format!("failed to save {}: {err}", dst_path.display())))?;
     Ok(())
 }

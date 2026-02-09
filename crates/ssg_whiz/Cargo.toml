@@ -24,3 +24,4 @@ dioxus-ssr = { workspace = true }
 daisy_rsx = { path = "../daisy_rsx" }
 pulldown-cmark = { workspace = true }
 syntect = { workspace = true }
+image = "0.25"
