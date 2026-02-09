@@ -10,7 +10,7 @@ pub fn ProblemSolution(
 ) -> Element {
     rsx! {
         section {
-            class: format!("md:flex lg:max-w-5xl gap-8 w-full {}", class.unwrap_or("".to_string())),
+            class: format!("md:flex gap-8 w-full {}", class.unwrap_or("".to_string())),
             div {
                 class: "flex-1",
                 h1 {

@@ -16,7 +16,7 @@ pub fn Benefits(
         section {
             class: format!("{}", class.unwrap_or("".to_string())),
             div {
-                class: "container mx-auto",
+                class: "w-full",
                 div {
                     class: "flex flex-col text-center w-full mb-20",
                     h2 {

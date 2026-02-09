@@ -15,8 +15,8 @@ pub fn QuadFeature(
     text4: String,
 ) -> Element {
     rsx! {
-        section { class: "lg:max-w-5xl py-24 sm:py-32",
-        div { class: "mx-auto max-w-7xl px-6 lg:px-8",
+        section { class: "w-full",
+        div { class: "w-full",
             div { class: "mx-auto max-w-2xl lg:text-center",
                 h2 { class: "badge badge-outline", "{title}" }
                 p { class: "mt-2 text-3xl font-bold tracking-tight sm:text-4xl font-display",
@@ -24,8 +24,8 @@ pub fn QuadFeature(
                 }
                 p { class: "mt-6 text-lg leading-8", "{text}" }
             }
-            div { class: "mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl",
-                dl { class: "grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16",
+            div { class: "mx-auto mt-10 max-w-2xl lg:mt-12 lg:max-w-4xl",
+                dl { class: "grid max-w-xl grid-cols-1 gap-x-8 gap-y-8 lg:max-w-none lg:grid-cols-2 lg:gap-y-10",
                     div { class: "relative pl-16",
                         dt { class: "text-base font-semibold leading-7",
                             div { class: "absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600",

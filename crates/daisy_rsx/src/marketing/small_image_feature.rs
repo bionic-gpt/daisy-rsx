@@ -13,7 +13,7 @@ pub fn SmallImageFeature(
     let class = class.unwrap_or("".to_string());
     rsx! {
         section {
-            class: "{class} lg:max-w-5xl md:flex {flip} gap-8",
+            class: "{class} md:flex {flip} gap-8",
             div {
                 class: "flex-1",
                 h2 {

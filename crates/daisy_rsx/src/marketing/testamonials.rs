@@ -56,9 +56,9 @@ pub fn Testamonials(
     let class = class.unwrap_or("".to_string());
     rsx! {
         section {
-            class: format!("mx-auto lg:max-w-5xl {class}"),
+            class: class,
             div {
-                class: "container mx-auto",
+                class: "w-full",
                 h1 {
                     class: "text-3xl font-medium font-display title-font mb-12 text-center",
                     "Testimonials"

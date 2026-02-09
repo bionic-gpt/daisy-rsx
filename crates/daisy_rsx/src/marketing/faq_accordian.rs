@@ -11,7 +11,7 @@ pub fn Faq(questions: Vec<FaqText>, class: Option<String>) -> Element {
     let class = class.unwrap_or("".to_string());
     rsx! {
         section {
-            class: format!("{class} lg:max-w-5xl"),
+            class: class,
             h1 {
                 class: "text-3xl font-medium font-display title-font mb-12 text-center",
                 "Frequently asked questions"
