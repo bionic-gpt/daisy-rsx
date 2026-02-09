@@ -6,11 +6,11 @@ pub fn summary() -> Summary {
         categories: vec![Category {
             name: "Updates".to_string(),
             pages: vec![PageSummary {
-                date: "2026-02-06",
-                title: "Hello world",
-                description: "First post from Decision.",
-                folder: "hello-world",
-                markdown: "hello-world.md",
+                date: "2026-02-09",
+                title: "Confidential Computing: A Practical Guide",
+                description: "How confidential computing protects data in use with TEEs, attestation, and a practical adoption path for sensitive workloads.",
+                folder: "confidential-compute",
+                markdown: include_str!("../content/blog/confidential-compute/index.md"),
                 image: None,
                 author: None,
                 author_image: None,
