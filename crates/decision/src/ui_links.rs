@@ -5,6 +5,8 @@ use ssg_whiz::SiteMeta;
 pub fn navigation_links() -> NavigationModel {
     NavigationModel {
         home: "/".to_string(),
+        logo_src: Some("/logo.svg".to_string()),
+        logo_alt: Some("Airbus Decision logo".to_string()),
         desktop_left: vec![NavigationEntry::Link(NavigationLink::new(
             "Blog",
             "/blog",
@@ -32,8 +34,8 @@ pub fn footer_links() -> FooterLinks {
 pub fn site_meta() -> SiteMeta {
     SiteMeta {
         base_url: "https://decision.example.com".to_string(),
-        site_name: "Decision".to_string(),
-        brand_name: "Decision".to_string(),
+        site_name: "Decision Advantage".to_string(),
+        brand_name: "Decision Advantage".to_string(),
         goatcounter: "".to_string(),
     }
 }

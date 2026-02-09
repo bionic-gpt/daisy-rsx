@@ -87,6 +87,8 @@ pub enum NavigationEntry {
 #[derive(Clone, PartialEq, Eq, Debug, Default)]
 pub struct NavigationModel {
     pub home: String,
+    pub logo_src: Option<String>,
+    pub logo_alt: Option<String>,
     pub desktop_left: Vec<NavigationEntry>,
     pub desktop_right: Vec<NavigationLink>,
     pub mobile: Vec<NavigationLink>,
@@ -168,22 +170,32 @@ pub fn Navigation(
 
     rsx! {
         header {
-            class: "sticky top-0 z-50",
+            class: "sticky top-0 z-50 site-nav-header",
             if let Some(site_header) = site_header {
                 {site_header}
             }
             div {
-                class: "backdrop-filter backdrop-blur-lg bg-base-100/80 border-b border-base-300",
+                class: "backdrop-filter backdrop-blur-lg bg-base-100/80 border-b border-base-300 site-nav-shell",
                 div {
-                    class: "navbar justify-between",
+                    class: "navbar justify-between site-nav-bar",
 
                     div {
                         class: "flex items-center gap-4",
                         a {
                             href: model.home.clone(),
                             span {
-                                class: "pl-3 flex flex-row gap-2",
-                                strong { "{brand}" }
+                                class: "pl-3 flex flex-row items-center gap-2",
+                                if let Some(logo_src) = model.logo_src {
+                                    img {
+                                        class: "h-8 w-auto",
+                                        src: logo_src,
+                                        alt: model.logo_alt.unwrap_or_else(|| format!("{brand} logo"))
+                                    }
+                                }
+                                strong {
+                                    class: "leading-none",
+                                    "{brand}"
+                                }
                             }
                         }
 

@@ -11,3 +11,25 @@
 
 ::view-transition-old(root),
 ::view-transition-new(root) { animation: none; }
+
+:root {
+  --airbus-blue: #00205b;
+  --airbus-blue-dark: #001741;
+}
+
+.site-nav-header .site-nav-shell {
+  background: var(--airbus-blue);
+  border-color: color-mix(in srgb, white 22%, var(--airbus-blue));
+}
+
+.site-nav-header .site-nav-bar a,
+.site-nav-header .site-nav-bar strong,
+.site-nav-header .site-nav-bar summary,
+.site-nav-header .site-nav-bar .btn-ghost {
+  color: white;
+}
+
+.site-nav-header .dropdown-content {
+  background: var(--airbus-blue-dark);
+  color: white;
+}

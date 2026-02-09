@@ -40,6 +40,8 @@ impl NavigationLinks {
         let github_href = "https://github.com/bionic-gpt/bionic-gpt";
         NavigationModel {
             home: home.clone(),
+            logo_src: None,
+            logo_alt: None,
             desktop_left: vec![
                 NavigationEntry::Menu(NavigationMenu::new(
                     "Product",

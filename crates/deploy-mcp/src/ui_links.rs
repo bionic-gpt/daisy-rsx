@@ -15,6 +15,8 @@ pub fn navigation_links() -> NavigationModel {
 
     NavigationModel {
         home: crate::routes::marketing::Index {}.to_string(),
+        logo_src: None,
+        logo_alt: None,
         desktop_left: vec![
             NavigationEntry::Link(NavigationLink::new("Pricing", pricing.clone(), Section::Pricing)),
             NavigationEntry::Menu(NavigationMenu::new(

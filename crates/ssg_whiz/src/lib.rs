@@ -102,6 +102,8 @@ impl Default for SiteConfig {
             live_reload: true,
             navigation_links: NavigationModel {
                 home: "/".to_string(),
+                logo_src: None,
+                logo_alt: None,
                 desktop_left: vec![],
                 desktop_right: vec![],
                 mobile: vec![],
