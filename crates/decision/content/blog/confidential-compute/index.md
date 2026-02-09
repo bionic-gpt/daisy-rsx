@@ -1,5 +1,3 @@
-# Confidential Computing: A Practical Guide
-
 *Inspired by: [Everything you should know about confidential computing](https://blog.42futures.com/p/confidential-computing)*
 
 Most teams already encrypt data at rest and in transit. The weak point is data **in use**: when code is actively processing plaintext in memory.

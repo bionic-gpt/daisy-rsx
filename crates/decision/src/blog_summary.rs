@@ -11,7 +11,7 @@ pub fn summary() -> Summary {
                 description: "How confidential computing protects data in use with TEEs, attestation, and a practical adoption path for sensitive workloads.",
                 folder: "confidential-compute",
                 markdown: include_str!("../content/blog/confidential-compute/index.md"),
-                image: None,
+                image: Some("/blog/confidential-compute/confidential-compute.png"),
                 author: None,
                 author_image: None,
             }],
