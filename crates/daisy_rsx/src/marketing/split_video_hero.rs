@@ -7,12 +7,14 @@ pub fn SplitVideoHero(
     video_src: String,
     cta_label: Option<String>,
     cta_href: Option<String>,
+    class: Option<String>,
 ) -> Element {
     let cta_label = cta_label.unwrap_or_else(|| "Book a Call".to_string());
+    let class = class.unwrap_or_default();
 
     rsx! {
         section {
-            class: "grid gap-10 items-center lg:grid-cols-2",
+            class: format!("grid gap-10 items-center lg:grid-cols-2 {class}"),
             div {
                 class: "text-center lg:text-left",
                 h1 {

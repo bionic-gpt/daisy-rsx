@@ -7,10 +7,13 @@ pub fn ImageHero(
     image: String,
     cta_label: Option<String>,
     cta_href: Option<String>,
+    class: Option<String>,
 ) -> Element {
     let cta_label = cta_label.unwrap_or_else(|| "Book a Call".to_string());
+    let class = class.unwrap_or_default();
     rsx! {
         section {
+            class: class,
             div {
                 class: "flex flex-col md:flex-row gap-8 text-center md:text-left",
                 div {
