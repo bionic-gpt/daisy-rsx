@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use daisy_rsx::marketing::navigation::Section;
+use daisy_rsx::marketing::{footer::Footer, navigation::Section};
 use ssg_whiz::layouts::layout::Layout;
 
 pub fn page() -> String {
@@ -32,7 +32,7 @@ pub fn page() -> String {
                             }
                             a {
                                 class: "dl-btn",
-                                href: "/blog",
+                                href: "/contact",
                                 "Schedule a Demo"
                             }
                         }
@@ -183,37 +183,15 @@ pub fn page() -> String {
                         p { "Schedule a strategic demonstration focused on senior command decision-making." }
                         a {
                             class: "dl-btn",
-                            href: "/blog",
+                            href: "/contact",
                             "Schedule a Demo"
                         }
                     }
                 }
 
-                footer {
-                    class: "dl-footer",
-                    div {
-                        class: "dl-footer-grid",
-                        div {
-                            h4 { "Decision Advantage" }
-                            p { class: "dl-lead", style: "font-size:0.92rem;max-width:30ch;", "Decision Advantage - The hardened decision layer." }
-                            div { class: "status", span { class: "pulse-dot" } "System Operational" }
-                        }
-                        nav {
-                            h4 { "Platform" }
-                            a { href: "/#hero", "Overview" }
-                            a { href: "/#protocol", "Architecture" }
-                        }
-                        nav {
-                            h4 { "Security" }
-                            a { href: "/#manifesto", "Controls" }
-                            a { href: "/#manifesto", "Assurance" }
-                        }
-                        nav {
-                            h4 { "Contact" }
-                            a { href: "/blog", "Schedule Demo" }
-                            a { href: "/blog", "Inquiries" }
-                        }
-                    }
+                Footer {
+                    margin_top: Some("mt-0".to_string()),
+                    links: crate::ui_links::footer_links(),
                 }
 
                 script {

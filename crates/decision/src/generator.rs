@@ -10,5 +10,8 @@ fn output_page(path: &str, html: String) -> SitePage {
 }
 
 pub async fn generate_static_pages() -> Vec<SitePage> {
-    vec![output_page("", pages::index::page())]
+    vec![
+        output_page("", pages::index::page()),
+        output_page("contact", pages::contact::page()),
+    ]
 }

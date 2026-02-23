@@ -27,12 +27,12 @@ pub fn navigation_links() -> NavigationModel {
                     .with_class("nav-link"),
             ),
             NavigationEntry::Link(
-                NavigationLink::external("Contact", "/blog", Section::Blog)
+                NavigationLink::new("Contact", "/contact", Section::Contact)
                     .with_class("nav-link"),
             ),
         ],
         desktop_right: vec![
-            NavigationLink::external("Schedule a Demo", "/blog", Section::Blog)
+            NavigationLink::new("Schedule a Demo", "/contact", Section::Contact)
                 .with_class("btn nav-cta nav-link"),
         ],
         mobile: vec![
@@ -40,8 +40,8 @@ pub fn navigation_links() -> NavigationModel {
             NavigationLink::external("Blog", "/blog", Section::Blog),
             NavigationLink::external("Security", "/#manifesto", Section::Home),
             NavigationLink::external("Integration", "/#artifacts", Section::Home),
-            NavigationLink::external("Contact", "/blog", Section::Blog),
-            NavigationLink::external("Schedule a Demo", "/blog", Section::Blog),
+            NavigationLink::new("Contact", "/contact", Section::Contact),
+            NavigationLink::new("Schedule a Demo", "/contact", Section::Contact),
         ],
     }
 }
@@ -49,11 +49,12 @@ pub fn navigation_links() -> NavigationModel {
 pub fn footer_links() -> FooterLinks {
     FooterLinks {
         blog: "/blog".to_string(),
-        pricing: "/pricing".to_string(),
+        pricing: "/".to_string(),
         contact: "/contact".to_string(),
-        terms: "/terms".to_string(),
-        privacy: "/privacy".to_string(),
+        terms: "/".to_string(),
+        privacy: "/".to_string(),
         about: None,
+        variant: Some("decision-luxe".to_string()),
     }
 }
 

@@ -1,5 +1,5 @@
 use super::layout::Layout;
-use crate::{page_permalink, summaries::{PageSummary, Summary}};
+use crate::{page_permalink, site_meta, summaries::{PageSummary, Summary}};
 use daisy_rsx::marketing::{
     extra_footer::{ExtraFooter, EXTRA_FOOTER_TITLE},
     footer::{Footer, FooterLinks},
@@ -26,7 +26,7 @@ pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
             image: post.image.map(|image| image.to_string()),
             section: Section::Blog,
             article {
-                class: "mt-24 mx-auto prose lg:prose-xl p-5",
+                class: "mt-32 mx-auto prose lg:prose-xl p-5",
                 h1 {
                     "{post.title}"
                 }
@@ -107,6 +107,19 @@ pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
 
 #[component]
 pub fn BlogList(summary: Summary, footer_links: FooterLinks) -> Element {
+    let meta = site_meta();
+    let (hero_title, hero_subtitle) = if meta.brand_name == "Decision" {
+        (
+            "Decision Briefings".to_string(),
+            "Operational insights, command judgment patterns, and secure decision-support practices.".to_string()
+        )
+    } else {
+        (
+            "Enterprise Generative AI".to_string(),
+            "The Bionic blog explores issues around LLMs in the enterprise".to_string()
+        )
+    };
+
     rsx! {
         Layout {
             title: "Blog",
@@ -114,14 +127,14 @@ pub fn BlogList(summary: Summary, footer_links: FooterLinks) -> Element {
             mobile_menu: None,
             section: Section::Blog,
             section {
-                class: "lg:max-w-5xl mx-auto text-center mb-12 mt-24",
+                class: "lg:max-w-5xl mx-auto text-center mb-12 mt-32",
                 h1 {
                     class: "text-4xl font-extrabold",
-                    "Enterprise Generative AI"
+                    "{hero_title}"
                 }
                 h2 {
                     class: "text-2xl font-bold",
-                    "The Bionic blog explores issues around LLMs in the enterprise"
+                    "{hero_subtitle}"
                 }
             }
             section {
