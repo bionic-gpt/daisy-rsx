@@ -1,0 +1,4 @@
+/workspace/crates/deploy-mcp/dist/blog/agentic-rag-explained/index.html -> /landing-page/bionic-console.png
+/workspace/crates/deploy-mcp/dist/blog/enterprise-mcp/index.html -> /landing-page/bionic-console.png
+/workspace/crates/deploy-mcp/dist/blog/mcp-explained-with-curl/index.html -> /landing-page/bionic-console.png
+/workspace/crates/deploy-mcp/dist/blog/vibe-engineering/index.html -> /landing-page/bionic-console.png

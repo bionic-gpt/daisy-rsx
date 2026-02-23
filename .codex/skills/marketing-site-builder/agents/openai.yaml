@@ -1,0 +1,4 @@
+interface:
+  display_name: "Marketing Site Builder"
+  short_description: "Maintain and scaffold Rust SSG marketing sites"
+  default_prompt: "Maintain an existing site or create a new marketing site using ssg_whiz + daisy_rsx with preflight and validation."

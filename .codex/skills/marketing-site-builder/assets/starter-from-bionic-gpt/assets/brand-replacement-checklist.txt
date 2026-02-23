@@ -1,0 +1,9 @@
+Replace baseline branding in:
+- src/ui_links.rs (title, description, canonical URL)
+- src/pages/home.rs (headline, subtitle, CTA)
+- assets/logo.svg and open graph image
+- content/pages/privacy.md and terms.md
+- any remaining "bionic" references in site-local files
+
+Recommended command:
+rg -n -i "bionic|deploy|decision" crates/<new-site-slug>

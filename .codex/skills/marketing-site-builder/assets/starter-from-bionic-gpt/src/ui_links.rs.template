@@ -1,0 +1,35 @@
+use daisy_rsx::marketing::navigation::{NavItem, NavigationModel, Section};
+use ssg_whiz::{FooterColumn, FooterLinks, LinkData, SiteMeta};
+
+pub fn site_meta() -> SiteMeta {
+    SiteMeta {
+        title: "<Brand Name>".to_string(),
+        description: "<One-line value proposition>".to_string(),
+        canonical_url: "https://<domain>/".to_string(),
+        og_image: "/open-graph.png".to_string(),
+    }
+}
+
+pub fn navigation_links() -> NavigationModel {
+    NavigationModel {
+        items: vec![
+            NavItem::new("Product", "/product/", Section::Product),
+            NavItem::new("Pricing", "/pricing/", Section::Pricing),
+            NavItem::new("Docs", "/docs/", Section::Docs),
+        ],
+        cta_label: "<Primary CTA>".to_string(),
+        cta_href: "/contact/".to_string(),
+    }
+}
+
+pub fn footer_links() -> FooterLinks {
+    FooterLinks {
+        columns: vec![FooterColumn {
+            title: "Company".to_string(),
+            links: vec![
+                LinkData::new("Privacy", "/privacy/"),
+                LinkData::new("Terms", "/terms/"),
+            ],
+        }],
+    }
+}

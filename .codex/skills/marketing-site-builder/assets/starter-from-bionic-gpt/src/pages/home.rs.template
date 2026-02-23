@@ -1,0 +1,33 @@
+use dioxus::prelude::*;
+use daisy_rsx::marketing::{
+    footer::Footer,
+    hero::Hero,
+    navigation::Section,
+};
+use ssg_whiz::layouts::layout::Layout;
+
+pub fn page() -> String {
+    let page = rsx!(
+        Layout {
+            title: "<Brand Name>".to_string(),
+            description: "<One-line value proposition>".to_string(),
+            mobile_menu: None,
+            section: Section::Home,
+            main {
+                class: "mx-auto w-full max-w-6xl px-6 pt-32 pb-24",
+                Hero {
+                    title: "<Outcome-focused headline>".to_string(),
+                    subtitle: "<Supporting proof and differentiation>".to_string(),
+                    cta_href: Some("/contact".to_string()),
+                    cta_label: Some("<Primary CTA>".to_string()),
+                    image_src: Some("/landing-page/hero.png".to_string()),
+                }
+            }
+            Footer {
+                links: crate::ui_links::footer_links()
+            }
+        }
+    );
+
+    ssg_whiz::render(page)
+}
