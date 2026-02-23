@@ -121,8 +121,8 @@ pub fn page() -> String {
                     section {
                         id: "protocol",
                         class: "dl-protocol-wrap dl-shell",
-                        h2 { class: "dl-headline", style: "font-size:clamp(1.8rem,4.8vw,3.7rem);margin:1rem 1rem 0.5rem;", "Operational Decision" i { "Protocol" } }
-                        p { class: "dl-lead", style: "margin:0 1rem 1.6rem;", "A disciplined approach to stabilizing judgment without disrupting command systems." }
+                        h2 { class: "dl-headline", style: "font-size:clamp(1.8rem,4.8vw,3.7rem);margin:1rem auto 0.5rem;text-align:center;", "Operational Decision" i { "Protocol" } }
+                        p { class: "dl-lead", style: "margin:0 auto 1.6rem;text-align:center;", "A disciplined approach to stabilizing judgment without disrupting command systems." }
                         div {
                             class: "protocol-stack",
 
