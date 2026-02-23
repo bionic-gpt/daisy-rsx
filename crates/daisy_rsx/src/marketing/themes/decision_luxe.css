@@ -153,17 +153,24 @@ body.nav-scrolled .site-nav-shell strong { color: var(--dl-ivory); }
 .dl-hero {
     min-height: 100dvh;
     display: flex;
-    align-items: flex-end;
-    padding: 9rem 1.8rem 2.2rem;
+    align-items: center;
+    padding: 7rem 1.8rem 2.2rem;
     position: relative;
     overflow: hidden;
-    border-radius: var(--dl-radius-xl);
+    border-radius: 0;
     isolation: isolate;
     background-image:
         linear-gradient(to top, rgba(13,13,18,0.96), rgba(13,13,18,0.24)),
         var(--dl-hero-image);
     background-size: cover;
     background-position: center;
+}
+
+.dl-wrap > .dl-hero {
+    width: auto;
+    max-width: none;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
 }
 
 .dl-hero::after {
@@ -175,7 +182,9 @@ body.nav-scrolled .site-nav-shell strong { color: var(--dl-ivory); }
 }
 
 .dl-hero-content {
-    max-width: 820px;
+    width: min(1080px, calc(100% - 2rem));
+    max-width: none;
+    margin: 0 auto;
     display: grid;
     gap: 1.1rem;
     animation: dl-fade-up calc(var(--dl-hero-duration-ms) * 1ms) cubic-bezier(0.22, 1, 0.36, 1) both;
