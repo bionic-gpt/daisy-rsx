@@ -1,5 +1,8 @@
+use crate::marketing::motion::MotionSpec;
+
 #[derive(Clone, PartialEq, Eq, Debug)]
 pub struct LandingPageSpec {
+    pub motion: MotionSpec,
     pub hero: HeroBlock,
     pub proof: Option<ProofBlock>,
     pub feature_blocks: Vec<FeatureBlock>,

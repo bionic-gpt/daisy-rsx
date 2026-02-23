@@ -24,6 +24,7 @@ pub struct MarketingTheme {
     pub buttons: ButtonStyle,
     pub title_class: String,
     pub subtitle_class: String,
+    pub motion: MotionTokens,
 }
 
 pub fn bionic_theme() -> MarketingTheme {
@@ -43,6 +44,15 @@ pub fn bionic_theme() -> MarketingTheme {
         },
         title_class: "font-display text-2xl md:text-6xl font-bold".to_string(),
         subtitle_class: "py-6 text-base md:text-lg".to_string(),
+        motion: MotionTokens {
+            duration_fast_ms: 220,
+            duration_base_ms: 520,
+            duration_slow_ms: 760,
+            easing_enter: "cubic-bezier(0.22, 1, 0.36, 1)".to_string(),
+            easing_emphasis: "cubic-bezier(0.34, 1.56, 0.64, 1)".to_string(),
+            stagger_ms: 90,
+            travel_px: 20,
+        },
     }
 }
 
@@ -63,6 +73,15 @@ pub fn decision_theme() -> MarketingTheme {
         },
         title_class: "text-4xl sm:text-5xl font-bold".to_string(),
         subtitle_class: "mt-6 text-lg opacity-80".to_string(),
+        motion: MotionTokens {
+            duration_fast_ms: 240,
+            duration_base_ms: 560,
+            duration_slow_ms: 820,
+            easing_enter: "cubic-bezier(0.22, 1, 0.36, 1)".to_string(),
+            easing_emphasis: "cubic-bezier(0.34, 1.56, 0.64, 1)".to_string(),
+            stagger_ms: 100,
+            travel_px: 26,
+        },
     }
 }
 
@@ -83,5 +102,15 @@ pub fn deploy_theme() -> MarketingTheme {
         },
         title_class: "font-display text-3xl md:text-5xl font-bold".to_string(),
         subtitle_class: "py-6 text-base md:text-lg opacity-80".to_string(),
+        motion: MotionTokens {
+            duration_fast_ms: 220,
+            duration_base_ms: 500,
+            duration_slow_ms: 740,
+            easing_enter: "cubic-bezier(0.22, 1, 0.36, 1)".to_string(),
+            easing_emphasis: "cubic-bezier(0.34, 1.56, 0.64, 1)".to_string(),
+            stagger_ms: 80,
+            travel_px: 18,
+        },
     }
 }
+use crate::marketing::motion::MotionTokens;

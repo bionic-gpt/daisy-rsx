@@ -10,6 +10,7 @@ pub mod image_feature;
 pub mod image_hero;
 pub mod landing_page;
 pub mod landing_spec;
+pub mod motion;
 pub mod navigation;
 pub mod problem_solution;
 pub mod quad_feature;

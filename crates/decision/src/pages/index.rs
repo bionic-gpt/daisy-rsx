@@ -7,6 +7,7 @@ use daisy_rsx::marketing::{
         ImageFeatureBlock, LandingPageSpec, LogoItem, PricingOrCtaBlock, ProofBlock, QuadFeatureBlock,
         QuadItem, SmallImageFeatureBlock, TestimonialItem, TestimonialsBlock,
     },
+    motion::{MotionPreset, MotionSpec},
     navigation::Section,
     theme::decision_theme,
 };
@@ -14,6 +15,11 @@ use ssg_whiz::layouts::layout::Layout;
 
 pub fn page() -> String {
     let spec = LandingPageSpec {
+        motion: MotionSpec {
+            hero: MotionPreset::Cinematic,
+            sections: MotionPreset::Cinematic,
+            cards: MotionPreset::Cinematic,
+        },
         hero: HeroBlock {
             variant: HeroVariant::SplitVideo {
                 video_src: "/european_flag.mp4".to_string(),
