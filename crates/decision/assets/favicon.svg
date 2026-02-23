@@ -1,28 +1,26 @@
 <svg width="144" height="144" viewBox="0 0 144 144" xmlns="http://www.w3.org/2000/svg">
-  <!-- Radial gradient background -->
   <defs>
-    <radialGradient id="bgGradient" cx="50%" cy="50%" r="75%">
-      <stop offset="0%" stop-color="#4e7eff"/>
-      <stop offset="100%" stop-color="#1f3ccf"/>
-    </radialGradient>
-
-    <!-- Drop shadow filter -->
-    <filter id="dropShadow" x="-50%" y="-50%" width="200%" height="200%">
-      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="black" flood-opacity="0.7"/>
+    <linearGradient id="decisionBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#161620" />
+      <stop offset="100%" stop-color="#0D0D12" />
+    </linearGradient>
+    <filter id="letterShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000000" flood-opacity="0.45" />
     </filter>
   </defs>
 
-  <!-- Rounded background -->
-  <rect width="144" height="144" rx="24" ry="24" fill="url(#bgGradient)" />
-  <style>
-    .small { 
-        font: normal 120px sans-serif; 
-        fill: white;
-    }
-  </style>
-  <!-- Bigger, bolder B with drop shadow -->
-  <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" class="small" fill="white"
-        filter="url(#dropShadow)">
-    B
-  </text>
+  <rect width="144" height="144" rx="24" ry="24" fill="url(#decisionBg)" />
+  <rect x="4" y="4" width="136" height="136" rx="20" ry="20" fill="none" stroke="#C9A84C" stroke-opacity="0.35" />
+
+  <text
+    x="50%"
+    y="50%"
+    text-anchor="middle"
+    dominant-baseline="central"
+    font-family="Inter, Arial, sans-serif"
+    font-size="94"
+    font-weight="700"
+    fill="#C9A84C"
+    filter="url(#letterShadow)"
+  >D</text>
 </svg>
