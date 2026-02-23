@@ -12,10 +12,6 @@ pub fn page() -> String {
             main {
                 class: "decision-luxe",
 
-                style {
-                    dangerous_inner_html: include_str!("index_luxe.css")
-                }
-
                 section {
                     id: "hero",
                     class: "dl-wrap",
@@ -33,6 +29,18 @@ pub fn page() -> String {
                             p {
                                 class: "dl-lead",
                                 "Decision Advantage turns fragmented operational data into clear, defensible decisions-at the speed senior leadership requires."
+                            }
+                            p {
+                                class: "dl-lead",
+                                style: "font-size:0.86rem;opacity:0.72;",
+                                "Themes: "
+                                a { class: "nav-link", href: "/?theme=midnight-luxe", "Midnight Luxe" }
+                                " / "
+                                a { class: "nav-link", href: "/?theme=organic-tech", "Organic Tech" }
+                                " / "
+                                a { class: "nav-link", href: "/?theme=brutalist-signal", "Brutalist Signal" }
+                                " / "
+                                a { class: "nav-link", href: "/?theme=vapor-clinic", "Vapor Clinic" }
                             }
                             a {
                                 class: "dl-btn",

@@ -1,5 +1,20 @@
-                    (() => {
-                      const hero = document.getElementById('hero');
+(() => {
+  const validThemes = new Set([
+    'midnight-luxe',
+    'organic-tech',
+    'brutalist-signal',
+    'vapor-clinic',
+  ]);
+  const params = new URLSearchParams(window.location.search);
+  const queryTheme = params.get('theme');
+  const savedTheme = window.localStorage.getItem('decision_theme');
+  const selected = validThemes.has(queryTheme || '')
+    ? queryTheme
+    : (validThemes.has(savedTheme || '') ? savedTheme : 'midnight-luxe');
+  document.body.setAttribute('data-dl-theme', selected);
+  window.localStorage.setItem('decision_theme', selected);
+
+  const hero = document.getElementById('hero');
                       const shell = document.querySelector('.site-nav-shell');
                       if (hero && shell) {
                         const io = new IntersectionObserver((entries) => {

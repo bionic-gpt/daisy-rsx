@@ -28,6 +28,21 @@ Complete this checklist before edits:
 - Edit `crates/daisy_rsx/src/marketing` only when at least two sites need the same change.
 - Keep shared component APIs backwards compatible unless a coordinated migration is requested.
 - Preserve existing site tone and structure unless a redesign is explicitly requested.
+- For redesign/new landing work, require a full page JSON spec before implementation.
+
+## JSON Content Contract (Required For Redesign/New Landing Pages)
+
+For landing page redesigns and new landing pages, require one complete JSON payload that defines all copy and animation behavior.
+
+1. If JSON is missing, ask for it first.
+2. If required fields are missing, ask follow-up questions one at a time until complete.
+3. Do not invent required final copy fields.
+4. Treat JSON as source of truth for RSX text and JavaScript animation behavior.
+5. Only make non-semantic polish edits (punctuation/casing) when explicitly requested.
+
+Schema and examples live in:
+
+- `references/site-spec-json.md`
 
 ## Architecture Navigation
 
@@ -59,6 +74,17 @@ Complete this checklist before edits:
 6. Validate:
    - `scripts/validate_site.sh <new-site-slug>`
 
+## JSON-to-Code Mapping Rules
+
+When a page spec JSON is provided:
+
+1. Map `seo` fields into `Layout` title/description (and any additional metadata surface used by the site).
+2. Map `nav` labels and CTA into `src/ui_links.rs`.
+3. Map section copy into RSX in `src/pages/*.rs` without placeholder text.
+4. Map `animations` fields into CSS/JavaScript behavior for that page.
+5. Keep IDs/selectors deterministic and aligned to JSON section keys.
+6. If an animation cannot be implemented as requested, use closest fallback and report it.
+
 ## Validation Standard
 
 Minimum required before completion:
@@ -78,6 +104,7 @@ Use:
 - Architecture and targeting: `references/architecture-map.md`
 - Existing site playbooks: `references/site-playbooks.md`
 - Prompt adaptation for RSX/SSG: `references/prompt-adaptation.md`
+- JSON page spec schema and examples: `references/site-spec-json.md`
 - New site checklist: `references/new-site-checklist.md`
 - Scaffolding script: `scripts/new_site_from_baseline.sh`
 - Validation script: `scripts/validate_site.sh`
