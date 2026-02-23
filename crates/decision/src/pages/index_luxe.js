@@ -20,9 +20,9 @@
                       }
 
                       const feedLines = [
-                        'SIGINT merged with route weather variance... confidence +12%.',
-                        'Priority route re-sequenced for contested corridor Bravo.',
-                        'Decision branch approved. Updating force package timing.',
+                        'Input variance detected across reporting channels.',
+                        'Confidence threshold stabilized after third correlation pass.',
+                        'Decision window narrowing: recommend action review.',
                       ];
                       const lineEl = document.getElementById('type-line');
                       if (lineEl) {

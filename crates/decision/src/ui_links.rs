@@ -11,11 +11,7 @@ pub fn navigation_links() -> NavigationModel {
         logo_alt: None,
         desktop_left: vec![
             NavigationEntry::Link(
-                NavigationLink::external("Artifacts", "/#artifacts", Section::Home)
-                    .with_class("nav-link"),
-            ),
-            NavigationEntry::Link(
-                NavigationLink::external("Manifesto", "/#manifesto", Section::Home)
+                NavigationLink::external("Platform", "/#hero", Section::Home)
                     .with_class("nav-link"),
             ),
             NavigationEntry::Link(
@@ -23,20 +19,24 @@ pub fn navigation_links() -> NavigationModel {
                     .with_class("nav-link"),
             ),
             NavigationEntry::Link(
-                NavigationLink::external("Briefings", "/blog", Section::Blog)
+                NavigationLink::external("Security", "/#manifesto", Section::Home)
+                    .with_class("nav-link"),
+            ),
+            NavigationEntry::Link(
+                NavigationLink::external("Contact", "/blog", Section::Blog)
                     .with_class("nav-link"),
             ),
         ],
         desktop_right: vec![
-            NavigationLink::external("Start Mission", "/blog", Section::Blog)
+            NavigationLink::external("Schedule a Demo", "/blog", Section::Blog)
                 .with_class("btn nav-cta nav-link"),
         ],
         mobile: vec![
-            NavigationLink::external("Artifacts", "/#artifacts", Section::Home),
-            NavigationLink::external("Manifesto", "/#manifesto", Section::Home),
             NavigationLink::external("Protocol", "/#protocol", Section::Home),
-            NavigationLink::external("Briefings", "/blog", Section::Blog),
-            NavigationLink::external("Start Mission", "/blog", Section::Blog),
+            NavigationLink::external("Platform", "/#hero", Section::Home),
+            NavigationLink::external("Security", "/#manifesto", Section::Home),
+            NavigationLink::external("Contact", "/blog", Section::Blog),
+            NavigationLink::external("Schedule a Demo", "/blog", Section::Blog),
         ],
     }
 }

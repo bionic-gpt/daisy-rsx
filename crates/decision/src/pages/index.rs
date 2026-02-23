@@ -5,8 +5,8 @@ use ssg_whiz::layouts::layout::Layout;
 pub fn page() -> String {
     let page = rsx!(
         Layout {
-            title: "Decision | Command Velocity Platform".to_string(),
-            description: "Command-grade decision velocity for operations that cannot wait.".to_string(),
+            title: "Decision Advantage | Command-Ready Judgment".to_string(),
+            description: "Decision Advantage is a hardened decision layer that transforms fragmented operational data into command-ready judgment for senior leadership.".to_string(),
             mobile_menu: None,
             section: Section::Home,
             main {
@@ -24,20 +24,20 @@ pub fn page() -> String {
                         class: "dl-hero",
                         div {
                             class: "dl-hero-content",
-                            span { class: "dl-kicker", "MIDNIGHT LUXE // DECISION OPS" }
+                            span { class: "dl-kicker", "Decision Advantage" }
                             h1 {
                                 class: "dl-headline",
-                                "Command theater,"
-                                i { "precision in motion." }
+                                "Command-Ready"
+                                i { "Judgment." }
                             }
                             p {
                                 class: "dl-lead",
-                                "Decision transforms fragmented war-room signals into one continuous operational instrument. Every brief, branch, and recommendation arrives in tempo with your command intent."
+                                "Decision Advantage turns fragmented operational data into clear, defensible decisions-at the speed senior leadership requires."
                             }
                             a {
                                 class: "dl-btn",
                                 href: "/blog",
-                                "Enter the Briefing Room"
+                                "Schedule a Demo"
                             }
                         }
                     }
@@ -53,20 +53,20 @@ pub fn page() -> String {
                             article {
                                 class: "dl-card",
                                 h3 { "Diagnostic Shuffler" }
-                                p { "Mission diagnostics reprioritize every 3 seconds so teams see where attention should move next." }
+                                p { "Surfaces the signals that matter by continuously re-framing inputs across operational contexts." }
                                 div {
                                     id: "diag-stage",
                                     class: "diag-stage",
-                                    div { class: "diag-item", small { "Priority" } strong { "Supply chain latency" } }
-                                    div { class: "diag-item", small { "Priority" } strong { "Denied-area ISR drift" } }
-                                    div { class: "diag-item", small { "Priority" } strong { "Comms degradation" } }
+                                    div { class: "diag-item", small { "Priority" } strong { "Operational Constraints" } }
+                                    div { class: "diag-item", small { "Priority" } strong { "Confidence Gaps" } }
+                                    div { class: "diag-item", small { "Priority" } strong { "Decision Risk" } }
                                 }
                             }
 
                             article {
                                 class: "dl-card",
                                 h3 { "Telemetry Typewriter" }
-                                p { "Live command feed types itself character-by-character with a persistent operations cursor." }
+                                p { "Streams live operational context into a readable decision feed-without dashboards or noise." }
                                 div {
                                     class: "telemetry",
                                     div { class: "live", span { class: "pulse-dot" } "Live Feed" }
@@ -83,7 +83,7 @@ pub fn page() -> String {
                             article {
                                 class: "dl-card",
                                 h3 { "Cursor Protocol Scheduler" }
-                                p { "The scheduler traces a decision cadence: select day, commit plan, save mission cycle." }
+                                p { "Coordinates decision timing across staff, systems, and command rhythms." }
                                 div {
                                     id: "scheduler",
                                     class: "scheduler",
@@ -98,7 +98,7 @@ pub fn page() -> String {
                                         div { class: "day-cell", "F" }
                                         div { class: "day-cell", "S" }
                                     }
-                                    div { class: "save-btn", id: "save-btn", "Save Protocol" }
+                                    div { class: "save-btn", id: "save-btn", "Right decision. Right moment." }
                                 }
                             }
                         }
@@ -110,14 +110,14 @@ pub fn page() -> String {
                         div { class: "dl-parallax", id: "parallax" }
                         div {
                             class: "dl-manifesto-content",
-                            p { "Most operations software optimizes for dashboard readability and retrospective reporting." }
+                            p { "Most systems focus on collecting more data, adding more dashboards, and accelerating raw output." }
                             h2 {
                                 class: "contrast",
-                                "We optimize for"
-                                em { " irreversible minutes." }
+                                "We focus on"
+                                em { " decision integrity under pressure." }
                             }
                             p {
-                                "Decision keeps leaders in command while compressing observe-orient-decide-act loops into a disciplined, auditable tempo."
+                                "Decision Advantage is designed for senior leaders operating under time compression, ambiguity, and consequence. It does not replace existing systems-it hardens them into a coherent decision layer that supports judgment, not automation theater."
                             }
                         }
                     }
@@ -133,9 +133,9 @@ pub fn page() -> String {
                                 class: "protocol-card",
                                 id: "protocol-card-1",
                                 div {
-                                    span { class: "protocol-step", "STEP 01" }
-                                    h3 { class: "protocol-title", "Ingest" em { " Theater Signals" } }
-                                    p { class: "protocol-desc", "Decision fuses ISR, HUMINT, logistics, and mission objectives into a single operational graph that can be trusted under pressure." }
+                                    span { class: "protocol-step", "PROTOCOL 01" }
+                                    h3 { class: "protocol-title", "Ingest" em { " Without Disruption" } }
+                                    p { class: "protocol-desc", "Connects to existing operational systems without re-architecture. No workflow breakage. No retraining." }
                                 }
                                 div {
                                     class: "viz",
@@ -147,9 +147,9 @@ pub fn page() -> String {
                                 class: "protocol-card",
                                 id: "protocol-card-2",
                                 div {
-                                    span { class: "protocol-step", "STEP 02" }
-                                    h3 { class: "protocol-title", "Scan" em { " Decision Paths" } }
-                                    p { class: "protocol-desc", "Courses of action are scored against doctrine, constraints, and confidence, then surfaced with transparent tradeoffs for command approval." }
+                                    span { class: "protocol-step", "PROTOCOL 02" }
+                                    h3 { class: "protocol-title", "Stabilize" em { " the Decision Frame" } }
+                                    p { class: "protocol-desc", "Normalizes fragmented inputs into a single, defensible context senior leaders can trust." }
                                 }
                                 div {
                                     class: "viz",
@@ -162,9 +162,9 @@ pub fn page() -> String {
                                 class: "protocol-card",
                                 id: "protocol-card-3",
                                 div {
-                                    span { class: "protocol-step", "STEP 03" }
-                                    h3 { class: "protocol-title", "Commit" em { " and Adapt" } }
-                                    p { class: "protocol-desc", "Every recommendation becomes an auditable pulse in the command timeline, enabling faster adaptation without surrendering authority." }
+                                    span { class: "protocol-step", "PROTOCOL 03" }
+                                    h3 { class: "protocol-title", "Deliver" em { " Command Judgment" } }
+                                    p { class: "protocol-desc", "Outputs clear decision posture-not recommendations-aligned to leadership intent and timing." }
                                 }
                                 div {
                                     class: "viz",
@@ -182,12 +182,12 @@ pub fn page() -> String {
 
                     section {
                         class: "dl-cta",
-                        h2 { "Ready to run command at luxury speed?" }
-                        p { "Stand up your first mission-specific Decision workflow and watch planning latency collapse while control stays with leadership." }
+                        h2 { "See Decision Advantage in Action." }
+                        p { "A strategic demonstration tailored to senior command decision-making." }
                         a {
                             class: "dl-btn",
                             href: "/blog",
-                            "Start Mission Setup"
+                            "Schedule a Demo"
                         }
                     }
                 }
@@ -197,26 +197,24 @@ pub fn page() -> String {
                     div {
                         class: "dl-footer-grid",
                         div {
-                            h4 { "Decision" }
-                            p { class: "dl-lead", style: "font-size:0.92rem;max-width:30ch;", "A command-grade decision platform for teams operating where the cost of delay is strategic." }
+                            h4 { "Decision Advantage" }
+                            p { class: "dl-lead", style: "font-size:0.92rem;max-width:30ch;", "Decision Advantage - The hardened decision layer." }
                             div { class: "status", span { class: "pulse-dot" } "System Operational" }
                         }
                         nav {
-                            h4 { "Navigate" }
-                            a { href: "/", "Home" }
-                            a { href: "/blog", "Briefings" }
-                            a { href: "/#protocol", "Protocol" }
+                            h4 { "Platform" }
+                            a { href: "/#hero", "Overview" }
+                            a { href: "/#protocol", "Architecture" }
                         }
                         nav {
-                            h4 { "Programs" }
-                            a { href: "/blog", "Scenario Library" }
-                            a { href: "/blog", "Operational Notes" }
-                            a { href: "/blog", "Release Signals" }
+                            h4 { "Protocol" }
+                            a { href: "/#protocol", "Method" }
+                            a { href: "/#manifesto", "Security" }
                         }
                         nav {
-                            h4 { "Legal" }
-                            a { href: "/", "Privacy" }
-                            a { href: "/", "Terms" }
+                            h4 { "Contact" }
+                            a { href: "/blog", "Schedule Demo" }
+                            a { href: "/blog", "Inquiries" }
                         }
                     }
                 }
