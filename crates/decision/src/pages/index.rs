@@ -6,7 +6,7 @@ pub fn page() -> String {
     let page = rsx!(
         Layout {
             title: "Decision Advantage | Command-Ready Judgment".to_string(),
-            description: "Decision Advantage is a hardened decision layer that transforms fragmented operational data into command-ready judgment for senior leadership.".to_string(),
+            description: "Decision Advantage is an agentic decision-support layer that turns fragmented operational data into command-ready judgment for senior leadership.".to_string(),
             mobile_menu: None,
             section: Section::Home,
             main {
@@ -23,24 +23,12 @@ pub fn page() -> String {
                             span { class: "dl-kicker", "Decision Advantage" }
                             h1 {
                                 class: "dl-headline",
-                                "Command-Ready"
-                                i { "Judgment." }
+                                "Agentic Decision Support for"
+                                i { "Command Judgment." }
                             }
                             p {
                                 class: "dl-lead",
-                                "Decision Advantage turns fragmented operational data into clear, defensible decisions-at the speed senior leadership requires."
-                            }
-                            p {
-                                class: "dl-lead",
-                                style: "font-size:0.86rem;opacity:0.72;",
-                                "Themes: "
-                                a { class: "nav-link", href: "/?theme=midnight-luxe", "Midnight Luxe" }
-                                " / "
-                                a { class: "nav-link", href: "/?theme=organic-tech", "Organic Tech" }
-                                " / "
-                                a { class: "nav-link", href: "/?theme=brutalist-signal", "Brutalist Signal" }
-                                " / "
-                                a { class: "nav-link", href: "/?theme=vapor-clinic", "Vapor Clinic" }
+                                "A hardened decision layer that coordinates agentic analysis across existing systems to deliver clear, defensible judgment at command tempo."
                             }
                             a {
                                 class: "dl-btn",
@@ -53,8 +41,8 @@ pub fn page() -> String {
                     section {
                         id: "artifacts",
                         class: "dl-artifacts dl-shell",
-                        h2 { class: "dl-headline" , style: "font-size:clamp(1.7rem,4.7vw,3.5rem);", "Interactive" i { "Functional Artifacts" } }
-                        p { class: "dl-lead", "Operational ideas should behave like software, not static slides. These live artifacts preview how Decision drives tempo and control." }
+                        h2 { class: "dl-headline" , style: "font-size:clamp(1.7rem,4.7vw,3.5rem);", "Operational Signals" i { "in Motion" } }
+                        p { class: "dl-lead", "These live artifacts represent how Decision Advantage continuously stabilizes inputs, timing, and context into usable command judgment." }
                         div {
                             class: "dl-grid3",
 
@@ -122,10 +110,10 @@ pub fn page() -> String {
                             h2 {
                                 class: "contrast",
                                 "We focus on"
-                                em { " decision integrity under pressure." }
+                                em { " decision integrity under pressure" }
                             }
                             p {
-                                "Decision Advantage is designed for senior leaders operating under time compression, ambiguity, and consequence. It does not replace existing systems-it hardens them into a coherent decision layer that supports judgment, not automation theater."
+                                "Decision Advantage exists to support senior leaders operating under time compression and consequence. It does not replace systems or issue recommendations-it coordinates agentic decision support that strengthens judgment when clarity matters most."
                             }
                         }
                     }
@@ -133,7 +121,8 @@ pub fn page() -> String {
                     section {
                         id: "protocol",
                         class: "dl-protocol-wrap dl-shell",
-                        h2 { class: "dl-headline", style: "font-size:clamp(1.8rem,4.8vw,3.7rem);margin:1rem 1rem 2rem;", "Protocol" i { "Stacking Archive" } }
+                        h2 { class: "dl-headline", style: "font-size:clamp(1.8rem,4.8vw,3.7rem);margin:1rem 1rem 0.5rem;", "Operational Decision" i { "Protocol" } }
+                        p { class: "dl-lead", style: "margin:0 1rem 1.6rem;", "A disciplined approach to stabilizing judgment without disrupting command systems." }
                         div {
                             class: "protocol-stack",
 
@@ -141,7 +130,7 @@ pub fn page() -> String {
                                 class: "protocol-card",
                                 id: "protocol-card-1",
                                 div {
-                                    span { class: "protocol-step", "PROTOCOL 01" }
+                                    span { class: "protocol-step", "Step 01" }
                                     h3 { class: "protocol-title", "Ingest" em { " Without Disruption" } }
                                     p { class: "protocol-desc", "Connects to existing operational systems without re-architecture. No workflow breakage. No retraining." }
                                 }
@@ -155,7 +144,7 @@ pub fn page() -> String {
                                 class: "protocol-card",
                                 id: "protocol-card-2",
                                 div {
-                                    span { class: "protocol-step", "PROTOCOL 02" }
+                                    span { class: "protocol-step", "Step 02" }
                                     h3 { class: "protocol-title", "Stabilize" em { " the Decision Frame" } }
                                     p { class: "protocol-desc", "Normalizes fragmented inputs into a single, defensible context senior leaders can trust." }
                                 }
@@ -170,7 +159,7 @@ pub fn page() -> String {
                                 class: "protocol-card",
                                 id: "protocol-card-3",
                                 div {
-                                    span { class: "protocol-step", "PROTOCOL 03" }
+                                    span { class: "protocol-step", "Step 03" }
                                     h3 { class: "protocol-title", "Deliver" em { " Command Judgment" } }
                                     p { class: "protocol-desc", "Outputs clear decision posture-not recommendations-aligned to leadership intent and timing." }
                                 }
@@ -190,8 +179,8 @@ pub fn page() -> String {
 
                     section {
                         class: "dl-cta",
-                        h2 { "See Decision Advantage in Action." }
-                        p { "A strategic demonstration tailored to senior command decision-making." }
+                        h2 { "Experience Decision Advantage." }
+                        p { "Schedule a strategic demonstration focused on senior command decision-making." }
                         a {
                             class: "dl-btn",
                             href: "/blog",
@@ -215,9 +204,9 @@ pub fn page() -> String {
                             a { href: "/#protocol", "Architecture" }
                         }
                         nav {
-                            h4 { "Protocol" }
-                            a { href: "/#protocol", "Method" }
-                            a { href: "/#manifesto", "Security" }
+                            h4 { "Security" }
+                            a { href: "/#manifesto", "Controls" }
+                            a { href: "/#manifesto", "Assurance" }
                         }
                         nav {
                             h4 { "Contact" }
