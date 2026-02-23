@@ -15,6 +15,10 @@ pub fn navigation_links() -> NavigationModel {
                     .with_class("nav-link"),
             ),
             NavigationEntry::Link(
+                NavigationLink::external("Blog", "/blog", Section::Blog)
+                    .with_class("nav-link"),
+            ),
+            NavigationEntry::Link(
                 NavigationLink::external("Security", "/#manifesto", Section::Home)
                     .with_class("nav-link"),
             ),
@@ -33,6 +37,7 @@ pub fn navigation_links() -> NavigationModel {
         ],
         mobile: vec![
             NavigationLink::external("Platform", "/#hero", Section::Home),
+            NavigationLink::external("Blog", "/blog", Section::Blog),
             NavigationLink::external("Security", "/#manifesto", Section::Home),
             NavigationLink::external("Integration", "/#artifacts", Section::Home),
             NavigationLink::external("Contact", "/blog", Section::Blog),

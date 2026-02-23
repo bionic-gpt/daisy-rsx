@@ -1,4 +1,13 @@
 :root {
+    --dl-obsidian: #0D0D12;
+    --dl-champagne: #C9A84C;
+    --dl-ivory: #FAF8F5;
+    --dl-slate: #2A2A35;
+    --dl-shell: rgba(250, 248, 245, 0.04);
+    --dl-shell-strong: rgba(250, 248, 245, 0.12);
+    --dl-font: "Inter", "Helvetica Neue", sans-serif;
+    --dl-hero-image: url('https://images.unsplash.com/photo-1473773508845-188df298d2d1?auto=format&fit=crop&w=1900&q=80');
+    --dl-manifesto-image: url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1700&q=80');
     --dl-radius-lg: 2rem;
     --dl-radius-xl: 3rem;
     --dl-nav-hover-lift-px: 1;
@@ -67,6 +76,71 @@ body {
         var(--dl-obsidian);
     color: var(--dl-ivory);
     font-family: var(--dl-font);
+    margin: 0;
+    min-height: 100vh;
+}
+
+html {
+    background: var(--dl-obsidian);
+}
+
+/* Shared content surfaces (blog/docs/pages) */
+article,
+section,
+main {
+    color: var(--dl-ivory);
+}
+
+.prose {
+    color: rgba(250, 248, 245, 0.86);
+}
+
+.prose :where(h1, h2, h3, h4, strong) {
+    color: var(--dl-ivory);
+}
+
+.prose :where(p, li, ul, ol, blockquote) {
+    color: rgba(250, 248, 245, 0.82);
+}
+
+.prose a,
+.prose :where(a strong) {
+    color: var(--dl-champagne);
+}
+
+.prose code {
+    color: var(--dl-ivory);
+    background: color-mix(in srgb, var(--dl-ivory) 10%, transparent);
+    border-radius: 0.35rem;
+    padding: 0.08rem 0.32rem;
+}
+
+.prose pre {
+    background: rgba(7, 7, 12, 0.8);
+    border: 1px solid rgba(250, 248, 245, 0.18);
+    border-radius: 0.9rem;
+}
+
+.prose blockquote {
+    border-left-color: color-mix(in srgb, var(--dl-champagne) 75%, transparent);
+}
+
+/* Blog cards and docs sidebars */
+.border {
+    border-color: rgba(250, 248, 245, 0.18) !important;
+}
+
+[data-scroll-key] {
+    background: color-mix(in srgb, var(--dl-obsidian) 88%, transparent);
+    border-right-color: rgba(250, 248, 245, 0.16) !important;
+}
+
+[data-scroll-key] a {
+    color: rgba(250, 248, 245, 0.8);
+}
+
+[data-scroll-key] a:hover {
+    color: var(--dl-champagne) !important;
 }
 
 body::before {
