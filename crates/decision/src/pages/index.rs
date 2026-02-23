@@ -1,178 +1,229 @@
 use dioxus::prelude::*;
-use daisy_rsx::marketing::{
-    footer::Footer,
-    landing_page::MarketingLandingPage,
-    landing_spec::{
-        BenefitItem, BenefitsBlock, FaqBlock, FaqItem, FeatureBlock, HeroBlock, HeroVariant,
-        ImageFeatureBlock, LandingPageSpec, LogoItem, PricingOrCtaBlock, ProofBlock, QuadFeatureBlock,
-        QuadItem, SmallImageFeatureBlock, TestimonialItem, TestimonialsBlock,
-    },
-    motion::{MotionPreset, MotionSpec},
-    navigation::Section,
-    theme::decision_theme,
-};
+use daisy_rsx::marketing::navigation::Section;
 use ssg_whiz::layouts::layout::Layout;
 
 pub fn page() -> String {
-    let spec = LandingPageSpec {
-        motion: MotionSpec {
-            hero: MotionPreset::Cinematic,
-            sections: MotionPreset::Cinematic,
-            cards: MotionPreset::Cinematic,
-        },
-        hero: HeroBlock {
-            variant: HeroVariant::SplitVideo {
-                video_src: "/european_flag.mp4".to_string(),
-            },
-            title: "Speed to decision is a weapons system".to_string(),
-            subtitle: "Plan, simulate, and adapt in minutes instead of hours.".to_string(),
-            cta_label: Some("See Demo".to_string()),
-            cta_href: Some("/contact".to_string()),
-        },
-        proof: Some(ProofBlock {
-            title: "Trusted by allied innovation teams".to_string(),
-            logos: vec![
-                LogoItem {
-                    src: "/customer-logos/logo-1.svg".to_string(),
-                    alt: "Customer logo one".to_string(),
-                },
-                LogoItem {
-                    src: "/customer-logos/logo-2.svg".to_string(),
-                    alt: "Customer logo two".to_string(),
-                },
-                LogoItem {
-                    src: "/customer-logos/logo-3.svg".to_string(),
-                    alt: "Customer logo three".to_string(),
-                },
-            ],
-        }),
-        feature_blocks: vec![
-            FeatureBlock::SmallImage(SmallImageFeatureBlock {
-                title: "Operational Tempo".to_string(),
-                sub_title: "From fragmented intel to coordinated action".to_string(),
-                text: "Operational teams lose tempo when intelligence, planning, and execution tools are disconnected across domains and classifications. Decision Advantage summarizes context, proposes COAs, and keeps commanders in the loop with explainable outputs.".to_string(),
-                image: "https://placehold.co/1024x768/0A2A66/FFFFFF?text=Joint+Ops+Picture".to_string(),
-                flip: true,
-            }),
-            FeatureBlock::SmallImage(SmallImageFeatureBlock {
-                title: "Mission Planning".to_string(),
-                sub_title: "Generate COAs with transparent assumptions".to_string(),
-                text: "AI agents continuously evaluate constraints, resources, and adversary posture to propose actionable courses of action with confidence scoring.".to_string(),
-                image: "https://placehold.co/960x640/123D8D/FFFFFF?text=COA+Generator".to_string(),
-                flip: false,
-            }),
-            FeatureBlock::SmallImage(SmallImageFeatureBlock {
-                title: "Cross-Domain Data".to_string(),
-                sub_title: "Fuse ISR, cyber, logistics, and HUMINT".to_string(),
-                text: "Unify structured and unstructured data into a single operational view that is queryable by commanders and staff in natural language.".to_string(),
-                image: "https://placehold.co/960x640/0F347C/FFFFFF?text=Data+Fusion".to_string(),
-                flip: true,
-            }),
-            FeatureBlock::Image(ImageFeatureBlock {
-                title: "Command Timeline & Scenario Replay".to_string(),
-                sub_title: "Understand why decisions were made and how outcomes evolved".to_string(),
-                image: "https://placehold.co/1280x720/1B4B9B/FFFFFF?text=Timeline+Replay".to_string(),
-            }),
-            FeatureBlock::Quad(QuadFeatureBlock {
-                title: "Core Capabilities".to_string(),
-                sub_title: "Built for contested, data-dense environments".to_string(),
-                text: "Decision Advantage turns information overload into prioritized, explainable actions for military operators.".to_string(),
-                items: [
-                    QuadItem {
-                        title: "Human-on-the-loop".to_string(),
-                        text: "Operators approve every high-impact action with full provenance.".to_string(),
-                    },
-                    QuadItem {
-                        title: "Secure by Design".to_string(),
-                        text: "Deploy in controlled environments with auditable model and data access.".to_string(),
-                    },
-                    QuadItem {
-                        title: "Continuous Adaptation".to_string(),
-                        text: "Agents re-plan as mission context and threat indicators change.".to_string(),
-                    },
-                    QuadItem {
-                        title: "After-Action Intelligence".to_string(),
-                        text: "Replay decisions, capture lessons learned, and improve doctrine.".to_string(),
-                    },
-                ],
-            }),
-            FeatureBlock::Benefits(BenefitsBlock {
-                title: "Outcomes".to_string(),
-                subtitle: "Operational benefits you can measure".to_string(),
-                items: [
-                    BenefitItem {
-                        title: "Faster OODA loops".to_string(),
-                        description: "Shorten observe-orient-decide-act cycles with realtime, context-aware recommendations.".to_string(),
-                    },
-                    BenefitItem {
-                        title: "Higher decision quality".to_string(),
-                        description: "Improve consistency with explainable AI support and validated planning templates.".to_string(),
-                    },
-                    BenefitItem {
-                        title: "Mission assurance".to_string(),
-                        description: "Maintain traceability, policy alignment, and post-mission audit records.".to_string(),
-                    },
-                ],
-            }),
-        ],
-        problem_solution: None,
-        process: None,
-        pricing_or_cta: PricingOrCtaBlock::Cta {
-            title: "Operational advantage starts with faster decisions".to_string(),
-            subtitle: "See how Decision Advantage fits your mission workflows.".to_string(),
-            button_label: "Request a Demo".to_string(),
-            button_href: "/contact".to_string(),
-        },
-        testimonials: Some(TestimonialsBlock {
-            title: "Testimonials".to_string(),
-            items: [
-                TestimonialItem {
-                    text: "Decision Advantage reduced our planning cycle by over 40% while preserving command authority and discipline.".to_string(),
-                    job: "Joint Task Force Operations Lead".to_string(),
-                    person: "A. Commander".to_string(),
-                    image: "https://placehold.co/96x96/001741/FFFFFF?text=AC".to_string(),
-                },
-                TestimonialItem {
-                    text: "We now run scenario branches in parallel and brief leadership with evidence-backed COAs in near real time.".to_string(),
-                    job: "Defense Analytics Director".to_string(),
-                    person: "R. Analyst".to_string(),
-                    image: "https://placehold.co/96x96/0A2A66/FFFFFF?text=RA".to_string(),
-                },
-            ],
-        }),
-        faq: Some(FaqBlock {
-            title: "Frequently asked questions".to_string(),
-            items: vec![
-                FaqItem {
-                    question: "Does this replace commanders?".to_string(),
-                    answer: "No. The platform is designed for human command authority, with AI providing recommendations and decision support.".to_string(),
-                },
-                FaqItem {
-                    question: "Can it run in sovereign or on-prem environments?".to_string(),
-                    answer: "Yes. Decision Advantage can be deployed in controlled environments to meet operational and sovereignty constraints.".to_string(),
-                },
-                FaqItem {
-                    question: "How do we trust model outputs?".to_string(),
-                    answer: "Every recommendation includes traceable sources, assumptions, and confidence signals for operator validation.".to_string(),
-                },
-            ],
-        }),
-    };
-
     let page = rsx!(
         Layout {
-            title: "Decision Advantage".to_string(),
-            description: "Agentic military AI for faster, auditable operational decision advantage.".to_string(),
+            title: "Decision | Command Velocity Platform".to_string(),
+            description: "Command-grade decision velocity for operations that cannot wait.".to_string(),
             mobile_menu: None,
             section: Section::Home,
             main {
-                MarketingLandingPage {
-                    theme: decision_theme(),
-                    spec: spec,
+                class: "decision-luxe",
+
+                style {
+                    dangerous_inner_html: include_str!("index_luxe.css")
                 }
-            }
-            Footer {
-                links: crate::ui_links::footer_links()
+
+                section {
+                    id: "hero",
+                    class: "dl-wrap",
+
+                    div {
+                        class: "dl-hero",
+                        div {
+                            class: "dl-hero-content",
+                            span { class: "dl-kicker", "MIDNIGHT LUXE // DECISION OPS" }
+                            h1 {
+                                class: "dl-headline",
+                                "Command theater,"
+                                i { "precision in motion." }
+                            }
+                            p {
+                                class: "dl-lead",
+                                "Decision transforms fragmented war-room signals into one continuous operational instrument. Every brief, branch, and recommendation arrives in tempo with your command intent."
+                            }
+                            a {
+                                class: "dl-btn",
+                                href: "/blog",
+                                "Enter the Briefing Room"
+                            }
+                        }
+                    }
+
+                    section {
+                        id: "artifacts",
+                        class: "dl-artifacts dl-shell",
+                        h2 { class: "dl-headline" , style: "font-size:clamp(1.7rem,4.7vw,3.5rem);", "Interactive" i { "Functional Artifacts" } }
+                        p { class: "dl-lead", "Operational ideas should behave like software, not static slides. These live artifacts preview how Decision drives tempo and control." }
+                        div {
+                            class: "dl-grid3",
+
+                            article {
+                                class: "dl-card",
+                                h3 { "Diagnostic Shuffler" }
+                                p { "Mission diagnostics reprioritize every 3 seconds so teams see where attention should move next." }
+                                div {
+                                    id: "diag-stage",
+                                    class: "diag-stage",
+                                    div { class: "diag-item", small { "Priority" } strong { "Supply chain latency" } }
+                                    div { class: "diag-item", small { "Priority" } strong { "Denied-area ISR drift" } }
+                                    div { class: "diag-item", small { "Priority" } strong { "Comms degradation" } }
+                                }
+                            }
+
+                            article {
+                                class: "dl-card",
+                                h3 { "Telemetry Typewriter" }
+                                p { "Live command feed types itself character-by-character with a persistent operations cursor." }
+                                div {
+                                    class: "telemetry",
+                                    div { class: "live", span { class: "pulse-dot" } "Live Feed" }
+                                    div {
+                                        code {
+                                            id: "type-line",
+                                            ""
+                                            span { class: "cursor" }
+                                        }
+                                    }
+                                }
+                            }
+
+                            article {
+                                class: "dl-card",
+                                h3 { "Cursor Protocol Scheduler" }
+                                p { "The scheduler traces a decision cadence: select day, commit plan, save mission cycle." }
+                                div {
+                                    id: "scheduler",
+                                    class: "scheduler",
+                                    div { id: "schedule-cursor", class: "schedule-cursor" }
+                                    div {
+                                        class: "schedule-grid",
+                                        div { class: "day-cell", "S" }
+                                        div { class: "day-cell", "M" }
+                                        div { class: "day-cell", "T" }
+                                        div { class: "day-cell", "W" }
+                                        div { class: "day-cell", "T" }
+                                        div { class: "day-cell", "F" }
+                                        div { class: "day-cell", "S" }
+                                    }
+                                    div { class: "save-btn", id: "save-btn", "Save Protocol" }
+                                }
+                            }
+                        }
+                    }
+
+                    section {
+                        id: "manifesto",
+                        class: "dl-manifesto",
+                        div { class: "dl-parallax", id: "parallax" }
+                        div {
+                            class: "dl-manifesto-content",
+                            p { "Most operations software optimizes for dashboard readability and retrospective reporting." }
+                            h2 {
+                                class: "contrast",
+                                "We optimize for"
+                                em { " irreversible minutes." }
+                            }
+                            p {
+                                "Decision keeps leaders in command while compressing observe-orient-decide-act loops into a disciplined, auditable tempo."
+                            }
+                        }
+                    }
+
+                    section {
+                        id: "protocol",
+                        class: "dl-protocol-wrap dl-shell",
+                        h2 { class: "dl-headline", style: "font-size:clamp(1.8rem,4.8vw,3.7rem);margin:1rem 1rem 2rem;", "Protocol" i { "Stacking Archive" } }
+                        div {
+                            class: "protocol-stack",
+
+                            article {
+                                class: "protocol-card",
+                                id: "protocol-card-1",
+                                div {
+                                    span { class: "protocol-step", "STEP 01" }
+                                    h3 { class: "protocol-title", "Ingest" em { " Theater Signals" } }
+                                    p { class: "protocol-desc", "Decision fuses ISR, HUMINT, logistics, and mission objectives into a single operational graph that can be trusted under pressure." }
+                                }
+                                div {
+                                    class: "viz",
+                                    div { class: "rotor" }
+                                }
+                            }
+
+                            article {
+                                class: "protocol-card",
+                                id: "protocol-card-2",
+                                div {
+                                    span { class: "protocol-step", "STEP 02" }
+                                    h3 { class: "protocol-title", "Scan" em { " Decision Paths" } }
+                                    p { class: "protocol-desc", "Courses of action are scored against doctrine, constraints, and confidence, then surfaced with transparent tradeoffs for command approval." }
+                                }
+                                div {
+                                    class: "viz",
+                                    div { class: "scan-grid" }
+                                    div { class: "scan-line" }
+                                }
+                            }
+
+                            article {
+                                class: "protocol-card",
+                                id: "protocol-card-3",
+                                div {
+                                    span { class: "protocol-step", "STEP 03" }
+                                    h3 { class: "protocol-title", "Commit" em { " and Adapt" } }
+                                    p { class: "protocol-desc", "Every recommendation becomes an auditable pulse in the command timeline, enabling faster adaptation without surrendering authority." }
+                                }
+                                div {
+                                    class: "viz",
+                                    svg {
+                                        class: "wave",
+                                        view_box: "0 0 320 110",
+                                        path {
+                                            d: "M0 56 C22 56, 24 30, 46 30 C68 30, 70 80, 95 80 C120 80, 122 52, 144 52 C166 52, 168 92, 190 92 C212 92, 216 40, 238 40 C260 40, 262 70, 285 70 C305 70, 306 56, 320 56"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    section {
+                        class: "dl-cta",
+                        h2 { "Ready to run command at luxury speed?" }
+                        p { "Stand up your first mission-specific Decision workflow and watch planning latency collapse while control stays with leadership." }
+                        a {
+                            class: "dl-btn",
+                            href: "/blog",
+                            "Start Mission Setup"
+                        }
+                    }
+                }
+
+                footer {
+                    class: "dl-footer",
+                    div {
+                        class: "dl-footer-grid",
+                        div {
+                            h4 { "Decision" }
+                            p { class: "dl-lead", style: "font-size:0.92rem;max-width:30ch;", "A command-grade decision platform for teams operating where the cost of delay is strategic." }
+                            div { class: "status", span { class: "pulse-dot" } "System Operational" }
+                        }
+                        nav {
+                            h4 { "Navigate" }
+                            a { href: "/", "Home" }
+                            a { href: "/blog", "Briefings" }
+                            a { href: "/#protocol", "Protocol" }
+                        }
+                        nav {
+                            h4 { "Programs" }
+                            a { href: "/blog", "Scenario Library" }
+                            a { href: "/blog", "Operational Notes" }
+                            a { href: "/blog", "Release Signals" }
+                        }
+                        nav {
+                            h4 { "Legal" }
+                            a { href: "/", "Privacy" }
+                            a { href: "/", "Terms" }
+                        }
+                    }
+                }
+
+                script {
+                    dangerous_inner_html: include_str!("index_luxe.js")
+                }
             }
         }
     );
