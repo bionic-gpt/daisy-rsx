@@ -64,7 +64,7 @@ impl NavigationLinks {
                         NavigationLink::new("Blog", blog.clone(), Section::Blog),
                         NavigationLink::new("Documentation", docs.clone(), Section::Docs),
                         NavigationLink::new(
-                            "Gen AI Architect Course",
+                            "Zero to Agentic AI Hero",
                             architect_course.clone(),
                             Section::ArchitectCourse,
                         ),
@@ -90,7 +90,11 @@ impl NavigationLinks {
                 NavigationLink::new("Pricing", pricing, Section::Pricing),
                 NavigationLink::new("Blog", blog, Section::Blog),
                 NavigationLink::new("Documentation", docs, Section::Docs),
-                NavigationLink::new("Architect Course", architect_course, Section::ArchitectCourse),
+                NavigationLink::new(
+                    "Zero to Agentic AI Hero",
+                    architect_course,
+                    Section::ArchitectCourse,
+                ),
                 NavigationLink::new("Partners", partners, Section::Partners),
                 NavigationLink::new("Book a Call", contact, Section::Contact),
                 NavigationLink::external("Star us on GitHub", github_href, Section::None)

@@ -1,4 +1,4 @@
-# Gen AI Architect Course Overview
+# Zero to Agentic AI Hero Overview
 
 After this course you'll understand:
 
