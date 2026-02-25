@@ -1,10 +1,12 @@
 # Understanding Tool Calls
 
-Tool calls let the assistant hand off work to real systems so it can fetch information it does not know itself—think “what is the date?” or “look up this account.” That keeps answers accurate, traceable, and aligned with the systems you already trust. This page explains when to create a tool versus a text-only response and how to encode arguments for reliability.
+- **Why tool calls exist.** They hand off work to *real systems* when the model can’t know the answer.
+- **What you get.** **Accurate**, *traceable* results aligned with systems you already trust.
+- **What this page covers.** When to use a **tool** vs. *text-only* response, and how to encode arguments reliably.
 
 We cover the request lifecycle, how structured responses are marshalled in Rust, and what telemetry you can collect to monitor usage.
 
-## Example: Asking “What is the date?” without Tools
+## Example: Asking “What is the price of Bitcoin?” without Tools
 
 When you omit the `tools` array, the model must answer using its internal context, which usually results in a generic response. The example below uses the same `granite4:tiny-h` model referenced in the Ollama quick start guide:
 
@@ -14,8 +16,14 @@ curl http://localhost:11434/api/chat \
   -d '{
         "model": "granite4:tiny-h",
         "messages": [
-          {"role": "system", "content": "You are a precise assistant that admits uncertainty."},
-          {"role": "user", "content": "What is the date?"}
+          {
+            "role": "system", 
+            "content": "You are a precise assistant that admits uncertainty."
+          },
+          {
+            "role": "user", 
+            "content": "What is the price of Bitcoin today in USD?"
+          }
         ]
       }'
 ```
@@ -25,11 +33,11 @@ Typical output looks like:
 ```json
 {
   "role": "assistant",
-  "content": "I do not have access to the current time. Please check your device clock."
+  "content": "I’m sorry, but I don’t have access to real‑time data, so I can’t provide today’s Bitcoin price. For the most up‑to‑date figure, please check a reliable financial source such as a cryptocurrency exchange (e.g., Coinbase, Binance), a market data site (e.g., CoinMarketCap, CoinGecko), or a financial news outlet. If you’d like, I can share information about how Bitcoin’s price has historically behaved or explain the factors that influence its value. Let me know how I can help!"
 }
 ```
 
-## Example: Asking “What is the date?” with Tools
+## Example: Asking “What is the price of Bitcoin?” with Tools
 
 The `chat` endpoint in Ollama can emit structured tool invocations when the user request requires code. Re-using the `granite4:tiny-h` model, expose a `get_current_datetime` tool so the assistant can call into deterministic logic:
 
@@ -37,30 +45,27 @@ The `chat` endpoint in Ollama can emit structured tool invocations when the user
 curl http://localhost:11434/api/chat \
   -H "Content-Type: application/json" \
   -d '{
-        "model": "granite4:tiny-h",
-        "messages": [
-          {"role": "system", "content": "You are a precise assistant that prefers tool calls over guessing."},
-          {"role": "user", "content": "What is the date?"}
-        ],
-        "tools": [
-          {
-            "type": "function",
-            "function": {
-              "name": "get_current_datetime",
-              "description": "Returns the ISO-8601 timestamp for the current moment.",
-              "parameters": {
-                "type": "object",
-                "properties": {
-                  "timezone": {
-                    "type": "string",
-                    "description": "Optional IANA timezone identifier such as America/New_York."
-                  }
-                }
-              }
-            }
+    "model": "granite4:tiny-h",
+    "messages": [
+      {"role": "system", "content": "You are a precise assistant that admits uncertainty."},
+      {"role": "user", "content": "What is the price of Bitcoin today in USD?"}
+    ],
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "get_bitcoin_price_usd",
+          "description": "Returns the current price of Bitcoin in USD.",
+          "parameters": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false
           }
-        ]
-      }'
+        }
+      }
+    ],
+    "tool_choice": "auto"
+  }'
 ```
 
 Ollama returns either a natural-language answer or a tool payload. When a tool is selected the `message` looks like:
@@ -71,11 +76,14 @@ Ollama returns either a natural-language answer or a tool payload. When a tool i
   "content": "",
   "tool_calls": [
     {
-      "name": "get_current_datetime",
-      "arguments": "{\"timezone\":\"UTC\"}"
+      "name": "get_bitcoin_price_usd",
+      "arguments": "{}"
     }
   ]
 }
 ```
 
-The tool payload contains everything your application needs: the tool name and the JSON arguments to pass to your own code. Once you execute the tool and hand the result back to the assistant, it can explain the answer in natural language. Comparing both flows highlights when tools are needed. With a tool definition, the assistant can retrieve the actual date; without one, it can only apologize or guess. Use this contrast when teaching teams why every real-world capability should be backed by deterministic code.
+- **Tool payload = executable intent.** It includes the *tool name* and *JSON arguments* your code should run.
+- **Run → respond.** Execute the tool, send the result back, and the assistant returns a *natural-language* answer.
+- **Why tools matter.** With a tool, you get the *real Bitcoin price*; without one, you get *apologies or guesses*.
+- **Teaching point.** Use this contrast to justify **deterministic code** behind every real-world capability.
