@@ -110,15 +110,15 @@ pub fn summary() -> Summary {
                 ],
             },
             Category {
-                name: "Agent Primitives".to_string(),
+                name: "Agent Runtime".to_string(),
                 pages: vec![
                     PageSummary {
                         date: "",
-                        title: "Agent Primitives",
-                        description: "Foundational capabilities for building autonomous agents.",
-                        folder: "architect-course/025-agent-primitives/",
+                        title: "Agent Runtime",
+                        description: "Runtime capabilities for operating autonomous agents.",
+                        folder: "architect-course/025-agent-runtime/",
                         markdown: include_str!(
-                            "../content/architect-course/025-agent-primitives/index.md"
+                            "../content/architect-course/025-agent-runtime/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -126,11 +126,11 @@ pub fn summary() -> Summary {
                     },
                     PageSummary {
                         date: "",
-                        title: "State Primitives",
+                        title: "Sandboxes",
                         description: "Placeholder page.",
-                        folder: "architect-course/025-agent-primitives/010-state-primitives/",
+                        folder: "architect-course/025-agent-runtime/010-sandboxes/",
                         markdown: include_str!(
-                            "../content/architect-course/025-agent-primitives/010-state-primitives/index.md"
+                            "../content/architect-course/025-agent-runtime/010-sandboxes/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -138,11 +138,11 @@ pub fn summary() -> Summary {
                     },
                     PageSummary {
                         date: "",
-                        title: "Observation Primitives",
+                        title: "Memory",
                         description: "Placeholder page.",
-                        folder: "architect-course/025-agent-primitives/020-observation-primitives/",
+                        folder: "architect-course/025-agent-runtime/020-memory/",
                         markdown: include_str!(
-                            "../content/architect-course/025-agent-primitives/020-observation-primitives/index.md"
+                            "../content/architect-course/025-agent-runtime/020-memory/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -150,11 +150,11 @@ pub fn summary() -> Summary {
                     },
                     PageSummary {
                         date: "",
-                        title: "Action Primitives",
+                        title: "Scheduled Jobs (Cron)",
                         description: "Placeholder page.",
-                        folder: "architect-course/025-agent-primitives/030-action-primitives/",
+                        folder: "architect-course/025-agent-runtime/030-scheduled-jobs-cron/",
                         markdown: include_str!(
-                            "../content/architect-course/025-agent-primitives/030-action-primitives/index.md"
+                            "../content/architect-course/025-agent-runtime/030-scheduled-jobs-cron/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -162,11 +162,11 @@ pub fn summary() -> Summary {
                     },
                     PageSummary {
                         date: "",
-                        title: "Planning Primitives",
+                        title: "Skills",
                         description: "Placeholder page.",
-                        folder: "architect-course/025-agent-primitives/040-planning-primitives/",
+                        folder: "architect-course/025-agent-runtime/040-skills/",
                         markdown: include_str!(
-                            "../content/architect-course/025-agent-primitives/040-planning-primitives/index.md"
+                            "../content/architect-course/025-agent-runtime/040-skills/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -174,11 +174,23 @@ pub fn summary() -> Summary {
                     },
                     PageSummary {
                         date: "",
-                        title: "Safety Primitives",
+                        title: "OpenAPI Toolsets",
                         description: "Placeholder page.",
-                        folder: "architect-course/025-agent-primitives/050-safety-primitives/",
+                        folder: "architect-course/025-agent-runtime/050-openapi-toolsets/",
                         markdown: include_str!(
-                            "../content/architect-course/025-agent-primitives/050-safety-primitives/index.md"
+                            "../content/architect-course/025-agent-runtime/050-openapi-toolsets/index.md"
+                        ),
+                        image: None,
+                        author_image: None,
+                        author: None,
+                    },
+                    PageSummary {
+                        date: "",
+                        title: "Documents and Attachments",
+                        description: "Placeholder page.",
+                        folder: "architect-course/025-agent-runtime/060-documents-and-attachments/",
+                        markdown: include_str!(
+                            "../content/architect-course/025-agent-runtime/060-documents-and-attachments/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -244,47 +256,6 @@ pub fn summary() -> Summary {
                         folder: "architect-course/030-agentic-integrations/055-create-an-integration/",
                         markdown: include_str!(
                             "../content/architect-course/030-agentic-integrations/055-create-an-integration/index.md"
-                        ),
-                        image: None,
-                        author_image: None,
-                        author: None,
-                    },
-                ],
-            },
-            Category {
-                name: "Agentic RAG (Coming Soon)".to_string(),
-                pages: vec![
-                    PageSummary {
-                        date: "",
-                        title: "Agentic RAG Introduction",
-                        description: "Core concepts behind our Agentic RAG pattern.",
-                        folder: "architect-course/040-agentic-rag/060-understanding-rag/",
-                        markdown: include_str!(
-                            "../content/architect-course/040-agentic-rag/060-understanding-rag/index.md"
-                        ),
-                        image: None,
-                        author_image: None,
-                        author: None,
-                    },
-                    PageSummary {
-                        date: "",
-                        title: "Loading Agentic RAG Datasets",
-                        description: "Ingestion patterns and guardrails for Agentic RAG datasets.",
-                        folder: "architect-course/040-agentic-rag/070-loading-rag-datasets/",
-                        markdown: include_str!(
-                            "../content/architect-course/040-agentic-rag/070-loading-rag-datasets/index.md"
-                        ),
-                        image: None,
-                        author_image: None,
-                        author: None,
-                    },
-                    PageSummary {
-                        date: "",
-                        title: "Testing an Agentic RAG Pipeline in the UI (Use Case)",
-                        description: "Guided validation scenario for Agentic RAG pipelines in the console.",
-                        folder: "architect-course/040-agentic-rag/080-testing-a-rag-pipeline-in-the-ui/",
-                        markdown: include_str!(
-                            "../content/architect-course/040-agentic-rag/080-testing-a-rag-pipeline-in-the-ui/index.md"
                         ),
                         image: None,
                         author_image: None,
