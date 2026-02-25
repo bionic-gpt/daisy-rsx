@@ -4,7 +4,7 @@ We're going to use the [IBM Granite 4.0 Tiny](https://www.ibm.com/new/announceme
 
 Basically it's going to work on most PC's even without a GPU and still give surprisingly good performance.
 
-![Alt text](/architect-course/010-gen-ai-lab/01-choosing-a-model/granite-4.png "Granite 4")
+![Alt text](./granite-4.png "Granite 4")
 
 ## Why Granite 4.0 Tiny?
 

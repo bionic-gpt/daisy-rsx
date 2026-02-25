@@ -6,11 +6,11 @@ From the sidebar choose `Integrations` and then `Select Integration`.
 
 You'll see an Integration called `Postgres`.
 
-![alt text](/architect-course/030-agentic-integrations/030-understanding-integrations/select-integration.png)
+![alt text](select-integration.png)
 
 Click on `Run Integration` to see the Postgres integration up and running.
 
-![alt text](/architect-course/030-agentic-integrations/030-understanding-integrations/integration-running.png)
+![alt text](integration-running.png)
 
 ## A look at the Postgres Integration
 
@@ -33,7 +33,7 @@ Click `Configure` and add the following as an API key. We're aware it's not an A
 postgresql://postgres:testpassword@postgres:5432/bionic-gpt?sslmode=disable
 ```
 
-![alt text](/architect-course/030-agentic-integrations/030-understanding-integrations/add-api-key.png)
+![alt text](add-api-key.png)
 
 ## Next...
 
