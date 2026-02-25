@@ -16,3 +16,10 @@ exec(code: string): string
 # Run a command/process in the sandbox
 process(command: string, args: string[]): string
 ```
+
+## Further Reading
+
+- [OpenClaw Sandbox](https://docs.openclaw.ai/gateway/sandboxing)
+- [Code Mode: give agents an entire API in 1,000 tokens](https://blog.cloudflare.com/code-mode-mcp/)
+- [IronClaw sandbox implementation](https://github.com/nearai/ironclaw/tree/main/src/sandbox)
+- [AI Sandboxes Startup](https://e2b.dev/)
