@@ -1,6 +1,6 @@
 # Scheduled Jobs (Cron)
 
-```txt
+```js
 # Create a scheduled job
 cron(schedule: string, tool_name: string, arguments: object): string
 

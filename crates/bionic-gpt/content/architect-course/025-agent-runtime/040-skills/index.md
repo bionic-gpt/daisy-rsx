@@ -1,6 +1,6 @@
 # Skills
 
-```txt
+```js
 # List installed skills
 skill_list(): string[]
 

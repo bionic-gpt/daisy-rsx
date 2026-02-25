@@ -1,6 +1,6 @@
 # Sandboxes
 
-```txt
+```js
 # Read a file from the sandbox
 read(path: string): string
 

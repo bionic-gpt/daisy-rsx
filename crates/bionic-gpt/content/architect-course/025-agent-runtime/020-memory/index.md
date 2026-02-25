@@ -1,6 +1,6 @@
 # Memory
 
-```txt
+```js
 # Search memory by semantic query
 memory_search(query: string, limit: number): object[]
 

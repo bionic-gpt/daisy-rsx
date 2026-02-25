@@ -1,6 +1,6 @@
 # OpenAPI Toolsets
 
-```txt
+```js
 # Register an OpenAPI spec as a toolset
 openapi_register(spec_url: string, name: string): string
 

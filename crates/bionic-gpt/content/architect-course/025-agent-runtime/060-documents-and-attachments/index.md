@@ -1,6 +1,6 @@
 # Documents and Attachments
 
-```txt
+```js
 # Search indexed documents
 document_search(query: string, top_k: number): object[]
 
