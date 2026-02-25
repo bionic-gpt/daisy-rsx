@@ -15,6 +15,7 @@ curl http://localhost:11434/api/chat \
   -H "Content-Type: application/json" \
   -d '{
         "model": "granite4:tiny-h",
+        "stream": false,
         "messages": [
           {
             "role": "system", 
@@ -46,6 +47,7 @@ curl http://localhost:11434/api/chat \
   -H "Content-Type: application/json" \
   -d '{
     "model": "granite4:tiny-h",
+    "stream": false,
     "messages": [
       {"role": "system", "content": "You are a precise assistant that admits uncertainty."},
       {"role": "user", "content": "What is the price of Bitcoin today in USD?"}

@@ -57,6 +57,7 @@ curl http://localhost:11434/api/chat \
   -H "Content-Type: application/json" \
   -d '{
     "model": "granite4:tiny-h",
+    "stream": false,
     "messages": [
       {
         "role": "system",
@@ -79,7 +80,7 @@ curl http://localhost:11434/api/chat \
       {
         "role": "tool",
         "name": "get_bitcoin_price_usd",
-        "content": "{\"price_usd\": 68000, \"source\": \"pretend-dispatcher\"}"
+        "content": "{\"price_usd\": 91337.42 }"
       }
     ]
   }'
