@@ -85,11 +85,23 @@ pub fn summary() -> Summary {
                     },
                     PageSummary {
                         date: "",
+                        title: "Agentic Loop",
+                        description: "Why agentic AI is just tool calling in a loop.",
+                        folder: "architect-course/02-basics-of-tool-calls/010-basics-of-tool-calls/020-agentic-loop/",
+                        markdown: include_str!(
+                            "../content/architect-course/02-basics-of-tool-calls/010-basics-of-tool-calls/020-agentic-loop/index.md"
+                        ),
+                        image: None,
+                        author_image: None,
+                        author: None,
+                    },
+                    PageSummary {
+                        date: "",
                         title: "Tool Calls in the UI",
                         description: "Follow tool invocation state transitions inside the console.",
-                        folder: "architect-course/02-basics-of-tool-calls/010-basics-of-tool-calls/020-tool-calls-in-the-ui/",
+                        folder: "architect-course/02-basics-of-tool-calls/010-basics-of-tool-calls/030-tool-calls-in-the-ui/",
                         markdown: include_str!(
-                            "../content/architect-course/02-basics-of-tool-calls/010-basics-of-tool-calls/020-tool-calls-in-the-ui/index.md"
+                            "../content/architect-course/02-basics-of-tool-calls/010-basics-of-tool-calls/030-tool-calls-in-the-ui/index.md"
                         ),
                         image: None,
                         author_image: None,
