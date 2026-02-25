@@ -25,6 +25,84 @@ pub fn Layout(props: LayoutProps) -> Element {
     let page_url = absolute_url(&page_url);
     let image = props.image.unwrap_or("/open-graph.png".to_string());
     let image_meta = absolute_url(&image);
+    let image_lightbox_css = r#"
+        .image-lightbox {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.92);
+            z-index: 9999;
+            cursor: zoom-out;
+            padding: 2rem;
+        }
+        .image-lightbox.is-open {
+            display: flex;
+        }
+        .image-lightbox img {
+            max-width: min(96vw, 1800px);
+            max-height: 92vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
+            border-radius: 8px;
+        }
+        article img,
+        .prose img {
+            cursor: zoom-in;
+        }
+    "#;
+    let image_lightbox_js = r#"
+        (function () {
+          if (window.__imageLightboxReady) return;
+          window.__imageLightboxReady = true;
+
+          const overlay = document.createElement("div");
+          overlay.className = "image-lightbox";
+          overlay.setAttribute("aria-hidden", "true");
+
+          const overlayImg = document.createElement("img");
+          overlayImg.alt = "";
+          overlay.appendChild(overlayImg);
+          document.body.appendChild(overlay);
+
+          function closeLightbox() {
+            overlay.classList.remove("is-open");
+            overlay.setAttribute("aria-hidden", "true");
+            overlayImg.removeAttribute("src");
+            document.body.style.overflow = "";
+          }
+
+          function openLightbox(src, alt) {
+            overlayImg.src = src;
+            overlayImg.alt = alt || "";
+            overlay.classList.add("is-open");
+            overlay.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
+          }
+
+          document.addEventListener("click", function (event) {
+            const target = event.target;
+            if (!(target instanceof HTMLImageElement)) return;
+            if (!target.closest("article, .prose")) return;
+            if (target.closest(".image-lightbox")) return;
+            if (!target.src) return;
+            openLightbox(target.src, target.alt);
+          });
+
+          overlay.addEventListener("click", function () {
+            closeLightbox();
+          });
+
+          document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape" && overlay.classList.contains("is-open")) {
+              closeLightbox();
+            }
+          });
+        })();
+    "#;
     rsx!(
         head {
             title {
@@ -80,6 +158,7 @@ pub fn Layout(props: LayoutProps) -> Element {
                 "type": "module",
                 src: "https://cdn.jsdelivr.net/npm/@justinribeiro/lite-youtube@1/lite-youtube.min.js"
             }
+            style { "{image_lightbox_css}" }
         }
         body {
             //WebinarHeader {}
@@ -95,6 +174,9 @@ pub fn Layout(props: LayoutProps) -> Element {
                 src: "https://instant.page/5.2.0",
                 type: "module",
                 integrity: "sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84q0uHVRRxEtvFPiQYbXWUorga2aqZJ0z"
+            }
+            script {
+                dangerous_inner_html: image_lightbox_js
             }
         }
     )
