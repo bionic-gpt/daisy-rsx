@@ -34,6 +34,9 @@ Skills are a lightweight way to keep the base prompt small while still enabling 
 
 OpenClaw weather example:
 
+
+![Alt text](./clawhub.png "Clawhub")
+
 - [https://clawhub.ai/steipete/weather](https://clawhub.ai/steipete/weather)
 
 In practice:
