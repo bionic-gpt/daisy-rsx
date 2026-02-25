@@ -18,4 +18,7 @@ sed -i "s|/tailwind\\.css|/tailwind-${TIMESTAMP}.css|g" ../ssg_whiz/src/layouts/
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 . "$HOME/.cargo/env"
 
+curl -fsSL https://d2lang.com/install.sh | sh -s --
+export PATH="$HOME/.local/bin:$PATH"
+
 cargo run
