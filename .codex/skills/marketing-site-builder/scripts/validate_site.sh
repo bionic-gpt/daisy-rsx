@@ -20,9 +20,10 @@ if [[ ! -d "$CRATE_DIR" ]]; then
 fi
 
 echo "[1/3] Build/generate site: $SITE"
-(cd "$CRATE_DIR" && DO_NOT_RUN_SERVER=1 cargo run --bin "$SITE") >/tmp/validate_site_${SITE}.log 2>&1 || {
+BUILD_LOG="/tmp/validate_site_${SITE}.log"
+(cd "$CRATE_DIR" && DO_NOT_RUN_SERVER=1 cargo run --bin "$SITE") 2>&1 | tee "$BUILD_LOG" || {
   echo "Build failed. Showing tail of log:"
-  tail -n 80 "/tmp/validate_site_${SITE}.log"
+  tail -n 80 "$BUILD_LOG"
   exit 1
 }
 
