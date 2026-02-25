@@ -15,6 +15,12 @@ fn image_variant_path(path: &str, width: u32, height: u32) -> String {
     }
 }
 
+fn supports_resized_variants(path: &str) -> bool {
+    path.rsplit_once('.')
+        .map(|(_, ext)| matches!(ext.to_ascii_lowercase().as_str(), "png" | "jpg" | "jpeg" | "webp"))
+        .unwrap_or(false)
+}
+
 #[component]
 pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
     let content = crate::markdown::markdown_to_html(post.markdown);
@@ -151,8 +157,20 @@ pub fn BlogList(summary: Summary, footer_links: FooterLinks) -> Element {
                                         if let Some(image) = page.image {
                                             img {
                                                 class: "w-full aspect-[16/9] object-cover rounded-md",
-                                                src: image_variant_path(image, 384, 216),
-                                                srcset: "{image_variant_path(image, 384, 216)} 1x, {image_variant_path(image, 768, 432)} 2x",
+                                                src: if supports_resized_variants(image) {
+                                                    image_variant_path(image, 384, 216)
+                                                } else {
+                                                    image.to_string()
+                                                },
+                                                srcset: if supports_resized_variants(image) {
+                                                    format!(
+                                                        "{} 1x, {} 2x",
+                                                        image_variant_path(image, 384, 216),
+                                                        image_variant_path(image, 768, 432)
+                                                    )
+                                                } else {
+                                                    String::new()
+                                                },
                                                 sizes: "(min-width: 768px) 384px, 100vw",
                                                 width: "384",
                                                 height: "216",
