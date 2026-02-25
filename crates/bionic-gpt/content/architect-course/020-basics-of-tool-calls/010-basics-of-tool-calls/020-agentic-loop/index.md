@@ -2,6 +2,9 @@
 
 Agentic AI is just **tool calling in a loop** until the model is finished. You are the dispatcher that **runs tools**, returns **results**, and lets the model keep going.
 
+
+![Alt text](./agent-loop.svg "ArchiAgent Looptecture")
+
 ## The Loop (Model ↔ Tools)
 
 1. **Model decides** to call a tool.

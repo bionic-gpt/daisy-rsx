@@ -28,4 +28,4 @@ You can then access the front end from `http://localhost:3000`.
 
 ## Screenshot
 
-![Alt text](./bionic-console.png "Start Screen")
+![Alt text](/architect-course/010-gen-ai-lab/03-docker-compose/bionic-console.png "Start Screen")

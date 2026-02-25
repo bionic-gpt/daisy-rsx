@@ -24,9 +24,9 @@ pub fn summary() -> Summary {
                         date: "",
                         title: "Choosing a Model",
                         description: "Pick the Granite baseline used throughout the lab.",
-                        folder: "architect-course/01-gen-ai-lab/01-choosing-a-model/",
+                        folder: "architect-course/gen-ai-lab/choosing-a-model/",
                         markdown: include_str!(
-                            "../content/architect-course/01-gen-ai-lab/01-choosing-a-model/index.md"
+                            "../content/architect-course/010-gen-ai-lab/01-choosing-a-model/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -36,8 +36,8 @@ pub fn summary() -> Summary {
                         date: "",
                         title: "Running an Inference Engine (Ollama)",
                         description: "Connecting to Ollam",
-                        folder: "architect-course/01-gen-ai-lab/02-ollama/",
-                        markdown: include_str!("../content/architect-course/01-gen-ai-lab/02-ollama/index.md"),
+                        folder: "architect-course/gen-ai-lab/ollama/",
+                        markdown: include_str!("../content/architect-course/010-gen-ai-lab/02-ollama/index.md"),
                         image: None,
                         author_image: None,
                         author: None,
@@ -46,9 +46,9 @@ pub fn summary() -> Summary {
                         date: "",
                         title: "Running the Bionic Agentic AI Platform",
                         description: "Try it on a Laptop",
-                        folder: "architect-course/01-gen-ai-lab/03-docker-compose/",
+                        folder: "architect-course/gen-ai-lab/docker-compose/",
                         markdown: include_str!(
-                            "../content/architect-course/01-gen-ai-lab/03-docker-compose/index.md"
+                            "../content/architect-course/010-gen-ai-lab/03-docker-compose/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -58,9 +58,9 @@ pub fn summary() -> Summary {
                         date: "",
                         title: "Testing Your Model",
                         description: "Run sanity checks to validate prompts and responses.",
-                        folder: "architect-course/01-gen-ai-lab/04-testing-model/",
+                        folder: "architect-course/gen-ai-lab/testing-model/",
                         markdown: include_str!(
-                            "../content/architect-course/01-gen-ai-lab/04-testing-model/index.md"
+                            "../content/architect-course/010-gen-ai-lab/04-testing-model/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -75,9 +75,9 @@ pub fn summary() -> Summary {
                         date: "",
                         title: "Understanding Tool Calls",
                         description: "When and how to wire structured tool executions.",
-                        folder: "architect-course/02-basics-of-tool-calls/010-basics-of-tool-calls/010-understanding-tool-calls/",
+                        folder: "architect-course/basics-of-tool-calls/understanding-tool-calls/",
                         markdown: include_str!(
-                            "../content/architect-course/02-basics-of-tool-calls/010-basics-of-tool-calls/010-understanding-tool-calls/index.md"
+                            "../content/architect-course/020-basics-of-tool-calls/010-basics-of-tool-calls/010-understanding-tool-calls/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -87,9 +87,9 @@ pub fn summary() -> Summary {
                         date: "",
                         title: "Agentic Loop",
                         description: "Why agentic AI is just tool calling in a loop.",
-                        folder: "architect-course/02-basics-of-tool-calls/010-basics-of-tool-calls/020-agentic-loop/",
+                        folder: "architect-course/basics-of-tool-calls/agentic-loop/",
                         markdown: include_str!(
-                            "../content/architect-course/02-basics-of-tool-calls/010-basics-of-tool-calls/020-agentic-loop/index.md"
+                            "../content/architect-course/020-basics-of-tool-calls/010-basics-of-tool-calls/020-agentic-loop/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -99,9 +99,86 @@ pub fn summary() -> Summary {
                         date: "",
                         title: "Tool Calls in the UI",
                         description: "Follow tool invocation state transitions inside the console.",
-                        folder: "architect-course/02-basics-of-tool-calls/010-basics-of-tool-calls/030-tool-calls-in-the-ui/",
+                        folder: "architect-course/basics-of-tool-calls/tool-calls-in-the-ui/",
                         markdown: include_str!(
-                            "../content/architect-course/02-basics-of-tool-calls/010-basics-of-tool-calls/030-tool-calls-in-the-ui/index.md"
+                            "../content/architect-course/020-basics-of-tool-calls/010-basics-of-tool-calls/030-tool-calls-in-the-ui/index.md"
+                        ),
+                        image: None,
+                        author_image: None,
+                        author: None,
+                    },
+                ],
+            },
+            Category {
+                name: "Agent Primitives".to_string(),
+                pages: vec![
+                    PageSummary {
+                        date: "",
+                        title: "Agent Primitives",
+                        description: "Foundational capabilities for building autonomous agents.",
+                        folder: "architect-course/agent-primitives/",
+                        markdown: include_str!(
+                            "../content/architect-course/025-agent-primitives/index.md"
+                        ),
+                        image: None,
+                        author_image: None,
+                        author: None,
+                    },
+                    PageSummary {
+                        date: "",
+                        title: "State Primitives",
+                        description: "Placeholder page.",
+                        folder: "architect-course/agent-primitives/state-primitives/",
+                        markdown: include_str!(
+                            "../content/architect-course/025-agent-primitives/010-state-primitives/index.md"
+                        ),
+                        image: None,
+                        author_image: None,
+                        author: None,
+                    },
+                    PageSummary {
+                        date: "",
+                        title: "Observation Primitives",
+                        description: "Placeholder page.",
+                        folder: "architect-course/agent-primitives/observation-primitives/",
+                        markdown: include_str!(
+                            "../content/architect-course/025-agent-primitives/020-observation-primitives/index.md"
+                        ),
+                        image: None,
+                        author_image: None,
+                        author: None,
+                    },
+                    PageSummary {
+                        date: "",
+                        title: "Action Primitives",
+                        description: "Placeholder page.",
+                        folder: "architect-course/agent-primitives/action-primitives/",
+                        markdown: include_str!(
+                            "../content/architect-course/025-agent-primitives/030-action-primitives/index.md"
+                        ),
+                        image: None,
+                        author_image: None,
+                        author: None,
+                    },
+                    PageSummary {
+                        date: "",
+                        title: "Planning Primitives",
+                        description: "Placeholder page.",
+                        folder: "architect-course/agent-primitives/planning-primitives/",
+                        markdown: include_str!(
+                            "../content/architect-course/025-agent-primitives/040-planning-primitives/index.md"
+                        ),
+                        image: None,
+                        author_image: None,
+                        author: None,
+                    },
+                    PageSummary {
+                        date: "",
+                        title: "Safety Primitives",
+                        description: "Placeholder page.",
+                        folder: "architect-course/agent-primitives/safety-primitives/",
+                        markdown: include_str!(
+                            "../content/architect-course/025-agent-primitives/050-safety-primitives/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -116,9 +193,9 @@ pub fn summary() -> Summary {
                         date: "",
                         title: "Connecting LLMs to External Systems",
                         description: "Conceptual overview of connecting external services.",
-                        folder: "architect-course/03-agentic-integrations/030-understanding-integrations/",
+                        folder: "architect-course/agentic-integrations/understanding-integrations/",
                         markdown: include_str!(
-                            "../content/architect-course/03-agentic-integrations/030-understanding-integrations/index.md"
+                            "../content/architect-course/030-agentic-integrations/030-understanding-integrations/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -128,9 +205,9 @@ pub fn summary() -> Summary {
                         date: "",
                         title: "Connecting an Assistant to Our Integrations",
                         description: "Enable built-in integrations and wire them to an assistant from the console.",
-                        folder: "architect-course/03-agentic-integrations/040-connecting-the-integration/",
+                        folder: "architect-course/agentic-integrations/connecting-the-integration/",
                         markdown: include_str!(
-                            "../content/architect-course/03-agentic-integrations/040-connecting-the-integration/index.md"
+                            "../content/architect-course/030-agentic-integrations/040-connecting-the-integration/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -140,9 +217,9 @@ pub fn summary() -> Summary {
                         date: "",
                         title: "Using Our Integration",
                         description: "Hands-on walkthrough with the generic integration connector.",
-                        folder: "architect-course/03-agentic-integrations/045-using-our-integration/",
+                        folder: "architect-course/agentic-integrations/using-our-integration/",
                         markdown: include_str!(
-                            "../content/architect-course/03-agentic-integrations/045-using-our-integration/index.md"
+                            "../content/architect-course/030-agentic-integrations/045-using-our-integration/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -152,9 +229,9 @@ pub fn summary() -> Summary {
                         date: "",
                         title: "Custom Integrations",
                         description: "Use OpenAPI specs to wire in-house APIs into assistants.",
-                        folder: "architect-course/03-agentic-integrations/050-understanding-open-api-specifications/",
+                        folder: "architect-course/agentic-integrations/understanding-open-api-specifications/",
                         markdown: include_str!(
-                            "../content/architect-course/03-agentic-integrations/050-understanding-open-api-specifications/index.md"
+                            "../content/architect-course/030-agentic-integrations/050-understanding-open-api-specifications/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -164,9 +241,9 @@ pub fn summary() -> Summary {
                         date: "",
                         title: "Create an Integration",
                         description: "Steps for granting secure Gmail access to assistants.",
-                        folder: "architect-course/03-agentic-integrations/055-create-an-integration/",
+                        folder: "architect-course/agentic-integrations/create-an-integration/",
                         markdown: include_str!(
-                            "../content/architect-course/03-agentic-integrations/055-create-an-integration/index.md"
+                            "../content/architect-course/030-agentic-integrations/055-create-an-integration/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -181,9 +258,9 @@ pub fn summary() -> Summary {
                         date: "",
                         title: "Agentic RAG Introduction",
                         description: "Core concepts behind our Agentic RAG pattern.",
-                        folder: "architect-course/04-agentic-rag/060-understanding-rag/",
+                        folder: "architect-course/agentic-rag/understanding-rag/",
                         markdown: include_str!(
-                            "../content/architect-course/04-agentic-rag/060-understanding-rag/index.md"
+                            "../content/architect-course/040-agentic-rag/060-understanding-rag/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -193,9 +270,9 @@ pub fn summary() -> Summary {
                         date: "",
                         title: "Loading Agentic RAG Datasets",
                         description: "Ingestion patterns and guardrails for Agentic RAG datasets.",
-                        folder: "architect-course/04-agentic-rag/070-loading-rag-datasets/",
+                        folder: "architect-course/agentic-rag/loading-rag-datasets/",
                         markdown: include_str!(
-                            "../content/architect-course/04-agentic-rag/070-loading-rag-datasets/index.md"
+                            "../content/architect-course/040-agentic-rag/070-loading-rag-datasets/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -205,9 +282,9 @@ pub fn summary() -> Summary {
                         date: "",
                         title: "Testing an Agentic RAG Pipeline in the UI (Use Case)",
                         description: "Guided validation scenario for Agentic RAG pipelines in the console.",
-                        folder: "architect-course/04-agentic-rag/080-testing-a-rag-pipeline-in-the-ui/",
+                        folder: "architect-course/agentic-rag/testing-a-rag-pipeline-in-the-ui/",
                         markdown: include_str!(
-                            "../content/architect-course/04-agentic-rag/080-testing-a-rag-pipeline-in-the-ui/index.md"
+                            "../content/architect-course/040-agentic-rag/080-testing-a-rag-pipeline-in-the-ui/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -222,9 +299,9 @@ pub fn summary() -> Summary {
                         date: "",
                         title: "Why Kubernetes",
                         description: "Why the platform relies on Kubernetes instead of standalone Docker setups.",
-                        folder: "architect-course/05-ai-ops/why-kubernetes/",
+                        folder: "architect-course/ai-ops/why-kubernetes/",
                         markdown: include_str!(
-                            "../content/architect-course/05-ai-ops/why-kubernetes/index.md"
+                            "../content/architect-course/050-ai-ops/why-kubernetes/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -234,8 +311,8 @@ pub fn summary() -> Summary {
                         date: "",
                         title: "Running Kubernetes Lab",
                         description: "Install a local K3s cluster that mirrors production topologies.",
-                        folder: "architect-course/05-ai-ops/install-linux/",
-                        markdown: include_str!("../content/architect-course/05-ai-ops/install-linux/index.md"),
+                        folder: "architect-course/ai-ops/install-linux/",
+                        markdown: include_str!("../content/architect-course/050-ai-ops/install-linux/index.md"),
                         image: None,
                         author_image: None,
                         author: None,

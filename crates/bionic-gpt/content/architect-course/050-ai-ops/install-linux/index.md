@@ -55,7 +55,7 @@ Error: ApiError: "service unavailable\n": Failed to parse error data (ErrorRespo
 After a while of container creation you should see all the pods running and then be able to access Bionic.
 
 
-![Alt text](bionic-startup-k9s.png "Bionic K9s")
+![Alt text](/architect-course/050-ai-ops/install-linux/bionic-startup-k9s.png "Bionic K9s")
 
 ## Run the User Interface
 

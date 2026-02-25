@@ -25,14 +25,14 @@ Example Response
 
 You should get a JSON spec back that resembles this structure.
 
-![alt text](generate-spec.png)
+![alt text](/architect-course/030-agentic-integrations/055-create-an-integration/generate-spec.png)
 
 Now add the spec to Bionic. Go to `Integrations > Select Integration > Add Custom` and paste your OpenAPI JSON into the textarea.
 
-![alt text](add-spec.png)
+![alt text](/architect-course/030-agentic-integrations/055-create-an-integration/add-spec.png)
 
 Click `Submit` to create the integration.
 
-![alt text](show-integration.png)
+![alt text](/architect-course/030-agentic-integrations/055-create-an-integration/show-integration.png)
 
 Finally, connect the integration to an assistant (as shown in the Postgres example) and start chatting with that system.

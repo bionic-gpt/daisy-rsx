@@ -9,17 +9,17 @@ Description: IBM Granite 4.0-H-Tiny is a hyper-efficient, 7-billion total parame
 Base URL: http://host.docker.internal:11434/v1
 ```
 
-![Alt text](./adding-the-model.png "Start Screen")
+![Alt text](/architect-course/010-gen-ai-lab/04-testing-model/adding-the-model.png "Start Screen")
 
 
 ## Enable Tool Use
 
 
-![Alt text](./tool-use.png "Start Screen")
+![Alt text](/architect-course/010-gen-ai-lab/04-testing-model/tool-use.png "Start Screen")
 
 ## Final Result
 
-![Alt text](./models-view.png "Start Screen")
+![Alt text](/architect-course/010-gen-ai-lab/04-testing-model/models-view.png "Start Screen")
 
 ## Try it out
 
@@ -31,4 +31,4 @@ Write a small hello world program in Rust.
 
 ## The Result
 
-![alt text](hello-world.png)
+![alt text](/architect-course/010-gen-ai-lab/04-testing-model/hello-world.png)
