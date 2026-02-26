@@ -15,11 +15,18 @@ function initCopyPaste() {
         </svg>
     `;
 
-    let blocks = document.querySelectorAll("pre");
+    let blocks = document.querySelectorAll("article pre, .prose pre");
 
     blocks.forEach((block) => {
+        if (block.dataset.copyReady === "true") {
+            return;
+        }
+
         if (navigator.clipboard) {
             let button = document.createElement("button");
+            button.type = "button";
+            button.className = "code-copy-btn";
+            button.dataset.copyCodeButton = "true";
             button.innerHTML = svgIcon;
             button.setAttribute("aria-label", copyButtonLabel);
 
@@ -37,6 +44,7 @@ function initCopyPaste() {
             block.parentNode.insertBefore(wrapper, block);
             wrapper.appendChild(block);
             wrapper.appendChild(button);
+            block.dataset.copyReady = "true";
 
             button.addEventListener("click", async () => {
                 await copyCode(block, button);
