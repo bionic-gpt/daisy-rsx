@@ -126,11 +126,11 @@ pub fn summary() -> Summary {
                     },
                     PageSummary {
                         date: "",
-                        title: "Sandboxes",
+                        title: "Memory",
                         description: "Placeholder page.",
-                        folder: "architect-course/025-common-toolsets/010-sandboxes/",
+                        folder: "architect-course/025-common-toolsets/020-memory/",
                         markdown: include_str!(
-                            "../content/architect-course/025-common-toolsets/010-sandboxes/index.md"
+                            "../content/architect-course/025-common-toolsets/020-memory/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -138,11 +138,23 @@ pub fn summary() -> Summary {
                     },
                     PageSummary {
                         date: "",
-                        title: "Memory",
+                        title: "Documents and Attachments",
                         description: "Placeholder page.",
-                        folder: "architect-course/025-common-toolsets/020-memory/",
+                        folder: "architect-course/025-common-toolsets/060-documents-and-attachments/",
                         markdown: include_str!(
-                            "../content/architect-course/025-common-toolsets/020-memory/index.md"
+                            "../content/architect-course/025-common-toolsets/060-documents-and-attachments/index.md"
+                        ),
+                        image: None,
+                        author_image: None,
+                        author: None,
+                    },
+                    PageSummary {
+                        date: "",
+                        title: "Sandboxes",
+                        description: "Placeholder page.",
+                        folder: "architect-course/025-common-toolsets/010-sandboxes/",
+                        markdown: include_str!(
+                            "../content/architect-course/025-common-toolsets/010-sandboxes/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -179,18 +191,6 @@ pub fn summary() -> Summary {
                         folder: "architect-course/025-common-toolsets/050-openapi-toolsets/",
                         markdown: include_str!(
                             "../content/architect-course/025-common-toolsets/050-openapi-toolsets/index.md"
-                        ),
-                        image: None,
-                        author_image: None,
-                        author: None,
-                    },
-                    PageSummary {
-                        date: "",
-                        title: "Documents and Attachments",
-                        description: "Placeholder page.",
-                        folder: "architect-course/025-common-toolsets/060-documents-and-attachments/",
-                        markdown: include_str!(
-                            "../content/architect-course/025-common-toolsets/060-documents-and-attachments/index.md"
                         ),
                         image: None,
                         author_image: None,
