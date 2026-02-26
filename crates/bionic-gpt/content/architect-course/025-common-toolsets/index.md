@@ -1,11 +1,11 @@
-# Agent Runtime
+# Common Toolsets
 
 An **agent runtime** is the operating environment around the model.
 The model reasons, but the runtime gives it **state**, **tools**, **execution**, and **time**.
 
 Diagram of the [Open Claw](https://openclaw.ai) runtime tools.
 
-![Alt text](./agent-runtime.svg "Agent Runtime")
+![Alt text](./agent-runtime.svg "Common Toolsets")
 
 ## Runtime Capabilities
 

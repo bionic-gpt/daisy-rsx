@@ -110,15 +110,15 @@ pub fn summary() -> Summary {
                 ],
             },
             Category {
-                name: "Agent Runtime".to_string(),
+                name: "Common Toolsets".to_string(),
                 pages: vec![
                     PageSummary {
                         date: "",
-                        title: "Agent Runtime",
+                        title: "Common Toolsets",
                         description: "Runtime capabilities for operating autonomous agents.",
-                        folder: "architect-course/025-agent-runtime/",
+                        folder: "architect-course/025-common-toolsets/",
                         markdown: include_str!(
-                            "../content/architect-course/025-agent-runtime/index.md"
+                            "../content/architect-course/025-common-toolsets/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -128,9 +128,9 @@ pub fn summary() -> Summary {
                         date: "",
                         title: "Sandboxes",
                         description: "Placeholder page.",
-                        folder: "architect-course/025-agent-runtime/010-sandboxes/",
+                        folder: "architect-course/025-common-toolsets/010-sandboxes/",
                         markdown: include_str!(
-                            "../content/architect-course/025-agent-runtime/010-sandboxes/index.md"
+                            "../content/architect-course/025-common-toolsets/010-sandboxes/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -140,9 +140,9 @@ pub fn summary() -> Summary {
                         date: "",
                         title: "Memory",
                         description: "Placeholder page.",
-                        folder: "architect-course/025-agent-runtime/020-memory/",
+                        folder: "architect-course/025-common-toolsets/020-memory/",
                         markdown: include_str!(
-                            "../content/architect-course/025-agent-runtime/020-memory/index.md"
+                            "../content/architect-course/025-common-toolsets/020-memory/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -152,9 +152,9 @@ pub fn summary() -> Summary {
                         date: "",
                         title: "Scheduled Jobs (Cron)",
                         description: "Placeholder page.",
-                        folder: "architect-course/025-agent-runtime/030-scheduled-jobs-cron/",
+                        folder: "architect-course/025-common-toolsets/030-scheduled-jobs-cron/",
                         markdown: include_str!(
-                            "../content/architect-course/025-agent-runtime/030-scheduled-jobs-cron/index.md"
+                            "../content/architect-course/025-common-toolsets/030-scheduled-jobs-cron/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -164,9 +164,9 @@ pub fn summary() -> Summary {
                         date: "",
                         title: "Skills",
                         description: "Placeholder page.",
-                        folder: "architect-course/025-agent-runtime/040-skills/",
+                        folder: "architect-course/025-common-toolsets/040-skills/",
                         markdown: include_str!(
-                            "../content/architect-course/025-agent-runtime/040-skills/index.md"
+                            "../content/architect-course/025-common-toolsets/040-skills/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -176,9 +176,9 @@ pub fn summary() -> Summary {
                         date: "",
                         title: "OpenAPI Toolsets",
                         description: "Placeholder page.",
-                        folder: "architect-course/025-agent-runtime/050-openapi-toolsets/",
+                        folder: "architect-course/025-common-toolsets/050-openapi-toolsets/",
                         markdown: include_str!(
-                            "../content/architect-course/025-agent-runtime/050-openapi-toolsets/index.md"
+                            "../content/architect-course/025-common-toolsets/050-openapi-toolsets/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -188,9 +188,9 @@ pub fn summary() -> Summary {
                         date: "",
                         title: "Documents and Attachments",
                         description: "Placeholder page.",
-                        folder: "architect-course/025-agent-runtime/060-documents-and-attachments/",
+                        folder: "architect-course/025-common-toolsets/060-documents-and-attachments/",
                         markdown: include_str!(
-                            "../content/architect-course/025-agent-runtime/060-documents-and-attachments/index.md"
+                            "../content/architect-course/025-common-toolsets/060-documents-and-attachments/index.md"
                         ),
                         image: None,
                         author_image: None,
