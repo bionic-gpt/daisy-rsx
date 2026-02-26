@@ -85,6 +85,21 @@ curl http://localhost:11434/api/chat \
         "name": "get_bitcoin_price_usd",
         "content": "{\"price_usd\": 91337.42 }"
       }
-    ]
+    ],
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "get_bitcoin_price_usd",
+          "description": "Returns the current price of Bitcoin in USD.",
+          "parameters": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false
+          }
+        }
+      }
+    ],
+    "tool_choice": "auto"
   }'
 ```

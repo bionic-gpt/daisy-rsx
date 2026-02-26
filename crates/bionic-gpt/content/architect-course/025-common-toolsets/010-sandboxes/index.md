@@ -49,3 +49,4 @@ Common sandbox examples:
 - [Code Mode: give agents an entire API in 1,000 tokens](https://blog.cloudflare.com/code-mode-mcp/)
 - [IronClaw sandbox implementation](https://github.com/nearai/ironclaw/tree/main/src/sandbox)
 - [AI Sandboxes Startup](https://e2b.dev/)
+- [Just Bash](https://github.com/vercel-labs/just-bash) Simulates a bash environment with configurable tools.
