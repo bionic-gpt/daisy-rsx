@@ -75,9 +75,9 @@ pub fn summary() -> Summary {
                         date: "",
                         title: "Understanding Tool Calls",
                         description: "When and how to wire structured tool executions.",
-                        folder: "architect-course/020-basics-of-tool-calls/010-basics-of-tool-calls/010-understanding-tool-calls/",
+                        folder: "architect-course/020-basics-of-tool-calls/010-understanding-tool-calls/",
                         markdown: include_str!(
-                            "../content/architect-course/020-basics-of-tool-calls/010-basics-of-tool-calls/010-understanding-tool-calls/index.md"
+                            "../content/architect-course/020-basics-of-tool-calls/010-understanding-tool-calls/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -87,9 +87,9 @@ pub fn summary() -> Summary {
                         date: "",
                         title: "Agentic Loop",
                         description: "Why agentic AI is just tool calling in a loop.",
-                        folder: "architect-course/020-basics-of-tool-calls/010-basics-of-tool-calls/020-agentic-loop/",
+                        folder: "architect-course/020-basics-of-tool-calls/020-agentic-loop/",
                         markdown: include_str!(
-                            "../content/architect-course/020-basics-of-tool-calls/010-basics-of-tool-calls/020-agentic-loop/index.md"
+                            "../content/architect-course/020-basics-of-tool-calls/020-agentic-loop/index.md"
                         ),
                         image: None,
                         author_image: None,
@@ -99,9 +99,21 @@ pub fn summary() -> Summary {
                         date: "",
                         title: "Tool Calls in the UI",
                         description: "Follow tool invocation state transitions inside the console.",
-                        folder: "architect-course/020-basics-of-tool-calls/010-basics-of-tool-calls/030-tool-calls-in-the-ui/",
+                        folder: "architect-course/020-basics-of-tool-calls/030-tool-calls-in-the-ui/",
                         markdown: include_str!(
-                            "../content/architect-course/020-basics-of-tool-calls/010-basics-of-tool-calls/030-tool-calls-in-the-ui/index.md"
+                            "../content/architect-course/020-basics-of-tool-calls/030-tool-calls-in-the-ui/index.md"
+                        ),
+                        image: None,
+                        author_image: None,
+                        author: None,
+                    },
+                    PageSummary {
+                        date: "",
+                        title: "Open Claw Runtime Tools",
+                        description: "Runtime capabilities available in Open Claw.",
+                        folder: "architect-course/020-basics-of-tool-calls/040-tool-calls-open-claw/",
+                        markdown: include_str!(
+                            "../content/architect-course/020-basics-of-tool-calls/040-tool-calls-open-claw/index.md"
                         ),
                         image: None,
                         author_image: None,

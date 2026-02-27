@@ -25,3 +25,6 @@ daisy_rsx = { path = "../daisy_rsx" }
 pulldown-cmark = { workspace = true }
 syntect = { workspace = true }
 image = "0.25"
+serde = { workspace = true }
+serde_json = { workspace = true }
+sha2 = "0.10"
