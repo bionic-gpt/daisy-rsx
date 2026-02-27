@@ -1,3 +1,5 @@
+# Open Claw Runtime Tools
+
 Diagram of the [Open Claw](https://openclaw.ai) runtime tools.
 
 ![Alt text](./open-claw.svg "Common Toolsets")
@@ -12,6 +14,8 @@ Diagram of the [Open Claw](https://openclaw.ai) runtime tools.
 
 Without a runtime, you have a chat model.
 With a runtime, you have an **agent** that can act reliably over time.
+
+## Tool Summary
 
 | Tool name          | Category              | Required params                     | Key enums / notes                                                                     |
 | ------------------ | --------------------- | ----------------------------------- | ------------------------------------------------------------------------------------- |

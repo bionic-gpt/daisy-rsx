@@ -91,21 +91,32 @@ agent.tool_call -> agent.tool_result: {class: edge-cyan}
 agent.tool_result -> agent.llm: {class: edge-green}
 
 # ─────────────────────────────────────────────
-# Bottom row
+# Bottom row (corrected to match gist toolset)
 # ─────────────────────────────────────────────
-main_tools: "Built in Tools" {
+main_tools: "Tool Surface" {
   class: [panel; violet]
-  grid-columns: 5
+  grid-columns: 4
   grid-gap: 20
-  memory: "Memory Search Engine" {
+
+  memory: "Memory" {
     class: [panel; violet]
     grid-columns: 1
     grid-gap: 10
 
     memory_search: "• memory_search" {class: [card; violet]}
-    memory_list: "• memory_list" {class: [card; violet]}
+    memory_get: "• memory_get" {class: [card; violet]}
   }
-  sandbox: "Sandbox" {
+
+  web: "Web" {
+    class: [panel; green]
+    grid-columns: 1
+    grid-gap: 10
+
+    web_search: "• web_search" {class: [card; green]}
+    web_fetch: "• web_fetch" {class: [card; green]}
+  }
+
+  sandbox: "Filesystem + Exec" {
     class: [panel; red]
     grid-columns: 1
     grid-gap: 10
@@ -116,36 +127,37 @@ main_tools: "Built in Tools" {
     exec: "• exec" {class: [card; red]}
     process: "• process" {class: [card; red]}
   }
-  cron: "Cron" {
+
+  automation: "Automation Surfaces" {
     class: [panel; cyan]
     grid-columns: 1
     grid-gap: 10
 
-    cron_job: "• cron" {class: [card; cyan]}
-    heartbeat: "• heartbeat" {class: [card; cyan]}
+    browser: "• browser" {class: [card; cyan]}
+    canvas: "• canvas" {class: [card; cyan]}
+    nodes: "• nodes" {class: [card; cyan]}
   }
-  skills: "Skills" {
+
+  orchestration: "Orchestration" {
     class: [panel; amber]
     grid-columns: 1
     grid-gap: 10
 
-    read: "• read" {class: [card; amber]}
-    edit: "• edit" {class: [card; amber]}
-    write: "• write" {class: [card; amber]}
-  }
-  various: "Various" {
-    class: [panel; green]
-    grid-columns: 1
-    grid-gap: 10
-
-    web_search: "• web_search" {class: [card; green]}
-    web_fetch: "• web_fetch" {class: [card; green]}
+    agents_list: "• agents_list" {class: [card; amber]}
+    sessions_list: "• sessions_list" {class: [card; amber]}
+    sessions_history: "• sessions_history" {class: [card; amber]}
+    sessions_send: "• sessions_send" {class: [card; amber]}
+    sessions_spawn: "• sessions_spawn" {class: [card; amber]}
+    subagents: "• subagents" {class: [card; amber]}
+    session_status: "• session_status" {class: [card; amber]}
+    message: "• message" {class: [card; amber]}
+    tts: "• tts" {class: [card; amber]}
   }
 }
 
-# Agent → bottom blocks
+# Agent → bottom blocks (corrected)
 agent -> main_tools.memory: {class: edge-violet}
-agent -> main_tools.various: {class: edge-green}
+agent -> main_tools.web: {class: edge-green}
 agent -> main_tools.sandbox: {class: edge-red}
-agent -> main_tools.cron: {class: edge-cyan}
-agent -> main_tools.skills: {class: edge-amber}
+agent -> main_tools.automation: {class: edge-cyan}
+agent -> main_tools.orchestration: {class: edge-amber}
