@@ -1,6 +1,6 @@
 # Open Claw Runtime Tools
 
-Diagram of the [Open Claw](https://openclaw.ai) runtime tools.
+Diagram of the [Open Claw](https://openclaw.ai) runtime tools, the [System Prompt](https://gist.github.com/242816/db0e828914b4d8c99de44e69aaec6042) and the Open Claw [Tool Defintions](https://gist.github.com/242816/9affbf5f3198e4e4677dd3afaf38e90d)
 
 ![Alt text](./open-claw.svg "Common Toolsets")
 
