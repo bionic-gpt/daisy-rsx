@@ -454,7 +454,7 @@ dependencies = [
 
 [[package]]
 name = "daisy_rsx"
-version = "0.1.54"
+version = "0.1.55"
 dependencies = [
  "dioxus",
  "dioxus-ssr",
