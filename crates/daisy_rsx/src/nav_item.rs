@@ -13,7 +13,7 @@ pub struct NavItemProps {
 #[component]
 pub fn NavItem(props: NavItemProps) -> Element {
     let class = match (&props.id, &props.selected_item_id) {
-        (Some(id), Some(selected_id)) if id == selected_id => "active",
+        (Some(id), Some(selected_id)) if id == selected_id => "menu-active",
         _ => "",
     };
     rsx!(
