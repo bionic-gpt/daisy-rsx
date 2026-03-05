@@ -186,7 +186,7 @@ A typical release flow using [`cargo-release`](https://github.com/crate-ci/cargo
 
 ```sh
 cargo install cargo-release
-cargo release patch
+cargo release patch -p daisy_rsx
 ```
 
 The command above performs a dry run. When you are ready to publish, run:
@@ -195,7 +195,7 @@ The command above performs a dry run. When you are ready to publish, run:
 set -a
 source .env
 set +a
-cargo release patch --execute
+cargo release patch -p daisy_rsx --execute
 ```
 
 `cargo-release` will bump the version, create a matching `v*` tag, push the changes, and trigger the release workflow.
