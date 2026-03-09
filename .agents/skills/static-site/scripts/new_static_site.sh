@@ -28,10 +28,15 @@ fi
 
 SITE_SNAKE="${SITE_SLUG//-/_}"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-WORKSPACE_ROOT="$(cd "$SCRIPT_DIR/../../../.." && pwd)"
+WORKSPACE_ROOT="$(pwd)"
 TEMPLATE_DIR="$SCRIPT_DIR/../assets/minimal-site-template"
 TARGET_DIR="$WORKSPACE_ROOT/crates/$SITE_SLUG"
 WORKSPACE_CARGO="$WORKSPACE_ROOT/Cargo.toml"
+
+if [[ ! -f "$WORKSPACE_CARGO" ]]; then
+  echo "Error: run this script from the workspace root that contains Cargo.toml"
+  exit 1
+fi
 
 if [[ ! -d "$TEMPLATE_DIR" ]]; then
   echo "Error: template directory not found: $TEMPLATE_DIR"
