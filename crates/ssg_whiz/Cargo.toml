@@ -3,12 +3,8 @@ name = "ssg_whiz"
 version = "0.1.0"
 edition = "2024"
 license = "MIT"
-publish = false
 
 description = "Static site generation orchestration utilities."
-
-[package.metadata.release]
-release = false
 
 [lib]
 path = "src/lib.rs"
@@ -21,7 +17,7 @@ tower-livereload = { workspace = true }
 tracing = { workspace = true }
 dioxus = { workspace = true }
 dioxus-ssr = { workspace = true }
-daisy_rsx = { path = "../daisy_rsx" }
+daisy_rsx = { version = "0.1.56", path = "../daisy_rsx" }
 pulldown-cmark = { workspace = true }
 syntect = { workspace = true }
 image = "0.25"
