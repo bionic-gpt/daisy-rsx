@@ -3,6 +3,8 @@ name = "ssg_whiz"
 version = "0.1.0"
 edition = "2024"
 license = "MIT"
+repository = "https://github.com/bionic-gpt/daisy-rsx"
+homepage = "https://github.com/bionic-gpt/daisy-rsx"
 
 description = "Static site generation orchestration utilities."
 
