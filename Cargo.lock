@@ -2068,7 +2068,7 @@ checksum = "6980e8d7511241f8acf4aebddbb1ff938df5eebe98691418c4468d0b72a96a67"
 
 [[package]]
 name = "ssg_whiz"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "axum",
  "daisy_rsx",
