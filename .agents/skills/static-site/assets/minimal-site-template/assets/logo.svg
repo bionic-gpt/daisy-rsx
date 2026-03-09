@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 48">
+  <rect width="48" height="48" rx="12" fill="#111827"/>
+  <path d="M15 13h18v6H21v4h10c5 0 8 3 8 7s-3 8-9 8H15v-6h14c2 0 4-1 4-3s-1-3-4-3h-6c-5 0-8-3-8-7s3-8 8-8z" fill="#F9FAFB"/>
+  <text x="64" y="31" fill="#111827" font-family="Arial, sans-serif" font-size="24" font-weight="700">__SITE_TITLE__</text>
+</svg>

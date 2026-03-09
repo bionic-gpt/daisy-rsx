@@ -1,1 +1,0 @@
-/workspace/crates/bionic-gpt/dist/solutions/education/index.html -> /river/education_assistants.png
