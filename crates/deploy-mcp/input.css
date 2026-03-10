@@ -20,11 +20,15 @@
 }
 
 .blog-post {
-  @apply mt-32 mx-auto p-5;
+  @apply mt-32 mx-auto max-w-4xl p-5;
 }
 
 .blog-post__meta {
   @apply flex flex-row mt-8 mb-4;
+}
+
+.blog-post__title {
+  @apply text-4xl font-extrabold leading-tight;
 }
 
 .blog-post__author-image {
