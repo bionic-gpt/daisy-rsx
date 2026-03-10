@@ -130,6 +130,8 @@ async fn main() {
     let docs_summary = docs_summary::summary();
     let blog_summary = blog_summary::summary();
     let pages_summary = pages_summary::summary();
+    let tailwind_stylesheet =
+        std::env::var("TAILWIND_STYLESHEET").unwrap_or_else(|_| "/tailwind.css".to_string());
 
     let run_server = std::env::var("DO_NOT_RUN_SERVER").is_err();
     let config = SiteConfig {
@@ -143,7 +145,7 @@ async fn main() {
         site_header: None,
         site_assets: SiteAssets {
             stylesheets: vec![
-                "/tailwind.css".to_string(),
+                tailwind_stylesheet,
                 "/content-lightbox.css".to_string(),
             ],
             head_scripts: vec![
