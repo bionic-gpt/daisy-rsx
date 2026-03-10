@@ -141,7 +141,10 @@ async fn main() {
         site_meta: ui_links::site_meta(),
         site_header: None,
         site_assets: SiteAssets {
-            stylesheets: vec!["/tailwind.css".to_string()],
+            stylesheets: vec![
+                "/tailwind.css".to_string(),
+                "/content-lightbox.css".to_string(),
+            ],
             head_scripts: vec![
                 ScriptAsset {
                     src: "/goat-counter.js".to_string(),
@@ -174,6 +177,12 @@ async fn main() {
                     "sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84q0uHVRRxEtvFPiQYbXWUorga2aqZJ0z"
                         .to_string(),
                 ),
+                data_goatcounter: None,
+            }, ScriptAsset {
+                src: "/content-lightbox.js".to_string(),
+                script_type: None,
+                async_load: false,
+                integrity: None,
                 data_goatcounter: None,
             }],
         },
