@@ -1,21 +1,17 @@
 use std::error::Error;
 use std::future::Future;
 use std::io;
-use std::io::Read;
 use std::path::{Path, PathBuf};
 use std::pin::Pin;
 use std::process::Command;
-use std::{collections::BTreeMap, fmt::Write as _};
 
-use image::{ImageFormat, ImageReader, imageops::FilterType};
-use serde::{Deserialize, Serialize};
-use sha2::{Digest, Sha256};
+use image::{imageops::FilterType, ImageFormat, ImageReader};
 
+use crate::summaries::{BlogSummary, DocumentSite, PagesSummary, Summary};
 use crate::{
     generate_website, set_navigation_links, set_site_header, set_site_meta, SiteConfig, SitePage,
     WebsiteInput,
 };
-use crate::summaries::{BlogSummary, DocumentSite, PagesSummary, Summary};
 
 pub struct SiteBuilder {
     config: SiteConfig,
@@ -110,10 +106,7 @@ impl SiteBuilder {
     }
 }
 
-fn require<T>(
-    value: Option<T>,
-    name: &'static str,
-) -> Result<T, Box<dyn Error + Send + Sync>> {
+fn require<T>(value: Option<T>, name: &'static str) -> Result<T, Box<dyn Error + Send + Sync>> {
     value.ok_or_else(|| format!("SiteBuilder missing {name}").into())
 }
 
@@ -128,10 +121,7 @@ fn copy_assets_dir(dist_dir: &Path) -> io::Result<()> {
 fn copy_summary_assets(dist_dir: &Path, summary: &Summary) -> io::Result<()> {
     let src = Path::new("content").join(summary.source_folder);
     if src.exists() {
-        tracing::info!(
-            "site build: copying summary assets from {}",
-            src.display()
-        );
+        tracing::info!("site build: copying summary assets from {}", src.display());
         let dst = dist_dir.join(summary.source_folder);
         if summary.source_folder == "blog" {
             let stats = copy_blog_folder_with_resizing(&src, &dst)?;
@@ -167,19 +157,7 @@ struct BlogImageStats {
     skipped: usize,
 }
 
-const BLOG_VARIANTS_MANIFEST: &str = ".image-variants-manifest.json";
 const BLOG_VARIANT_SIZES: [(u32, u32); 2] = [(384, 216), (768, 432)];
-
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Default)]
-struct BlogImageManifest {
-    entries: BTreeMap<String, BlogImageManifestEntry>,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
-struct BlogImageManifestEntry {
-    source_hash: String,
-    variants: Vec<String>,
-}
 
 fn copy_folder(src: &Path, dst: &Path) -> io::Result<()> {
     std::fs::create_dir_all(dst)?;
@@ -200,27 +178,10 @@ fn copy_folder(src: &Path, dst: &Path) -> io::Result<()> {
 }
 
 fn copy_blog_folder_with_resizing(src: &Path, dst: &Path) -> io::Result<BlogImageStats> {
-    let manifest_path = src.join(BLOG_VARIANTS_MANIFEST);
-    let old_manifest = load_blog_manifest(&manifest_path)?;
-    let mut new_entries = BTreeMap::new();
     let mut stats = BlogImageStats::default();
 
-    process_blog_variants(
-        src,
-        src,
-        &old_manifest.entries,
-        &mut new_entries,
-        &mut stats,
-    )?;
-
-    let new_manifest = BlogImageManifest {
-        entries: new_entries,
-    };
-    if old_manifest != new_manifest {
-        save_blog_manifest(&manifest_path, &new_manifest)?;
-    }
-
     copy_blog_assets_to_dist(src, dst)?;
+    process_blog_variants(src, src, dst, &mut stats)?;
 
     Ok(stats)
 }
@@ -238,8 +199,7 @@ fn is_resizable_blog_image(path: &Path) -> bool {
 fn process_blog_variants(
     root: &Path,
     current_dir: &Path,
-    old_entries: &BTreeMap<String, BlogImageManifestEntry>,
-    new_entries: &mut BTreeMap<String, BlogImageManifestEntry>,
+    dist_root: &Path,
     stats: &mut BlogImageStats,
 ) -> io::Result<()> {
     for entry in std::fs::read_dir(current_dir)? {
@@ -247,85 +207,28 @@ fn process_blog_variants(
         let path = entry.path();
 
         if path.is_dir() {
-            process_blog_variants(root, &path, old_entries, new_entries, stats)?;
-            continue;
-        }
-
-        if path.file_name().and_then(|n| n.to_str()) == Some(BLOG_VARIANTS_MANIFEST) {
+            process_blog_variants(root, &path, dist_root, stats)?;
             continue;
         }
         if !is_resizable_blog_image(&path) || is_blog_variant_file(&path) {
             continue;
         }
 
-        let relative = path
-            .strip_prefix(root)
-            .map_err(|err| io::Error::other(format!("invalid blog path {}: {err}", path.display())))?;
-        let relative_key = relative.to_string_lossy().replace('\\', "/");
-        let source_hash = file_sha256_hex(&path)?;
-        let variant_paths = blog_variant_paths(&path)?;
-        let variant_keys = variant_paths
-            .iter()
-            .map(|p| {
-                p.strip_prefix(root)
-                    .map(|rel| rel.to_string_lossy().replace('\\', "/"))
-                    .map_err(|err| {
-                        io::Error::other(format!("invalid variant path {}: {err}", p.display()))
-                    })
-            })
-            .collect::<io::Result<Vec<_>>>()?;
-
-        let old_entry = old_entries.get(&relative_key);
-        let variants_exist = variant_paths.iter().all(|p| p.exists());
-        let hash_unchanged = old_entry
-            .map(|entry| entry.source_hash == source_hash)
-            .unwrap_or(false);
-        let variants_match_manifest = old_entry
-            .map(|entry| entry.variants == variant_keys)
-            .unwrap_or(false);
-
-        if hash_unchanged && variants_exist && variants_match_manifest {
+        let relative = path.strip_prefix(root).map_err(|err| {
+            io::Error::other(format!("invalid blog path {}: {err}", path.display()))
+        })?;
+        let dist_source_path = dist_root.join(relative);
+        let variant_paths = blog_variant_paths(&dist_source_path)?;
+        if variants_up_to_date(&path, &variant_paths)? {
             stats.skipped += 1;
         } else {
-            generate_blog_variants(&path, &variant_paths)?;
+            generate_blog_variants(&dist_source_path, &variant_paths)?;
             tracing::info!("site build: resized blog image {}", path.display());
             stats.regenerated += 1;
         }
-
-        new_entries.insert(
-            relative_key,
-            BlogImageManifestEntry {
-                source_hash,
-                variants: variant_keys,
-            },
-        );
     }
 
     Ok(())
-}
-
-fn load_blog_manifest(path: &Path) -> io::Result<BlogImageManifest> {
-    if !path.exists() {
-        return Ok(BlogImageManifest::default());
-    }
-    let content = std::fs::read_to_string(path)?;
-    match serde_json::from_str::<BlogImageManifest>(&content) {
-        Ok(manifest) => Ok(manifest),
-        Err(err) => {
-            tracing::warn!(
-                "site build: invalid blog manifest at {}: {}; rebuilding",
-                path.display(),
-                err
-            );
-            Ok(BlogImageManifest::default())
-        }
-    }
-}
-
-fn save_blog_manifest(path: &Path, manifest: &BlogImageManifest) -> io::Result<()> {
-    let content = serde_json::to_string_pretty(manifest)
-        .map_err(|err| io::Error::other(format!("failed to serialize blog manifest: {err}")))?;
-    std::fs::write(path, format!("{content}\n"))
 }
 
 fn copy_blog_assets_to_dist(src: &Path, dst: &Path) -> io::Result<()> {
@@ -337,33 +240,11 @@ fn copy_blog_assets_to_dist(src: &Path, dst: &Path) -> io::Result<()> {
 
         if src_path.is_dir() {
             copy_blog_assets_to_dist(&src_path, &dst_path)?;
-        } else if src_path.file_name().and_then(|n| n.to_str()) == Some(BLOG_VARIANTS_MANIFEST) {
-            continue;
         } else {
             std::fs::copy(&src_path, &dst_path)?;
         }
     }
     Ok(())
-}
-
-fn file_sha256_hex(path: &Path) -> io::Result<String> {
-    let mut file = std::fs::File::open(path)?;
-    let mut hasher = Sha256::new();
-    let mut buf = [0u8; 8192];
-    loop {
-        let n = file.read(&mut buf)?;
-        if n == 0 {
-            break;
-        }
-        hasher.update(&buf[..n]);
-    }
-
-    let mut out = String::with_capacity(64);
-    for byte in hasher.finalize() {
-        write!(&mut out, "{byte:02x}")
-            .map_err(|err| io::Error::other(format!("failed to encode hash: {err}")))?;
-    }
-    Ok(out)
 }
 
 fn is_blog_variant_file(path: &Path) -> bool {
@@ -386,18 +267,39 @@ fn blog_variant_paths(path: &Path) -> io::Result<Vec<PathBuf>> {
         .collect()
 }
 
+fn variants_up_to_date(src_path: &Path, variant_paths: &[PathBuf]) -> io::Result<bool> {
+    let src_meta = std::fs::metadata(src_path)?;
+    let src_mtime = src_meta.modified()?;
+
+    for variant_path in variant_paths {
+        let Ok(variant_meta) = std::fs::metadata(variant_path) else {
+            return Ok(false);
+        };
+        let Ok(variant_mtime) = variant_meta.modified() else {
+            return Ok(false);
+        };
+        if variant_mtime < src_mtime {
+            return Ok(false);
+        }
+    }
+
+    Ok(true)
+}
+
 fn generate_blog_variants(src_path: &Path, variant_paths: &[PathBuf]) -> io::Result<()> {
-    let image = ImageReader::open(src_path)?
-        .decode()
-        .map_err(|err| io::Error::other(format!("failed to decode {}: {err}", src_path.display())))?;
+    let image = ImageReader::open(src_path)?.decode().map_err(|err| {
+        io::Error::other(format!("failed to decode {}: {err}", src_path.display()))
+    })?;
 
     for (idx, variant_path) in variant_paths.iter().enumerate() {
         let (width, height) = BLOG_VARIANT_SIZES[idx];
         let resized = image.resize_to_fill(width, height, FilterType::Lanczos3);
         let format = image_format_for(variant_path)?;
-        resized.save_with_format(variant_path, format).map_err(|err| {
-            io::Error::other(format!("failed to save {}: {err}", variant_path.display()))
-        })?;
+        resized
+            .save_with_format(variant_path, format)
+            .map_err(|err| {
+                io::Error::other(format!("failed to save {}: {err}", variant_path.display()))
+            })?;
     }
     Ok(())
 }

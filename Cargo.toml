@@ -1,10 +1,6 @@
 [workspace]
 members = [
-    "crates/daisy_rsx",
-    "crates/bionic-gpt",
-    "crates/ssg_whiz",
-    "crates/deploy-mcp",
-    "crates/decision"
+    "crates/*"
 ]
 resolver = "2"
 
