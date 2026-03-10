@@ -8,9 +8,9 @@ pub mod ui_links;
 
 pub use ssg_whiz::render;
 
-use std::net::SocketAddr;
-use ssg_whiz::{SiteBuilder, SiteConfig};
 use ssg_whiz::summaries::DocumentSite;
+use ssg_whiz::{ScriptAsset, SiteAssets, SiteBuilder, SiteConfig};
+use std::net::SocketAddr;
 
 pub mod routes {
     pub const SIGN_IN_UP: &str = "https://app.deploy-mcp.com";
@@ -140,6 +140,43 @@ async fn main() {
         footer_links: ui_links::footer_links(),
         site_meta: ui_links::site_meta(),
         site_header: None,
+        site_assets: SiteAssets {
+            stylesheets: vec!["/tailwind.css".to_string()],
+            head_scripts: vec![
+                ScriptAsset {
+                    src: "/goat-counter.js".to_string(),
+                    script_type: None,
+                    async_load: true,
+                    integrity: None,
+                    data_goatcounter: Some("https://deploy.goatcounter.com/count".to_string()),
+                },
+                ScriptAsset {
+                    src: "/copy-paste.js".to_string(),
+                    script_type: None,
+                    async_load: true,
+                    integrity: None,
+                    data_goatcounter: None,
+                },
+                ScriptAsset {
+                    src: "https://cdn.jsdelivr.net/npm/@justinribeiro/lite-youtube@1/lite-youtube.min.js"
+                        .to_string(),
+                    script_type: Some("module".to_string()),
+                    async_load: false,
+                    integrity: None,
+                    data_goatcounter: None,
+                },
+            ],
+            body_scripts: vec![ScriptAsset {
+                src: "https://instant.page/5.2.0".to_string(),
+                script_type: Some("module".to_string()),
+                async_load: false,
+                integrity: Some(
+                    "sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84q0uHVRRxEtvFPiQYbXWUorga2aqZJ0z"
+                        .to_string(),
+                ),
+                data_goatcounter: None,
+            }],
+        },
     };
 
     SiteBuilder::new(config)

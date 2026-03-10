@@ -4,13 +4,13 @@ use tracing::warn;
 
 use crate::mcp_specs::all_specs;
 
+use crate::ui_links::footer_links;
 use daisy_rsx::marketing::{
     extra_footer::{ExtraFooter, EXTRA_FOOTER_TITLE},
     footer::Footer,
     navigation::Section,
 };
 use ssg_whiz::layouts::layout::Layout;
-use crate::ui_links::footer_links;
 
 #[derive(Clone, PartialEq, Eq)]
 pub struct IntegrationSpec {

@@ -1,6 +1,6 @@
 #![allow(non_snake_case)]
 
-use crate::{absolute_url, navigation_links, site_meta};
+use crate::{absolute_url, navigation_links, site_assets, site_meta};
 use daisy_rsx::marketing::navigation::{Navigation, Section};
 use dioxus::prelude::*;
 
@@ -18,10 +18,8 @@ pub struct LayoutProps {
 
 pub fn Layout(props: LayoutProps) -> Element {
     let meta = site_meta();
-    let page_url = props
-        .url
-        .clone()
-        .unwrap_or_else(|| meta.base_url.clone());
+    let assets = site_assets();
+    let page_url = props.url.clone().unwrap_or_else(|| meta.base_url.clone());
     let page_url = absolute_url(&page_url);
     let image = props.image.unwrap_or("/open-graph.png".to_string());
     let image_meta = absolute_url(&image);
@@ -288,30 +286,26 @@ pub fn Layout(props: LayoutProps) -> Element {
             meta { property: "og:image", content: "{image_meta}" }
             meta { property: "twitter:image", content: "{image_meta}" }
 
-            link {
-                rel: "stylesheet",
-                href: "/tailwind.css",
-                "type": "text/css"
+            for href in &assets.stylesheets {
+                link {
+                    rel: "stylesheet",
+                    href: "{href}",
+                    "type": "text/css"
+                }
             }
             link {
                 rel: "icon",
                 "type": "image/svg+xml",
                 href: "/favicon.svg"
             }
-            script {
-                "async": "true",
-                "data-goatcounter": "{meta.goatcounter}",
-                src: "/goat-counter.js"
-
-            }
-            script {
-                "async": "true",
-                src: "/copy-paste.js"
-
-            }
-            script {
-                "type": "module",
-                src: "https://cdn.jsdelivr.net/npm/@justinribeiro/lite-youtube@1/lite-youtube.min.js"
+            for script_asset in &assets.head_scripts {
+                script {
+                    async: script_asset.async_load,
+                    "data-goatcounter": "{script_asset.data_goatcounter.as_deref().unwrap_or(\"\")}",
+                    integrity: "{script_asset.integrity.as_deref().unwrap_or(\"\")}",
+                    r#type: "{script_asset.script_type.as_deref().unwrap_or(\"\")}",
+                    src: "{script_asset.src}"
+                }
             }
             style { "{lightbox_css}" }
         }
@@ -325,10 +319,13 @@ pub fn Layout(props: LayoutProps) -> Element {
                 site_header: crate::site_header_factory().map(|factory| factory())
             }
             {props.children}
-            script {
-                src: "https://instant.page/5.2.0",
-                type: "module",
-                integrity: "sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84q0uHVRRxEtvFPiQYbXWUorga2aqZJ0z"
+            for script_asset in &assets.body_scripts {
+                script {
+                    async: script_asset.async_load,
+                    integrity: "{script_asset.integrity.as_deref().unwrap_or(\"\")}",
+                    r#type: "{script_asset.script_type.as_deref().unwrap_or(\"\")}",
+                    src: "{script_asset.src}"
+                }
             }
             script {
                 dangerous_inner_html: lightbox_js

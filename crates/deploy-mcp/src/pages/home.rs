@@ -1,5 +1,7 @@
 use dioxus::prelude::*;
 
+use crate::routes;
+use crate::ui_links::footer_links;
 use daisy_rsx::marketing::{
     customer_logos::Customers,
     extra_footer::{ExtraFooter, EXTRA_FOOTER_TITLE},
@@ -10,8 +12,6 @@ use daisy_rsx::marketing::{
     testamonials::Testamonials,
 };
 use ssg_whiz::layouts::layout::Layout;
-use crate::ui_links::footer_links;
-use crate::routes;
 
 pub fn home_page() -> String {
     let features = vec![

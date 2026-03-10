@@ -18,7 +18,11 @@ pub fn navigation_links() -> NavigationModel {
         logo_src: None,
         logo_alt: None,
         desktop_left: vec![
-            NavigationEntry::Link(NavigationLink::new("Pricing", pricing.clone(), Section::Pricing)),
+            NavigationEntry::Link(NavigationLink::new(
+                "Pricing",
+                pricing.clone(),
+                Section::Pricing,
+            )),
             NavigationEntry::Menu(NavigationMenu::new(
                 "Resources",
                 vec![
@@ -43,7 +47,11 @@ pub fn navigation_links() -> NavigationModel {
                 .with_class("btn btn-primary btn-sm"),
         ],
         mobile: vec![
-            NavigationLink::new("Home", crate::routes::marketing::Index {}.to_string(), Section::Home),
+            NavigationLink::new(
+                "Home",
+                crate::routes::marketing::Index {}.to_string(),
+                Section::Home,
+            ),
             NavigationLink::new("Pricing", pricing, Section::Pricing),
             NavigationLink::new("Blog", blog, Section::Blog),
             NavigationLink::new("Documentation", docs, Section::Docs),

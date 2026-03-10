@@ -1,7 +1,10 @@
 use dioxus::prelude::*;
 
 use super::layout::Layout;
-use crate::{page_permalink, summaries::{Category, PageSummary, Summary}};
+use crate::{
+    page_permalink,
+    summaries::{Category, PageSummary, Summary},
+};
 use daisy_rsx::marketing::navigation::Section;
 
 #[component]

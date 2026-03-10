@@ -9,8 +9,8 @@ use image::{imageops::FilterType, ImageFormat, ImageReader};
 
 use crate::summaries::{BlogSummary, DocumentSite, PagesSummary, Summary};
 use crate::{
-    generate_website, set_navigation_links, set_site_header, set_site_meta, SiteConfig, SitePage,
-    WebsiteInput,
+    generate_website, set_navigation_links, set_site_assets, set_site_header, set_site_meta,
+    SiteConfig, SitePage, WebsiteInput,
 };
 
 pub struct SiteBuilder {
@@ -72,6 +72,7 @@ impl SiteBuilder {
         set_navigation_links(self.config.navigation_links.clone());
         set_site_meta(self.config.site_meta.clone());
         set_site_header(self.config.site_header);
+        set_site_assets(self.config.site_assets.clone());
 
         let dist_dir = self.config.dist_dir.clone();
         std::fs::create_dir_all(&dist_dir)?;

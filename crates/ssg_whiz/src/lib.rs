@@ -17,25 +17,24 @@ use tower_livereload::LiveReloadLayer;
 use layouts::{BlogList, BlogPost, Document, MarkdownPage};
 use summaries::{BlogSummary, DocumentSite, PagesSummary, Summary};
 
+pub mod builder;
 pub mod layouts;
 pub mod markdown;
 pub mod summaries;
-pub mod builder;
 
 pub use builder::SiteBuilder;
 
 static NAV_LINKS: OnceLock<NavigationModel> = OnceLock::new();
 static SITE_META: OnceLock<SiteMeta> = OnceLock::new();
 static SITE_HEADER_FACTORY: OnceLock<Option<SiteHeaderFactory>> = OnceLock::new();
+static SITE_ASSETS: OnceLock<SiteAssets> = OnceLock::new();
 
 pub fn set_navigation_links(links: NavigationModel) {
     let _ = NAV_LINKS.set(links);
 }
 
 pub(crate) fn navigation_links() -> &'static NavigationModel {
-    NAV_LINKS
-        .get()
-        .expect("ssg_whiz navigation links not set")
+    NAV_LINKS.get().expect("ssg_whiz navigation links not set")
 }
 
 #[derive(Clone, Debug)]
@@ -62,6 +61,42 @@ pub fn set_site_header(factory: Option<SiteHeaderFactory>) {
 
 pub(crate) fn site_header_factory() -> Option<SiteHeaderFactory> {
     SITE_HEADER_FACTORY.get().cloned().unwrap_or(None)
+}
+
+#[derive(Clone, Debug, Default)]
+pub struct SiteAssets {
+    pub stylesheets: Vec<String>,
+    pub head_scripts: Vec<ScriptAsset>,
+    pub body_scripts: Vec<ScriptAsset>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct ScriptAsset {
+    pub src: String,
+    pub script_type: Option<String>,
+    pub async_load: bool,
+    pub integrity: Option<String>,
+    pub data_goatcounter: Option<String>,
+}
+
+impl ScriptAsset {
+    pub fn new(src: impl Into<String>) -> Self {
+        Self {
+            src: src.into(),
+            script_type: None,
+            async_load: false,
+            integrity: None,
+            data_goatcounter: None,
+        }
+    }
+}
+
+pub fn set_site_assets(assets: SiteAssets) {
+    let _ = SITE_ASSETS.set(assets);
+}
+
+pub(crate) fn site_assets() -> &'static SiteAssets {
+    SITE_ASSETS.get().expect("ssg_whiz site assets not set")
 }
 
 pub fn absolute_url(value: &str) -> String {
@@ -91,6 +126,7 @@ pub struct SiteConfig {
     pub footer_links: FooterLinks,
     pub site_meta: SiteMeta,
     pub site_header: Option<SiteHeaderFactory>,
+    pub site_assets: SiteAssets,
 }
 
 impl Default for SiteConfig {
@@ -124,6 +160,45 @@ impl Default for SiteConfig {
                 goatcounter: "https://bionicgpt.goatcounter.com/count".to_string(),
             },
             site_header: None,
+            site_assets: SiteAssets {
+                stylesheets: vec!["/tailwind.css".to_string()],
+                head_scripts: vec![
+                    ScriptAsset {
+                        src: "/goat-counter.js".to_string(),
+                        script_type: None,
+                        async_load: true,
+                        integrity: None,
+                        data_goatcounter: Some(
+                            "https://bionicgpt.goatcounter.com/count".to_string(),
+                        ),
+                    },
+                    ScriptAsset {
+                        src: "/copy-paste.js".to_string(),
+                        script_type: None,
+                        async_load: true,
+                        integrity: None,
+                        data_goatcounter: None,
+                    },
+                    ScriptAsset {
+                        src: "https://cdn.jsdelivr.net/npm/@justinribeiro/lite-youtube@1/lite-youtube.min.js"
+                            .to_string(),
+                        script_type: Some("module".to_string()),
+                        async_load: false,
+                        integrity: None,
+                        data_goatcounter: None,
+                    },
+                ],
+                body_scripts: vec![ScriptAsset {
+                    src: "https://instant.page/5.2.0".to_string(),
+                    script_type: Some("module".to_string()),
+                    async_load: false,
+                    integrity: Some(
+                        "sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84q0uHVRRxEtvFPiQYbXWUorga2aqZJ0z"
+                            .to_string(),
+                    ),
+                    data_goatcounter: None,
+                }],
+            },
         }
     }
 }
@@ -149,6 +224,7 @@ pub async fn generate_website(
     set_navigation_links(config.navigation_links.clone());
     set_site_meta(config.site_meta.clone());
     set_site_header(config.site_header);
+    set_site_assets(config.site_assets.clone());
 
     let mut pages = input.static_pages;
     pages.extend(render_blog_posts(&input.blog, config.footer_links.clone()));
@@ -158,7 +234,10 @@ pub async fn generate_website(
         pages.extend(render_document_site(&doc_site.summary, doc_site.section));
     }
 
-    pages.extend(render_pages_summary(&input.pages, config.footer_links.clone()));
+    pages.extend(render_pages_summary(
+        &input.pages,
+        config.footer_links.clone(),
+    ));
 
     generate_site(config, pages).await
 }
