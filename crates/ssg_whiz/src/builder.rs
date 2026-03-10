@@ -124,7 +124,7 @@ fn copy_summary_assets(dist_dir: &Path, summary: &Summary) -> io::Result<()> {
         tracing::info!("site build: copying summary assets from {}", src.display());
         let dst = dist_dir.join(summary.source_folder);
         if summary.source_folder == "blog" {
-            let stats = copy_blog_folder_with_resizing(&src, &dst)?;
+            let stats = copy_blog_folder_with_resizing(dist_dir, &src, &dst)?;
             tracing::info!(
                 "site build: blog image variants regenerated: {}, skipped: {}",
                 stats.regenerated,
@@ -158,6 +158,7 @@ struct BlogImageStats {
 }
 
 const BLOG_VARIANT_SIZES: [(u32, u32); 2] = [(384, 216), (768, 432)];
+const PROCESSED_ASSETS_DIR: &str = "processed";
 
 fn copy_folder(src: &Path, dst: &Path) -> io::Result<()> {
     std::fs::create_dir_all(dst)?;
@@ -177,11 +178,20 @@ fn copy_folder(src: &Path, dst: &Path) -> io::Result<()> {
     Ok(())
 }
 
-fn copy_blog_folder_with_resizing(src: &Path, dst: &Path) -> io::Result<BlogImageStats> {
+fn copy_blog_folder_with_resizing(
+    dist_dir: &Path,
+    src: &Path,
+    dst: &Path,
+) -> io::Result<BlogImageStats> {
     let mut stats = BlogImageStats::default();
+    let processed_src = Path::new(PROCESSED_ASSETS_DIR).join("blog");
+    let processed_dst = dist_dir.join(PROCESSED_ASSETS_DIR).join("blog");
 
     copy_blog_assets_to_dist(src, dst)?;
-    process_blog_variants(src, src, dst, &mut stats)?;
+    process_blog_variants(src, src, &processed_src, &mut stats)?;
+    if processed_src.exists() {
+        copy_folder(&processed_src, &processed_dst)?;
+    }
 
     Ok(stats)
 }
@@ -199,7 +209,7 @@ fn is_resizable_blog_image(path: &Path) -> bool {
 fn process_blog_variants(
     root: &Path,
     current_dir: &Path,
-    dist_root: &Path,
+    processed_root: &Path,
     stats: &mut BlogImageStats,
 ) -> io::Result<()> {
     for entry in std::fs::read_dir(current_dir)? {
@@ -207,7 +217,7 @@ fn process_blog_variants(
         let path = entry.path();
 
         if path.is_dir() {
-            process_blog_variants(root, &path, dist_root, stats)?;
+            process_blog_variants(root, &path, processed_root, stats)?;
             continue;
         }
         if !is_resizable_blog_image(&path) || is_blog_variant_file(&path) {
@@ -217,12 +227,12 @@ fn process_blog_variants(
         let relative = path.strip_prefix(root).map_err(|err| {
             io::Error::other(format!("invalid blog path {}: {err}", path.display()))
         })?;
-        let dist_source_path = dist_root.join(relative);
-        let variant_paths = blog_variant_paths(&dist_source_path)?;
+        let processed_source_path = processed_root.join(relative);
+        let variant_paths = blog_variant_paths(&processed_source_path)?;
         if variants_up_to_date(&path, &variant_paths)? {
             stats.skipped += 1;
         } else {
-            generate_blog_variants(&dist_source_path, &variant_paths)?;
+            generate_blog_variants(&path, &variant_paths)?;
             tracing::info!("site build: resized blog image {}", path.display());
             stats.regenerated += 1;
         }
@@ -293,6 +303,9 @@ fn generate_blog_variants(src_path: &Path, variant_paths: &[PathBuf]) -> io::Res
 
     for (idx, variant_path) in variant_paths.iter().enumerate() {
         let (width, height) = BLOG_VARIANT_SIZES[idx];
+        if let Some(parent) = variant_path.parent() {
+            std::fs::create_dir_all(parent)?;
+        }
         let resized = image.resize_to_fill(width, height, FilterType::Lanczos3);
         let format = image_format_for(variant_path)?;
         resized

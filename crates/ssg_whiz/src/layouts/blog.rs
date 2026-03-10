@@ -1,5 +1,8 @@
 use super::layout::Layout;
-use crate::{page_permalink, site_meta, summaries::{PageSummary, Summary}};
+use crate::{
+    page_permalink, site_meta,
+    summaries::{PageSummary, Summary},
+};
 use daisy_rsx::marketing::{
     extra_footer::{ExtraFooter, EXTRA_FOOTER_TITLE},
     footer::{Footer, FooterLinks},
@@ -9,7 +12,10 @@ use dioxus::prelude::*;
 
 fn image_variant_path(path: &str, width: u32, height: u32) -> String {
     if let Some((base, ext)) = path.rsplit_once('.') {
-        format!("{base}-{width}x{height}.{ext}")
+        format!(
+            "/processed/{base}-{width}x{height}.{ext}",
+            base = base.trim_start_matches('/')
+        )
     } else {
         path.to_string()
     }
@@ -17,7 +23,12 @@ fn image_variant_path(path: &str, width: u32, height: u32) -> String {
 
 fn supports_resized_variants(path: &str) -> bool {
     path.rsplit_once('.')
-        .map(|(_, ext)| matches!(ext.to_ascii_lowercase().as_str(), "png" | "jpg" | "jpeg" | "webp"))
+        .map(|(_, ext)| {
+            matches!(
+                ext.to_ascii_lowercase().as_str(),
+                "png" | "jpg" | "jpeg" | "webp"
+            )
+        })
         .unwrap_or(false)
 }
 
@@ -122,7 +133,7 @@ pub fn BlogList(summary: Summary, footer_links: FooterLinks) -> Element {
     } else {
         (
             "Enterprise Generative AI".to_string(),
-            "The Bionic blog explores issues around LLMs in the enterprise".to_string()
+            "The Bionic blog explores issues around LLMs in the enterprise".to_string(),
         )
     };
 
