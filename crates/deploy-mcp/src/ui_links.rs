@@ -1,8 +1,7 @@
-use daisy_rsx::marketing::{
-    footer::FooterLinks,
-    navigation::{NavigationEntry, NavigationLink, NavigationMenu, NavigationModel, Section},
+use ssg_whiz::{
+    FooterLinks, NavigationEntry, NavigationLink, NavigationMenu, NavigationModel, Section,
+    SiteMeta,
 };
-use ssg_whiz::SiteMeta;
 
 pub fn navigation_links() -> NavigationModel {
     let pricing = crate::routes::marketing::Pricing {}.to_string();

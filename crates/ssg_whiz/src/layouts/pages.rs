@@ -1,9 +1,5 @@
 use super::layout::Layout;
-use crate::{page_permalink, summaries::PageSummary};
-use daisy_rsx::marketing::{
-    footer::{Footer, FooterLinks},
-    navigation::Section,
-};
+use crate::{page_permalink, summaries::PageSummary, Footer, FooterLinks, Section};
 use dioxus::prelude::*;
 
 #[component]

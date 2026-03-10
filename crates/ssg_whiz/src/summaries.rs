@@ -1,4 +1,4 @@
-use daisy_rsx::marketing::navigation::Section;
+use crate::Section;
 
 #[derive(PartialEq, Eq, Clone, Debug)]
 pub struct Summary {

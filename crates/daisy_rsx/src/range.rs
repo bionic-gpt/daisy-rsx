@@ -97,7 +97,7 @@ pub fn Range(props: RangeProps) -> Element {
 #[test]
 fn test_range() {
     let props = RangeProps {
-        children: rsx!( "Hello" ),
+        children: rsx!("Hello"),
         class: Some("test".to_string()),
         range_color: Some(RangeColor::Info),
         min: 0,
@@ -119,7 +119,7 @@ fn test_range() {
 #[test]
 fn test_range_default() {
     let props = RangeProps {
-        children: rsx!( "Hello" ),
+        children: rsx!("Hello"),
         class: None,
         range_color: None,
         min: 0,

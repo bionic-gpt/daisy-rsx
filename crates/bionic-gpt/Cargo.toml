@@ -21,6 +21,5 @@ dioxus.workspace = true
 serde.workspace = true
 tower-http = { workspace = true, features = ["fs", "trace"] }
 
-daisy_rsx = { path = "../daisy_rsx" }
 ssg_whiz = { path = "../ssg_whiz" }
 tower-livereload.workspace = true

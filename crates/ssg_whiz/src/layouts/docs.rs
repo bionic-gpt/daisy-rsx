@@ -4,8 +4,8 @@ use super::layout::Layout;
 use crate::{
     page_permalink,
     summaries::{Category, PageSummary, Summary},
+    Section,
 };
-use daisy_rsx::marketing::navigation::Section;
 
 #[component]
 pub fn Document(

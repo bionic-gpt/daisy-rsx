@@ -1,8 +1,8 @@
 #![allow(non_snake_case)]
 #![allow(unused_braces)]
 
-use std::fmt::Display;
 use dioxus::prelude::*;
+use std::fmt::Display;
 
 #[derive(Default, Copy, Clone, Debug, PartialEq, Eq)]
 pub enum TimelineDirection {
@@ -32,8 +32,16 @@ pub struct TimelineProps {
 #[component]
 pub fn Timeline(props: TimelineProps) -> Element {
     let direction = props.direction.unwrap_or_default();
-    let compact = if props.compact.unwrap_or(false) { "timeline-compact" } else { "" };
-    let snap_icon = if props.snap_icon.unwrap_or(false) { "timeline-snap-icon" } else { "" };
+    let compact = if props.compact.unwrap_or(false) {
+        "timeline-compact"
+    } else {
+        ""
+    };
+    let snap_icon = if props.snap_icon.unwrap_or(false) {
+        "timeline-snap-icon"
+    } else {
+        ""
+    };
     let class = props.class.unwrap_or_default();
 
     rsx!(
@@ -65,7 +73,11 @@ pub struct TimelinePartProps {
 
 #[component]
 pub fn TimelineStart(props: TimelinePartProps) -> Element {
-    let boxed = if props.boxed.unwrap_or(false) { "timeline-box" } else { "" };
+    let boxed = if props.boxed.unwrap_or(false) {
+        "timeline-box"
+    } else {
+        ""
+    };
     rsx!(
         div { class: "timeline-start {boxed} {props.class.clone().unwrap_or_default()}", {props.children} }
     )
@@ -80,7 +92,11 @@ pub fn TimelineMiddle(props: TimelinePartProps) -> Element {
 
 #[component]
 pub fn TimelineEnd(props: TimelinePartProps) -> Element {
-    let boxed = if props.boxed.unwrap_or(false) { "timeline-box" } else { "" };
+    let boxed = if props.boxed.unwrap_or(false) {
+        "timeline-box"
+    } else {
+        ""
+    };
     rsx!(
         div { class: "timeline-end {boxed} {props.class.clone().unwrap_or_default()}", {props.children} }
     )

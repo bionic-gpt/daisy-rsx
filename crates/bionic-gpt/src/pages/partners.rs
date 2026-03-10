@@ -1,14 +1,11 @@
-use ssg_whiz::layouts::layout::Layout;
-use crate::ui_links::footer_links;
-use daisy_rsx::marketing::{
-    benefits::Benefits,
-    features::BionicFeatures,
-    footer::Footer,
-    hero::Hero,
-    navigation::Section,
+use crate::marketing::{
+    benefits::Benefits, features::BionicFeatures, footer::Footer, hero::Hero,
     testamonials::Testamonial2,
 };
+use crate::ui_links::footer_links;
 use dioxus::prelude::*;
+use ssg_whiz::layouts::layout::Layout;
+use ssg_whiz::Section;
 
 pub fn partners_page() -> String {
     let page = rsx! {

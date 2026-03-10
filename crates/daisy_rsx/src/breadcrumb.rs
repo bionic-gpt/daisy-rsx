@@ -52,10 +52,7 @@ fn test_breadcrumb_basic() {
         },
     ];
 
-    let props = BreadcrumbProps {
-        items,
-        class: None,
-    };
+    let props = BreadcrumbProps { items, class: None };
 
     let expected = r#"<div class="breadcrumbs text-sm "><ul><li><a href="/">Home</a></li><li><a href="/documents">Documents</a></li><li>Add Document</li></ul></div>"#;
     let result = dioxus_ssr::render_element(Breadcrumb(props));
@@ -110,10 +107,7 @@ fn test_breadcrumb_only_links() {
         },
     ];
 
-    let props = BreadcrumbProps {
-        items,
-        class: None,
-    };
+    let props = BreadcrumbProps { items, class: None };
 
     let expected = r#"<div class="breadcrumbs text-sm "><ul><li><a href="/">Home</a></li><li><a href="/about">About</a></li></ul></div>"#;
     let result = dioxus_ssr::render_element(Breadcrumb(props));
@@ -133,12 +127,10 @@ fn test_breadcrumb_only_text() {
         },
     ];
 
-    let props = BreadcrumbProps {
-        items,
-        class: None,
-    };
+    let props = BreadcrumbProps { items, class: None };
 
-    let expected = r#"<div class="breadcrumbs text-sm "><ul><li>Step 1</li><li>Step 2</li></ul></div>"#;
+    let expected =
+        r#"<div class="breadcrumbs text-sm "><ul><li>Step 1</li><li>Step 2</li></ul></div>"#;
     let result = dioxus_ssr::render_element(Breadcrumb(props));
     assert_eq!(result, expected);
 }

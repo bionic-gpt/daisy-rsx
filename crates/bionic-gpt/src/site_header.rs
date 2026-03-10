@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use daisy_rsx::marketing::site_header::SiteHeader;
+use ssg_whiz::SiteHeader;
 
 pub fn site_header() -> SiteHeader {
     rsx!(

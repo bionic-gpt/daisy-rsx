@@ -1,7 +1,6 @@
 #![allow(non_snake_case)]
 
-use crate::{absolute_url, navigation_links, site_assets, site_meta};
-use daisy_rsx::marketing::navigation::{Navigation, Section};
+use crate::{absolute_url, navigation_links, site_assets, site_meta, Navigation, Section};
 use dioxus::prelude::*;
 
 // Remember: owned props must implement PartialEq!

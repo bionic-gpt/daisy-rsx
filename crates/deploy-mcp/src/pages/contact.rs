@@ -1,15 +1,15 @@
 use dioxus::prelude::*;
 
-use crate::ui_links::footer_links;
-use daisy_rsx::marketing::{
+use crate::marketing::{
     customer_logos::Customers,
     extra_footer::{ExtraFooter, EXTRA_FOOTER_TITLE},
     footer::Footer,
-    navigation::Section,
     security::Security,
     testamonials::Testamonials,
 };
+use crate::ui_links::footer_links;
 use ssg_whiz::layouts::layout::Layout;
+use ssg_whiz::Section;
 
 pub fn contact_page() -> String {
     let testimonials = rsx! {

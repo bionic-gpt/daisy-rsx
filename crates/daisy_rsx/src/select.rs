@@ -97,7 +97,7 @@ fn test_select_option() {
     let props = OptionProps {
         value: "test".to_string(),
         selected_value: Some("test".to_string()),
-        children: rsx!( "Hello" ),
+        children: rsx!("Hello"),
     };
 
     let expected = r#"<option value="test" selected=true>Hello</option>"#;

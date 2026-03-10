@@ -131,12 +131,10 @@ pub fn NavItem(link: NavigationLink, current_section: Section) -> Element {
 #[component]
 fn DesktopEntry(entry: NavigationEntry, current_section: Section) -> Element {
     match entry {
-        NavigationEntry::Link(link) => rsx!(
-            NavItem {
-                link,
-                current_section,
-            }
-        ),
+        NavigationEntry::Link(link) => rsx!(NavItem {
+            link,
+            current_section,
+        }),
         NavigationEntry::Menu(menu) => rsx!(
             li {
                 details {

@@ -1,12 +1,12 @@
 use dioxus::prelude::*;
 
-use crate::ui_links::footer_links;
-use daisy_rsx::marketing::{
+use crate::marketing::{
     extra_footer::{ExtraFooter, EXTRA_FOOTER_TITLE},
     footer::Footer,
-    navigation::Section,
 };
+use crate::ui_links::footer_links;
 use ssg_whiz::layouts::layout::Layout;
+use ssg_whiz::Section;
 
 pub fn pricing_page() -> String {
     let body = rsx! {

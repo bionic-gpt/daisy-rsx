@@ -62,7 +62,7 @@ pub fn ModalAction(props: ModalActionProps) -> Element {
 #[test]
 fn test_modal() {
     let props = ModalProps {
-        children: rsx!( "Hello" ),
+        children: rsx!("Hello"),
         class: Some("test".to_string()),
         submit_action: Some("test".to_string()),
         trigger_id: "id".to_string(),
@@ -77,7 +77,7 @@ fn test_modal() {
 #[test]
 fn test_modal_without_submit_action() {
     let props = ModalProps {
-        children: rsx!( "Hello" ),
+        children: rsx!("Hello"),
         class: Some("test".to_string()),
         submit_action: None,
         trigger_id: "id".to_string(),

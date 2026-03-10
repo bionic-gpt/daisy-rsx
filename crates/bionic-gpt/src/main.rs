@@ -1,13 +1,12 @@
 use std::net::SocketAddr;
 
-use ssg_whiz::{ScriptAsset, SiteAssets, SiteBuilder, SiteConfig};
+use ssg_whiz::{ScriptAsset, Section, SiteAssets, SiteBuilder, SiteConfig};
 
 use bionic_gpt::{
     architect_course_summary, blog_summary, docs_summary, generator, pages_summary,
     site_header::site_header,
     ui_links::{footer_links, navigation_links},
 };
-use daisy_rsx::marketing::navigation::Section;
 use ssg_whiz::summaries::DocumentSite;
 
 #[tokio::main]

@@ -5,11 +5,6 @@ use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
 use axum::Router;
-use daisy_rsx::marketing::{
-    footer::FooterLinks,
-    navigation::{NavigationModel, Section},
-    site_header::SiteHeader,
-};
 use dioxus::prelude::*;
 use tower_http::services::ServeDir;
 use tower_livereload::LiveReloadLayer;
@@ -20,9 +15,16 @@ use summaries::{BlogSummary, DocumentSite, PagesSummary, Summary};
 pub mod builder;
 pub mod layouts;
 pub mod markdown;
+pub mod marketing;
 pub mod summaries;
 
 pub use builder::SiteBuilder;
+pub use marketing::extra_footer::{ExtraFooter, EXTRA_FOOTER_TITLE};
+pub use marketing::footer::{Footer, FooterLinks};
+pub use marketing::navigation::{
+    Navigation, NavigationEntry, NavigationLink, NavigationMenu, NavigationModel, Section,
+};
+pub use marketing::site_header::SiteHeader;
 
 static NAV_LINKS: OnceLock<NavigationModel> = OnceLock::new();
 static SITE_META: OnceLock<SiteMeta> = OnceLock::new();

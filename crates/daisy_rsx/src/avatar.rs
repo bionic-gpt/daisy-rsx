@@ -5,35 +5,14 @@ use dioxus::prelude::*;
 /// DaisyUI color pairs for letter avatars. Each tuple contains the background
 /// color variable and its matching foreground color.
 const AVATAR_COLORS: [(&str, &str); 8] = [
-    (
-        "var(--color-primary)",
-        "var(--color-primary-content)",
-    ),
-    (
-        "var(--color-secondary)",
-        "var(--color-secondary-content)",
-    ),
-    (
-        "var(--color-accent)",
-        "var(--color-accent-content)",
-    ),
-    (
-        "var(--color-neutral)",
-        "var(--color-neutral-content)",
-    ),
+    ("var(--color-primary)", "var(--color-primary-content)"),
+    ("var(--color-secondary)", "var(--color-secondary-content)"),
+    ("var(--color-accent)", "var(--color-accent-content)"),
+    ("var(--color-neutral)", "var(--color-neutral-content)"),
     ("var(--color-info)", "var(--color-info-content)"),
-    (
-        "var(--color-success)",
-        "var(--color-success-content)",
-    ),
-    (
-        "var(--color-warning)",
-        "var(--color-warning-content)",
-    ),
-    (
-        "var(--color-error)",
-        "var(--color-error-content)",
-    ),
+    ("var(--color-success)", "var(--color-success-content)"),
+    ("var(--color-warning)", "var(--color-warning-content)"),
+    ("var(--color-error)", "var(--color-error-content)"),
 ];
 
 fn letter_colors(ch: char) -> (&'static str, &'static str) {

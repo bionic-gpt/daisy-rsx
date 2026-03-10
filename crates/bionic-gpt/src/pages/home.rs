@@ -1,18 +1,18 @@
-use ssg_whiz::layouts::layout::Layout;
-use crate::ui_links::footer_links;
-use daisy_rsx::marketing::{
+use crate::marketing::{
     benefits::Benefits,
     customer_logos::Customers,
     faq_accordian::{Faq, FaqText},
     features::BionicFeatures,
     footer::Footer,
-    navigation::Section,
     security::Security,
     small_image_feature::SmallImageFeature,
     testamonials::Testamonial1,
     video_hero::VideoHero,
 };
+use crate::ui_links::footer_links;
 use dioxus::prelude::*;
+use ssg_whiz::layouts::layout::Layout;
+use ssg_whiz::Section;
 
 pub fn home_page() -> String {
     let page = rsx! {

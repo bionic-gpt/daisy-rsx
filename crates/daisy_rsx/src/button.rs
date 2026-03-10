@@ -145,7 +145,6 @@ pub fn Button(props: ButtonProps) -> Element {
     let class = props.class.unwrap_or_default();
     let disabled = props.disabled.filter(|&x| x);
 
-
     if props.button_type == Some(ButtonType::Link) {
         rsx!(
             a {
@@ -193,7 +192,7 @@ pub fn Button(props: ButtonProps) -> Element {
 #[test]
 fn test_button() {
     let props = ButtonProps {
-        children: rsx!( "Hello" ),
+        children: rsx!("Hello"),
         class: Some("test".to_string()),
         href: None,
         target: None,
@@ -222,7 +221,7 @@ fn test_button() {
 #[test]
 fn test_button_with_images() {
     let props = ButtonProps {
-        children: rsx!( "Hello" ),
+        children: rsx!("Hello"),
         class: Some("test".to_string()),
         href: None,
         target: None,
@@ -262,7 +261,7 @@ fn test_all_button_schemes() {
 
     for (scheme, expected_class) in schemes {
         let props = ButtonProps {
-            children: rsx!( "Test" ),
+            children: rsx!("Test"),
             class: None,
             href: None,
             target: None,
@@ -281,9 +280,13 @@ fn test_all_button_schemes() {
         };
 
         let result = dioxus_ssr::render_element(Button(props));
-        assert!(result.contains(expected_class),
-                "Expected '{}' to contain '{}', but got: {}",
-                result, expected_class, result);
+        assert!(
+            result.contains(expected_class),
+            "Expected '{}' to contain '{}', but got: {}",
+            result,
+            expected_class,
+            result
+        );
     }
 }
 
@@ -291,7 +294,7 @@ fn test_all_button_schemes() {
 #[test]
 fn test_default_button_scheme() {
     let props = ButtonProps {
-        children: rsx!( "Default" ),
+        children: rsx!("Default"),
         class: None,
         href: None,
         target: None,
@@ -310,6 +313,9 @@ fn test_default_button_scheme() {
     };
 
     let result = dioxus_ssr::render_element(Button(props));
-    assert!(result.contains("btn-neutral"),
-            "Expected default scheme to be 'btn-neutral', but got: {}", result);
+    assert!(
+        result.contains("btn-neutral"),
+        "Expected default scheme to be 'btn-neutral', but got: {}",
+        result
+    );
 }

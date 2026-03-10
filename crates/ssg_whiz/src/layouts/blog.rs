@@ -2,11 +2,7 @@ use super::layout::Layout;
 use crate::{
     page_permalink, site_meta,
     summaries::{PageSummary, Summary},
-};
-use daisy_rsx::marketing::{
-    extra_footer::{ExtraFooter, EXTRA_FOOTER_TITLE},
-    footer::{Footer, FooterLinks},
-    navigation::Section,
+    ExtraFooter, Footer, FooterLinks, Section, EXTRA_FOOTER_TITLE,
 };
 use dioxus::prelude::*;
 

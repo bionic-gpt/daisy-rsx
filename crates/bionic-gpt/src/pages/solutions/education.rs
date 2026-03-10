@@ -1,16 +1,16 @@
-use ssg_whiz::layouts::layout::Layout;
-use crate::ui_links::footer_links;
-use daisy_rsx::marketing::{
+use crate::marketing::{
     customer_logos::Customers,
     extra_footer::{ExtraFooter, EXTRA_FOOTER_TITLE},
     features::BionicFeatures,
     footer::Footer,
     hero::Hero,
-    navigation::Section,
     small_image_feature::SmallImageFeature,
     testamonials::Testamonial2,
 };
+use crate::ui_links::footer_links;
 use dioxus::prelude::*;
+use ssg_whiz::layouts::layout::Layout;
+use ssg_whiz::Section;
 
 pub fn page() -> String {
     let page = rsx! {

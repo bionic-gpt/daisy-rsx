@@ -260,7 +260,6 @@ version = "0.1.0"
 dependencies = [
  "axum",
  "axum-extra",
- "daisy_rsx",
  "dioxus",
  "serde",
  "ssg_whiz",
@@ -500,7 +499,6 @@ version = "0.1.0"
 dependencies = [
  "axum",
  "axum-extra",
- "daisy_rsx",
  "dioxus",
  "serde",
  "serde_json",
@@ -2058,7 +2056,6 @@ name = "ssg_whiz"
 version = "0.1.2"
 dependencies = [
  "axum",
- "daisy_rsx",
  "dioxus",
  "dioxus-ssr",
  "image",

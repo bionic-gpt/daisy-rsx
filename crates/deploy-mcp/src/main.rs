@@ -1,6 +1,7 @@
 pub mod blog_summary;
 pub mod docs_summary;
 pub mod generator;
+pub mod marketing;
 pub mod mcp_specs;
 pub mod pages;
 pub mod pages_summary;
@@ -9,7 +10,7 @@ pub mod ui_links;
 pub use ssg_whiz::render;
 
 use ssg_whiz::summaries::DocumentSite;
-use ssg_whiz::{ScriptAsset, SiteAssets, SiteBuilder, SiteConfig};
+use ssg_whiz::{ScriptAsset, Section, SiteAssets, SiteBuilder, SiteConfig};
 use std::net::SocketAddr;
 
 pub mod routes {
@@ -193,7 +194,7 @@ async fn main() {
         .pages(pages_summary)
         .document(DocumentSite {
             summary: docs_summary,
-            section: daisy_rsx::marketing::navigation::Section::Docs,
+            section: Section::Docs,
         })
         .static_pages(generator::generate_static_pages)
         .build()
