@@ -32,7 +32,7 @@ async fn main() {
         site_meta: bionic_gpt::ui_links::site_meta(),
         site_header: Some(site_header),
         site_assets: SiteAssets {
-            stylesheets: vec!["/tailwind.css".to_string()],
+            stylesheets: vec!["/tailwind.css".to_string(), "https://cdn.jsdelivr.net/npm/daisyui@5".into()],
             head_scripts: vec![
                 ScriptAsset {
                     src: "/goat-counter.js".to_string(),
