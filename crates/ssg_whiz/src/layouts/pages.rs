@@ -16,9 +16,9 @@ pub fn MarkdownPage(post: PageSummary, footer_links: FooterLinks) -> Element {
             url: Some(page_permalink(post.folder)),
             section: Section::None,
             article {
-                class: "mx-auto max-w-2xl p-5",
+                class: "markdown-page",
                 div {
-                    class: "prose",
+                    class: "markdown-page__content",
                     dangerous_inner_html: "{content}"
                 }
             }

@@ -18,7 +18,7 @@ deploy:
     cd /workspace/crates/deploy-mcp && cargo watch --workdir /workspace/crates/deploy-mcp -w ./content -w ./src -w /workspace/crates/ssg_whiz/src --no-gitignore -x "run --bin deploy-mcp"
 
 deploy-tw:
-    cd /workspace/crates/bionic-gpt && tailwind-extra -i ./input.css -o ./dist/tailwind.css --watch
+    cd /workspace/crates/deploy-mcp && tailwind-extra -i ./input.css -o ./dist/tailwind.css --watch
 
 decision:
     cd /workspace/crates/decision && cargo watch --workdir /workspace/crates/decision -w ./content -w ./src -w /workspace/crates/ssg_whiz/src --no-gitignore -x "run --bin decision"

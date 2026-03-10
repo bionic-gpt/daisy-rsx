@@ -43,14 +43,16 @@ pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
             image: post.image.map(|image| image.to_string()),
             section: Section::Blog,
             article {
-                class: "mt-32 mx-auto prose lg:prose-xl p-5",
+                class: "blog-post",
                 h1 {
+                    class: "blog-post__title",
                     "{post.title}"
                 }
                 div {
-                    class: "not-prose flex flex-row mt-8 mb-4",
+                    class: "blog-post__meta",
                     if let Some(author_image) = post.author_image {
                         img {
+                            class: "blog-post__author-image",
                             width: "44",
                             height: "44",
                             src: author_image,
@@ -58,27 +60,27 @@ pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
                         }
                     }
                     div {
-                        class: "not-prose flex flex-col pl-2",
+                        class: "blog-post__meta-text",
                         if let Some(author) = post.author {
                             strong {
-                                class: "text-base",
+                                class: "blog-post__author",
                                 "{author}"
                             }
                         }
                         small {
-                            class: "text-base",
+                            class: "blog-post__date",
                             "{post.date}"
                         }
                     }
                 }
                 div {
-                    class: "not-prose flex justify-between items-center border-t border-b mb-4",
+                    class: "blog-post__share",
                     small {
-                        class: "not-prose",
+                        class: "blog-post__share-label",
                         "Share"
                     }
                     div {
-                        class: "not-prose flex flex-row gap-1",
+                        class: "blog-post__share-links",
                         a {
                             href: "https://twitter.com/intent/tweet?url={page_permalink(post.folder)}",
                             img {
@@ -99,12 +101,13 @@ pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
                 }
                 if let Some(image) = post.image {
                     img {
-                        class: "mb-8 object-cover h-96 w-full",
+                        class: "blog-post__hero-image",
                         src: image,
                         alt: "{post.title}"
                     }
                 }
                 div {
+                    class: "blog-post__content",
                     dangerous_inner_html: "{content}"
                 }
             }
@@ -144,30 +147,31 @@ pub fn BlogList(summary: Summary, footer_links: FooterLinks) -> Element {
             mobile_menu: None,
             section: Section::Blog,
             section {
-                class: "lg:max-w-5xl mx-auto text-center mb-12 mt-32",
+                class: "blog-list__hero",
                 h1 {
-                    class: "text-4xl font-extrabold",
+                    class: "blog-list__title",
                     "{hero_title}"
                 }
                 h2 {
-                    class: "text-2xl font-bold",
+                    class: "blog-list__subtitle",
                     "{hero_subtitle}"
                 }
             }
             section {
-                class: "lg:max-w-5xl mx-auto p-4",
+                class: "blog-list__content",
                 div {
                     div {
-                        class: "md:grid grid-cols-2 gap-4",
+                        class: "blog-list__grid",
                         for category in summary.categories {
                             for page in category.pages {
                                 div {
-                                    class: "border p-4",
+                                    class: "blog-card",
                                     a {
+                                        class: "blog-card__image-link",
                                         href: "/{page.folder}",
                                         if let Some(image) = page.image {
                                             img {
-                                                class: "w-full aspect-[16/9] object-cover rounded-md",
+                                                class: "blog-card__image",
                                                 src: if supports_resized_variants(image) {
                                                     image_variant_path(image, 384, 216)
                                                 } else {
@@ -191,17 +195,21 @@ pub fn BlogList(summary: Summary, footer_links: FooterLinks) -> Element {
                                         }
                                     }
                                     div {
+                                        class: "blog-card__body",
                                         div {
+                                            class: "blog-card__content",
                                             h3 {
+                                                class: "blog-card__title",
                                                 "{page.title}"
                                             }
                                             p {
-                                                class: "subtitle",
+                                                class: "blog-card__date",
                                                 strong {
                                                     "{page.date}"
                                                 }
                                             }
                                             p {
+                                                class: "blog-card__cta",
                                                 a {
                                                     href: "/{page.folder}",
                                                     "Read More..."

@@ -24,10 +24,10 @@ pub fn Document(
                 summary: summary.clone()
             }),
             main {
-                class: "flex-1",
+                class: "docs-page",
 
                 div {
-                    class: "flex flex-row relative",
+                    class: "docs-page__layout",
                     LeftNav {
                         summary: summary.clone(),
                         active_folder: doc.folder,
@@ -82,16 +82,16 @@ fn MobileMenu(summary: Summary) -> Element {
 fn LeftNav(summary: Summary, active_folder: &'static str, scroll_key: &'static str) -> Element {
     rsx! {
         div {
-            class: "fixed z-40 lg:z-auto w-0 -left-full lg:w-[420px] !lg:left-0 lg:sticky h-[calc(100vh-108px)] top-2 bottom-0 flex flex-col ml-0 border-r lg:overflow-y-auto",
+            class: "docs-sidebar",
             "data-scroll-key": scroll_key,
             nav {
-                class: "pt-12 p-5",
+                class: "docs-sidebar__nav",
                 for category in &summary.categories {
                     p {
                         class: format!(
-                            "font-semibold mb-2 {}",
+                            "docs-sidebar__category-title{}",
                             if category.name.contains("Coming Soon") {
-                                "opacity-60"
+                                " docs-sidebar__category-title--disabled"
                             } else {
                                 ""
                             }
@@ -99,20 +99,20 @@ fn LeftNav(summary: Summary, active_folder: &'static str, scroll_key: &'static s
                         "{category.name}"
                     }
                     ul {
-                        class: "mb-6",
+                        class: "docs-sidebar__page-list",
                         for page in &category.pages {
                             li {
-                                class: "mb-2",
+                                class: "docs-sidebar__page-item",
                                 a {
                                     class: format!(
-                                        "rounded-md hover:text-sky-500 dark:hover:text-sky-400 {} {}",
+                                        "docs-sidebar__page-link{}{}",
                                         if page.folder == active_folder && !category.name.contains("Coming Soon") {
-                                            "text-primary font-semibold border-b-2 border-primary pb-[2px]"
+                                            " docs-sidebar__page-link--active"
                                         } else {
                                             ""
                                         },
                                         if category.name.contains("Coming Soon") {
-                                            "opacity-50 pointer-events-none cursor-not-allowed"
+                                            " docs-sidebar__page-link--disabled"
                                         } else {
                                             ""
                                         }
@@ -137,12 +137,13 @@ fn Content(doc: PageSummary) -> Element {
     let content = crate::markdown::markdown_to_html(doc.markdown);
     rsx! {
         section {
-            class: "p-5 pt-12 w-full h-[calc(100vh-108px)] lg:overflow-y-auto",
+            class: "docs-content",
             div {
-                class: "mb-12",
+                class: "docs-content__inner",
                 article {
-                    class: "mx-auto prose",
+                    class: "docs-content__article",
                     div {
+                        class: "docs-content__body",
                         dangerous_inner_html: "{content}"
                     }
                 }
