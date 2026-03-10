@@ -1,11 +1,13 @@
 use std::error::Error;
 use std::future::Future;
 use std::io;
+use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::pin::Pin;
 use std::process::Command;
 
 use image::{imageops::FilterType, ImageFormat, ImageReader};
+use sha2::{Digest, Sha256};
 
 use crate::summaries::{BlogSummary, DocumentSite, PagesSummary, Summary};
 use crate::{
@@ -68,15 +70,22 @@ impl SiteBuilder {
     pub async fn build(self) -> Result<(), Box<dyn Error + Send + Sync>> {
         tracing::info!("site build: starting");
         let static_pages = require(self.static_pages, "static pages")?;
-
-        set_navigation_links(self.config.navigation_links.clone());
-        set_site_meta(self.config.site_meta.clone());
-        set_site_header(self.config.site_header);
-        set_site_assets(self.config.site_assets.clone());
-
-        let dist_dir = self.config.dist_dir.clone();
+        let mut config = self.config;
+        let dist_dir = config.dist_dir.clone();
         std::fs::create_dir_all(&dist_dir)?;
         tracing::info!("site build: dist dir ready at {}", dist_dir.display());
+
+        let framework_stylesheets = emit_framework_stylesheets(&dist_dir)?;
+        if !framework_stylesheets.is_empty() {
+            let mut stylesheets = framework_stylesheets;
+            stylesheets.extend(config.site_assets.stylesheets);
+            config.site_assets.stylesheets = stylesheets;
+        }
+
+        set_navigation_links(config.navigation_links.clone());
+        set_site_meta(config.site_meta.clone());
+        set_site_header(config.site_header);
+        set_site_assets(config.site_assets.clone());
 
         copy_assets_dir(&dist_dir)?;
         tracing::info!("site build: copied shared assets");
@@ -99,7 +108,7 @@ impl SiteBuilder {
             static_pages: static_pages().await,
         };
 
-        let result = generate_website(self.config, input).await;
+        let result = generate_website(config, input).await;
         if result.is_ok() {
             tracing::info!("site build: complete");
         }
@@ -160,6 +169,36 @@ struct BlogImageStats {
 
 const BLOG_VARIANT_SIZES: [(u32, u32); 2] = [(384, 216), (768, 432)];
 const PROCESSED_ASSETS_DIR: &str = "processed";
+const FRAMEWORK_STYLES: [(&str, &str); 2] = [
+    ("ssg-whiz-navigation", include_str!("../css/navigation.css")),
+    ("ssg-whiz-content", include_str!("../css/content.css")),
+];
+
+fn emit_framework_stylesheets(dist_dir: &Path) -> io::Result<Vec<String>> {
+    let mut emitted = Vec::with_capacity(FRAMEWORK_STYLES.len());
+
+    for (name, content) in FRAMEWORK_STYLES {
+        let hash = short_sha256_hex(content.as_bytes());
+        let filename = format!("{name}-{hash}.css");
+        let output_path = dist_dir.join(&filename);
+
+        let mut file = std::fs::File::create(&output_path)?;
+        file.write_all(content.as_bytes())?;
+        emitted.push(format!("/{filename}"));
+    }
+
+    Ok(emitted)
+}
+
+fn short_sha256_hex(bytes: &[u8]) -> String {
+    let digest = Sha256::digest(bytes);
+    let mut out = String::with_capacity(12);
+    for byte in digest.iter().take(6) {
+        use std::fmt::Write as _;
+        let _ = write!(&mut out, "{byte:02x}");
+    }
+    out
+}
 
 fn copy_folder(src: &Path, dst: &Path) -> io::Result<()> {
     std::fs::create_dir_all(dst)?;

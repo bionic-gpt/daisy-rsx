@@ -13,16 +13,12 @@ pub struct FooterLinks {
 
 #[component]
 pub fn Footer(margin_top: Option<String>, links: FooterLinks) -> Element {
-    let extra_class = if let Some(extra_class) = margin_top {
-        extra_class
-    } else {
-        "mt-24".to_string()
-    };
+    let flush = margin_top.as_deref() == Some("mt-0");
 
     if links.variant.as_deref() == Some("decision-luxe") {
         return rsx! {
             footer {
-                class: "dl-footer {extra_class}",
+                class: if flush { "dl-footer dl-footer--flush" } else { "dl-footer" },
                 div {
                     class: "dl-footer-grid",
                     div {
@@ -56,61 +52,64 @@ pub fn Footer(margin_top: Option<String>, links: FooterLinks) -> Element {
 
     rsx! {
         footer {
-            class: "{extra_class} bg-neutral text-neutral-content p-10",
+            class: if flush { "site-footer site-footer--flush" } else { "site-footer" },
             div {
-                class: "mx-auto lg:max-w-5xl flex flex-col md:flex-row justify-between",
+                class: "site-footer__inner",
                 nav {
+                    class: "site-footer__section",
                     h6 {
-                        class: "footer-title",
+                        class: "site-footer__title",
                         "Resources"
                     }
                     a {
                         href: links.blog.clone(),
-                        class: "block link-hover",
+                        class: "site-footer__link",
                         "Blog"
                     }
                     a {
                         href: links.pricing.clone(),
-                        class: "block link-hover",
+                        class: "site-footer__link",
                         "Pricing"
                     }
                 }
                 nav {
+                    class: "site-footer__section",
                     h6 {
-                        class: "footer-title",
+                        class: "site-footer__title",
                         "Company"
                     }
                     if let Some(about) = links.about.clone() {
                         a {
-                            class: "block link-hover",
+                            class: "site-footer__link",
                             href: about,
                             "About Us"
                         }
                     } else {
                         a {
-                            class: "block link-hover",
+                            class: "site-footer__link",
                             "About Us"
                         }
                     }
                     a {
                         href: links.contact.clone(),
-                        class: "block link-hover",
+                        class: "site-footer__link",
                         "Contact"
                     }
                 }
                 nav {
+                    class: "site-footer__section",
                     h6 {
-                        class: "footer-title",
+                        class: "site-footer__title",
                         "Legal"
                     }
                     a {
                         href: links.terms.clone(),
-                        class: "block link-hover",
+                        class: "site-footer__link",
                         "Terms of Use"
                     }
                     a {
                         href: links.privacy.clone(),
-                        class: "block link-hover",
+                        class: "site-footer__link",
                         "Privacy Policy"
                     }
                 }

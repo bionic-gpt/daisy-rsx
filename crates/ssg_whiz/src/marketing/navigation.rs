@@ -96,21 +96,19 @@ pub struct NavigationModel {
 
 #[component]
 pub fn NavItem(link: NavigationLink, current_section: Section) -> Element {
-    let mut added_class = "";
+    let mut class = String::from("site-nav__link");
     if link.section == current_section {
-        added_class = "underline";
+        class.push_str(" site-nav__link--active");
     }
-
-    let mut class = link.class.unwrap_or_default();
-    if !added_class.is_empty() {
-        if !class.is_empty() {
+    if let Some(extra) = link.class {
+        if !extra.is_empty() {
             class.push(' ');
+            class.push_str(&extra);
         }
-        class.push_str(added_class);
     }
 
     rsx! {
-        li {
+        li { class: "site-nav__item",
             a {
                 class: class,
                 "hx-boost": if link.hx_boost { "true" } else { "false" },
@@ -136,13 +134,12 @@ fn DesktopEntry(entry: NavigationEntry, current_section: Section) -> Element {
             current_section,
         }),
         NavigationEntry::Menu(menu) => rsx!(
-            li {
-                details {
-                    summary {
+            li { class: "site-nav__item site-nav__item--menu",
+                details { class: "site-nav__menu",
+                    summary { class: "site-nav__menu-summary",
                         "{menu.label}"
                     }
-                    ul {
-                        class: "p-2",
+                    ul { class: "site-nav__submenu",
                         for link in menu.links {
                             NavItem {
                                 link,
@@ -168,37 +165,32 @@ pub fn Navigation(
 
     rsx! {
         header {
-            class: "sticky top-0 z-50 site-nav-header",
+            class: "site-nav",
             if let Some(site_header) = site_header {
                 {site_header}
             }
-            div {
-                class: "backdrop-filter backdrop-blur-lg bg-base-100/80 border-b border-base-300 site-nav-shell",
-                div {
-                    class: "navbar justify-between site-nav-bar",
-
-                    div {
-                        class: "flex items-center gap-4",
+            div { class: "site-nav__backdrop",
+                div { class: "site-nav__inner",
+                    div { class: "site-nav__brand-group",
                         a {
+                            class: "site-nav__brand-link",
                             href: model.home.clone(),
-                            span {
-                                class: "pl-3 flex flex-row items-center gap-2",
+                            span { class: "site-nav__brand",
                                 if let Some(logo_src) = model.logo_src {
                                     img {
-                                        class: "h-8 w-auto",
+                                        class: "site-nav__logo",
                                         src: logo_src,
                                         alt: model.logo_alt.unwrap_or_else(|| format!("{brand} logo"))
                                     }
                                 }
-                                strong {
-                                    class: "leading-none",
+                                strong { class: "site-nav__brand-text",
                                     "{brand}"
                                 }
                             }
                         }
 
-                        div { class: "hidden lg:flex",
-                            ul { class: "menu menu-horizontal px-1 dropdown-content",
+                        nav { class: "site-nav__desktop site-nav__desktop--left",
+                            ul { class: "site-nav__list",
                                 for entry in model.desktop_left {
                                     DesktopEntry {
                                         entry,
@@ -209,8 +201,8 @@ pub fn Navigation(
                         }
                     }
 
-                    div { class: "hidden lg:flex items-center",
-                        ul { class: "menu menu-horizontal px-3",
+                    nav { class: "site-nav__desktop site-nav__desktop--right",
+                        ul { class: "site-nav__list site-nav__list--right",
                             for link in model.desktop_right {
                                 NavItem {
                                     link,
@@ -220,17 +212,15 @@ pub fn Navigation(
                         }
                     }
 
-                    div { class: "dropdown lg:hidden dropdown-end",
-                        div {
-                            tabindex: "0",
-                            role: "button",
-                            class: "btn btn-ghost",
+                    details { class: "site-nav__mobile",
+                        summary {
+                            class: "site-nav__mobile-toggle",
                             svg {
                                 xmlns: "http://www.w3.org/2000/svg",
                                 stroke: "currentColor",
                                 view_box: "0 0 24 24",
                                 fill: "none",
-                                class: "h-5 w-5",
+                                class: "site-nav__mobile-icon",
                                 path {
                                     d: "M4 6h16M4 12h8m-8 6h16",
                                     stroke_linejoin: "round",
@@ -239,8 +229,7 @@ pub fn Navigation(
                                 }
                             }
                         }
-                        ul {
-                            class: "menu menu-sm dropdown-content mt-3 z-1 p-2 shadow-sm bg-base-100 rounded-box w-52",
+                        ul { class: "site-nav__mobile-menu",
                             for link in model.mobile {
                                 NavItem {
                                     link,

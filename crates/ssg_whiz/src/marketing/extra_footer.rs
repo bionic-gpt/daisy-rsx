@@ -7,23 +7,23 @@ pub const EXTRA_FOOTER_TITLE: &str =
 pub fn ExtraFooter(title: String, image: String, cta: String, cta_url: String) -> Element {
     rsx! {
         section {
-            class: "py-16 px-6 mt-24 w-full bg-secondary-content mb-0",
+            class: "site-extra-footer",
             div {
-                class: "mx-auto flex max-w-6xl flex-col items-center gap-6 px-6 text-center",
+                class: "site-extra-footer__inner",
                 h2 {
-                    class: "text-3xl font-bold max-w-3xl mx-auto leading-tight",
+                    class: "site-extra-footer__title",
                     "{title}"
                 }
                 img {
-                    class: "w-full max-w-3xl",
+                    class: "site-extra-footer__image",
                     alt: "Product Screenshot",
                     src: "{image}"
                 }
                 div {
-                    class: "flex flex-col gap-4 sm:flex-row sm:justify-center",
+                    class: "site-extra-footer__actions",
                     a {
                         href: "{cta_url}",
-                        class: "btn btn-primary",
+                        class: "site-extra-footer__button",
                         "{cta}"
                     }
                 }
