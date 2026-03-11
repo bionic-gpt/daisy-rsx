@@ -70,6 +70,8 @@ async fn main() {
                 ),
                 data_goatcounter: None,
             }],
+            head_inline_scripts: vec![],
+            body_inline_scripts: vec![],
         },
     };
 

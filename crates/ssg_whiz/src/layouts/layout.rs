@@ -73,6 +73,12 @@ pub fn Layout(props: LayoutProps) -> Element {
                     src: "{script_asset.src}"
                 }
             }
+            for inline_script in &assets.head_inline_scripts {
+                script {
+                    r#type: "{inline_script.script_type.as_deref().unwrap_or(\"\")}",
+                    dangerous_inner_html: "{inline_script.code}"
+                }
+            }
         }
         body {
             //WebinarHeader {}
@@ -90,6 +96,12 @@ pub fn Layout(props: LayoutProps) -> Element {
                     integrity: "{script_asset.integrity.as_deref().unwrap_or(\"\")}",
                     r#type: "{script_asset.script_type.as_deref().unwrap_or(\"\")}",
                     src: "{script_asset.src}"
+                }
+            }
+            for inline_script in &assets.body_inline_scripts {
+                script {
+                    r#type: "{inline_script.script_type.as_deref().unwrap_or(\"\")}",
+                    dangerous_inner_html: "{inline_script.code}"
                 }
             }
         }

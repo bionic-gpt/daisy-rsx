@@ -188,6 +188,8 @@ async fn main() {
                 integrity: None,
                 data_goatcounter: None,
             }],
+            head_inline_scripts: vec![],
+            body_inline_scripts: vec![],
         },
     };
 

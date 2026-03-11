@@ -70,6 +70,8 @@ pub struct SiteAssets {
     pub stylesheets: Vec<String>,
     pub head_scripts: Vec<ScriptAsset>,
     pub body_scripts: Vec<ScriptAsset>,
+    pub head_inline_scripts: Vec<InlineScript>,
+    pub body_inline_scripts: Vec<InlineScript>,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -89,6 +91,21 @@ impl ScriptAsset {
             async_load: false,
             integrity: None,
             data_goatcounter: None,
+        }
+    }
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct InlineScript {
+    pub code: String,
+    pub script_type: Option<String>,
+}
+
+impl InlineScript {
+    pub fn new(code: impl Into<String>) -> Self {
+        Self {
+            code: code.into(),
+            script_type: None,
         }
     }
 }
@@ -200,6 +217,8 @@ impl Default for SiteConfig {
                     ),
                     data_goatcounter: None,
                 }],
+                head_inline_scripts: vec![],
+                body_inline_scripts: vec![],
             },
         }
     }
