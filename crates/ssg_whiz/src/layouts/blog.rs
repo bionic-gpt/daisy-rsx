@@ -39,9 +39,9 @@ pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
             image: post.image.map(|image| image.to_string()),
             section: Section::Blog,
             article {
-                class: "mt-32 px-5",
+                class: "mt-24 mx-auto max-w-prose px-5 lg:prose-xl",
                 div {
-                    class: "mx-auto max-w-prose",
+                    class: "",
                     h1 {
                         class: "text-4xl font-extrabold leading-tight md:text-5xl",
                         "{post.title}"
@@ -155,7 +155,7 @@ pub fn BlogList(summary: Summary, footer_links: FooterLinks) -> Element {
                     for category in summary.categories {
                         for page in category.pages {
                             article {
-                                class: "card bg-base-100 shadow-md ring-1 ring-base-300 transition-transform duration-200 hover:-translate-y-1 hover:shadow-xl",
+                                class: "card mx-auto w-full max-w-sm bg-base-100 ring-1 ring-base-300",
                                 figure {
                                     a {
                                         href: "/{page.folder}",

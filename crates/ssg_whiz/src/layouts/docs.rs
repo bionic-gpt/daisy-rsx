@@ -139,7 +139,7 @@ fn Content(doc: PageSummary) -> Element {
             div {
                 class: "mb-12",
                 article {
-                    class: "mx-auto max-w-3xl",
+                    class: "mt-24 mx-auto prose max-w-prose px-5 lg:prose-xl",
                     div {
                         class: "prose prose-slate max-w-none prose-pre:overflow-x-auto prose-pre:rounded-xl prose-pre:bg-slate-100 prose-code:font-mono prose-img:max-w-full",
                         dangerous_inner_html: "{content}"
