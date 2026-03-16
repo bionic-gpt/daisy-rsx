@@ -23,10 +23,10 @@ pub fn Document(
                 summary: summary.clone()
             }),
             main {
-                class: "docs-page",
+                class: "flex-1",
 
                 div {
-                    class: "docs-page__layout",
+                    class: "relative flex flex-row",
                     LeftNav {
                         summary: summary.clone(),
                         active_folder: doc.folder,
@@ -63,7 +63,7 @@ pub fn Document(
 fn MobileMenu(summary: Summary) -> Element {
     rsx! {
         for category in &summary.categories {
-            ul {
+            ul { class: "menu menu-sm gap-1",
                 for page in &category.pages {
                     li {
                         a {
@@ -81,16 +81,16 @@ fn MobileMenu(summary: Summary) -> Element {
 fn LeftNav(summary: Summary, active_folder: &'static str, scroll_key: &'static str) -> Element {
     rsx! {
         div {
-            class: "docs-sidebar",
+            class: "fixed top-2.5 bottom-0 left-[-100%] z-40 hidden h-[calc(100vh-108px)] w-[420px] shrink-0 overflow-y-auto border-r border-base-300 bg-base-100 lg:sticky lg:left-0 lg:block",
             "data-scroll-key": scroll_key,
             nav {
-                class: "docs-sidebar__nav",
+                class: "px-5 pt-12 pb-5",
                 for category in &summary.categories {
                     p {
                         class: format!(
-                            "docs-sidebar__category-title{}",
+                            "mb-2 font-semibold{}",
                             if category.name.contains("Coming Soon") {
-                                " docs-sidebar__category-title--disabled"
+                                " opacity-60"
                             } else {
                                 ""
                             }
@@ -98,20 +98,19 @@ fn LeftNav(summary: Summary, active_folder: &'static str, scroll_key: &'static s
                         "{category.name}"
                     }
                     ul {
-                        class: "docs-sidebar__page-list",
+                        class: "menu mb-6 p-0",
                         for page in &category.pages {
                             li {
-                                class: "docs-sidebar__page-item",
                                 a {
                                     class: format!(
-                                        "docs-sidebar__page-link{}{}",
+                                        "{}{}",
                                         if page.folder == active_folder && !category.name.contains("Coming Soon") {
-                                            " docs-sidebar__page-link--active"
+                                            "active"
                                         } else {
                                             ""
                                         },
                                         if category.name.contains("Coming Soon") {
-                                            " docs-sidebar__page-link--disabled"
+                                            " pointer-events-none cursor-not-allowed opacity-50"
                                         } else {
                                             ""
                                         }
@@ -136,11 +135,11 @@ fn Content(doc: PageSummary) -> Element {
     let content = crate::markdown::markdown_to_html(doc.markdown);
     rsx! {
         section {
-            class: "docs-content",
+            class: "h-[calc(100vh-108px)] w-full px-5 pt-12 pb-5 lg:overflow-y-auto",
             div {
-                class: "docs-content__inner",
+                class: "mb-12",
                 article {
-                    class: "docs-content__article",
+                    class: "mx-auto max-w-3xl",
                     div {
                         class: "prose prose-slate max-w-none prose-pre:overflow-x-auto prose-pre:rounded-xl prose-pre:bg-slate-100 prose-code:font-mono prose-img:max-w-full",
                         dangerous_inner_html: "{content}"

@@ -39,18 +39,18 @@ pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
             image: post.image.map(|image| image.to_string()),
             section: Section::Blog,
             article {
-                class: "blog-post",
+                class: "mt-32 px-5",
                 div {
                     class: "mx-auto max-w-prose",
                     h1 {
-                        class: "blog-post__title",
+                        class: "text-4xl font-extrabold leading-tight md:text-5xl",
                         "{post.title}"
                     }
                     div {
-                        class: "blog-post__meta",
+                        class: "my-8 flex flex-row",
                         if let Some(author_image) = post.author_image {
                             img {
-                                class: "blog-post__author-image",
+                                class: "shrink-0 rounded-full",
                                 width: "44",
                                 height: "44",
                                 src: author_image,
@@ -58,28 +58,29 @@ pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
                             }
                         }
                         div {
-                            class: "blog-post__meta-text",
+                            class: "flex flex-col pl-2",
                             if let Some(author) = post.author {
                                 strong {
-                                    class: "blog-post__author",
+                                    class: "text-base font-semibold",
                                     "{author}"
                                 }
                             }
                             small {
-                                class: "blog-post__date",
+                                class: "text-base opacity-70",
                                 "{post.date}"
                             }
                         }
                     }
                     div {
-                        class: "blog-post__share",
+                        class: "mb-4 flex items-center justify-between border-y border-base-300 py-2",
                         small {
-                            class: "blog-post__share-label",
+                            class: "block text-sm font-medium uppercase tracking-wide opacity-70",
                             "Share"
                         }
                         div {
-                            class: "blog-post__share-links",
+                            class: "flex flex-row gap-2",
                             a {
+                                class: "btn btn-ghost btn-sm",
                                 href: "https://twitter.com/intent/tweet?url={page_permalink(post.folder)}",
                                 img {
                                     width: "16",
@@ -88,6 +89,7 @@ pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
                                 }
                             }
                             a {
+                                class: "btn btn-ghost btn-sm",
                                 href: "https://www.linkedin.com/sharing/share-offsite/?url={page_permalink(post.folder)}",
                                 img {
                                     width: "16",
@@ -99,7 +101,7 @@ pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
                     }
                     if let Some(image) = post.image {
                         img {
-                            class: "blog-post__hero-image",
+                            class: "mb-8 block aspect-video w-full rounded-box object-cover shadow-md",
                             src: image,
                             alt: "{post.title}"
                         }
@@ -136,31 +138,30 @@ pub fn BlogList(summary: Summary, footer_links: FooterLinks) -> Element {
             mobile_menu: None,
             section: Section::Blog,
             section {
-                class: "blog-list__hero",
+                class: "mx-auto mt-32 mb-12 max-w-5xl px-5 text-center",
                 h1 {
-                    class: "blog-list__title",
+                    class: "text-4xl font-extrabold md:text-5xl",
                     "{hero_title}"
                 }
                 h2 {
-                    class: "blog-list__subtitle",
+                    class: "mt-4 text-lg font-medium opacity-70 md:text-xl",
                     "{hero_subtitle}"
                 }
             }
             section {
-                class: "blog-list__content",
+                class: "mx-auto max-w-6xl px-5 pb-8",
                 div {
-                    div {
-                        class: "blog-list__grid",
-                        for category in summary.categories {
-                            for page in category.pages {
-                                div {
-                                    class: "blog-card",
+                    class: "grid gap-6 md:grid-cols-2",
+                    for category in summary.categories {
+                        for page in category.pages {
+                            article {
+                                class: "card bg-base-100 shadow-md ring-1 ring-base-300 transition-transform duration-200 hover:-translate-y-1 hover:shadow-xl",
+                                figure {
                                     a {
-                                        class: "blog-card__image-link",
                                         href: "/{page.folder}",
                                         if let Some(image) = page.image {
                                             img {
-                                                class: "blog-card__image",
+                                                class: "aspect-video w-full object-cover",
                                                 src: if supports_resized_variants(image) {
                                                     image_variant_path(image, 384, 216)
                                                 } else {
@@ -183,27 +184,30 @@ pub fn BlogList(summary: Summary, footer_links: FooterLinks) -> Element {
                                             }
                                         }
                                     }
+                                }
+                                div {
+                                    class: "card-body gap-3",
+                                    h3 {
+                                        class: "card-title text-balance text-xl",
+                                        a {
+                                            href: "/{page.folder}",
+                                            "{page.title}"
+                                        }
+                                    }
+                                    p {
+                                        class: "text-sm font-semibold uppercase tracking-wide opacity-60",
+                                        "{page.date}"
+                                    }
+                                    p {
+                                        class: "line-clamp-3 opacity-80",
+                                        "{page.description}"
+                                    }
                                     div {
-                                        class: "blog-card__body",
-                                        div {
-                                            class: "blog-card__content",
-                                            h3 {
-                                                class: "blog-card__title",
-                                                "{page.title}"
-                                            }
-                                            p {
-                                                class: "blog-card__date",
-                                                strong {
-                                                    "{page.date}"
-                                                }
-                                            }
-                                            p {
-                                                class: "blog-card__cta",
-                                                a {
-                                                    href: "/{page.folder}",
-                                                    "Read More..."
-                                                }
-                                            }
+                                        class: "card-actions justify-end pt-2",
+                                        a {
+                                            class: "btn btn-outline btn-sm",
+                                            href: "/{page.folder}",
+                                            "Read More"
                                         }
                                     }
                                 }

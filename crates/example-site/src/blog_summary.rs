@@ -11,7 +11,7 @@ pub fn summary() -> Summary {
                 description: "The first post for your new static site.",
                 folder: "blog/hello-world",
                 markdown: include_str!("../content/blog/hello-world/index.md"),
-                image: None,
+                image: Some("/blog/hello-world/header.png"),
                 author: None,
                 author_image: None,
             }],

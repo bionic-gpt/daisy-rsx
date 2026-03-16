@@ -220,23 +220,19 @@ pub fn Navigation(
                         }
                     }
                 }
-                div { class: "hidden lg:flex",
-                    ul { class: "menu menu-horizontal px-1",
-                        for link in model.desktop_right {
-                            li {
-                                a {
-                                    class: nav_link_class(&link, &section),
-                                    "hx-boost": if link.hx_boost { "true" } else { "false" },
-                                    href: link.href,
-                                    if let Some(src) = &link.badge_image {
-                                        img {
-                                            src: src.clone(),
-                                            alt: link.badge_alt.clone().unwrap_or_default()
-                                        }
-                                    } else {
-                                        "{link.label}"
-                                    }
+                div { class: "hidden lg:flex items-center gap-3",
+                    for link in model.desktop_right {
+                        a {
+                            class: nav_link_class(&link, &section),
+                            "hx-boost": if link.hx_boost { "true" } else { "false" },
+                            href: link.href,
+                            if let Some(src) = &link.badge_image {
+                                img {
+                                    src: src.clone(),
+                                    alt: link.badge_alt.clone().unwrap_or_default()
                                 }
+                            } else {
+                                "{link.label}"
                             }
                         }
                     }

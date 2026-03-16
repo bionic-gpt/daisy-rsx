@@ -16,64 +16,68 @@ pub fn Footer(margin_top: Option<String>, links: FooterLinks) -> Element {
 
     rsx! {
         footer {
-            class: if flush { "site-footer site-footer--flush" } else { "site-footer" },
+            class: if flush {
+                "mt-0 bg-base-200 px-6 py-10 text-base-content"
+            } else {
+                "mt-24 bg-base-200 px-6 py-10 text-base-content"
+            },
             div {
-                class: "site-footer__inner",
+                class: "mx-auto flex max-w-5xl flex-col gap-8 md:flex-row md:justify-between",
                 nav {
-                    class: "site-footer__section",
+                    class: "flex flex-col gap-2",
                     h6 {
-                        class: "site-footer__title",
+                        class: "mb-2 text-sm font-bold uppercase tracking-[0.08em]",
                         "Resources"
                     }
                     a {
                         href: links.blog.clone(),
-                        class: "site-footer__link",
+                        class: "link link-hover",
                         "Blog"
                     }
                     a {
                         href: links.pricing.clone(),
-                        class: "site-footer__link",
+                        class: "link link-hover",
                         "Pricing"
                     }
                 }
                 nav {
-                    class: "site-footer__section",
+                    class: "flex flex-col gap-2",
                     h6 {
-                        class: "site-footer__title",
+                        class: "mb-2 text-sm font-bold uppercase tracking-[0.08em]",
                         "Company"
                     }
                     if let Some(about) = links.about.clone() {
                         a {
-                            class: "site-footer__link",
+                            class: "link link-hover",
                             href: about,
                             "About Us"
                         }
                     } else {
                         a {
-                            class: "site-footer__link",
+                            class: "link link-hover",
                             "About Us"
                         }
                     }
                     a {
                         href: links.contact.clone(),
-                        class: "site-footer__link",
+                        class: "link link-hover",
                         "Contact"
                     }
                 }
                 nav {
-                    class: "site-footer__section",
+                    class: "flex flex-col gap-2",
                     h6 {
-                        class: "site-footer__title",
+                        class: "mb-2 text-sm font-bold uppercase tracking-[0.08em]",
                         "Legal"
                     }
                     a {
                         href: links.terms.clone(),
-                        class: "site-footer__link",
+                        class: "link link-hover",
                         "Terms of Use"
                     }
                     a {
                         href: links.privacy.clone(),
-                        class: "site-footer__link",
+                        class: "link link-hover",
                         "Privacy Policy"
                     }
                 }

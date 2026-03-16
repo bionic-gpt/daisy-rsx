@@ -171,8 +171,7 @@ struct BlogImageStats {
 
 const BLOG_VARIANT_SIZES: [(u32, u32); 2] = [(384, 216), (768, 432)];
 const PROCESSED_ASSETS_DIR: &str = "processed";
-const FRAMEWORK_STYLES: [(&str, &str); 1] =
-    [("ssg-whiz-content", include_str!("../css/content.css"))];
+const FRAMEWORK_STYLES: [(&str, &str); 0] = [];
 const FRAMEWORK_ASSETS: [(&str, &str); 2] = [
     (
         "social-sharing/x-twitter.svg",
