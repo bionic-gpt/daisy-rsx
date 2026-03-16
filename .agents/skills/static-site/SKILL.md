@@ -23,7 +23,7 @@ Use this skill to create a new site crate with the smallest baseline that still 
 
 - `src/main.rs`, `src/generator.rs`, `src/pages/index.rs`, `src/ui_links.rs`
 - one starter blog post
-- one starter static docs page
+- one starter docs section using the full docs/document-site layout
 - `assets/copy-paste.js` and `assets/goat-counter.js`
 - `cloudflare-build.sh`
 - `input.css`

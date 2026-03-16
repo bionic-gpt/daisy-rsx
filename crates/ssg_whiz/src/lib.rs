@@ -10,7 +10,7 @@ use tower_http::services::ServeDir;
 use tower_livereload::LiveReloadLayer;
 
 use layouts::{BlogList, BlogPost, Document, MarkdownPage};
-use summaries::{BlogSummary, DocumentSite, PagesSummary, Summary};
+use summaries::{BlogSummary, PagesSummary, Summary};
 
 pub mod builder;
 pub mod layouts;
@@ -25,6 +25,7 @@ pub use marketing::navigation::{
     Navigation, NavigationEntry, NavigationLink, NavigationMenu, NavigationModel, Section,
 };
 pub use marketing::site_header::SiteHeader;
+pub use summaries::DocumentSite;
 
 static NAV_LINKS: OnceLock<NavigationModel> = OnceLock::new();
 static SITE_META: OnceLock<SiteMeta> = OnceLock::new();

@@ -1,0 +1,26 @@
+<!DOCTYPE html><html lang='en'><head><title>Getting Started</title><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="description" content="A starter documentation section for your new static site."/><meta property="og:title" content="Getting Started"/><meta property="og:description" content="A starter documentation section for your new static site."/><meta property="og:type" content="article"/><meta property="og:site_name" content="Example Site"/><meta property="og:url" content="https://example.com/docs/getting-started"/><meta property="og:image" content="https://example.com/open-graph.png"/><meta property="twitter:image" content="https://example.com/open-graph.png"/><link rel="stylesheet" href="/ssg-whiz-navigation-8097bbb13dfb.css" type="text/css"/><link rel="stylesheet" href="/ssg-whiz-content-7ee594a94101.css" type="text/css"/><link rel="stylesheet" href="/tailwind.css" type="text/css"/><link rel="icon" type="image/svg+xml" href="/favicon.svg"/><script data-goatcounter="" integrity="" type="" src="/goat-counter.js"></script><script data-goatcounter="" integrity="" type="" src="/copy-paste.js"></script><script data-goatcounter="" integrity="" type="module" src="https://cdn.jsdelivr.net/npm/@justinribeiro/lite-youtube@1/lite-youtube.min.js"></script></head><body><header class="site-nav"><div class="site-nav__backdrop"><div class="site-nav__inner"><div class="site-nav__brand-group"><a class="site-nav__brand-link" href="/"><span class="site-nav__brand"><img class="site-nav__logo" src="/logo.svg" alt="Example Site logo"/><strong class="site-nav__brand-text">Example Site</strong></span></a><nav class="site-nav__desktop site-nav__desktop--left"><ul class="site-nav__list"><li class="site-nav__item"><a class="site-nav__link" hx-boost="false" href="/">Home</a></li><li class="site-nav__item"><a class="site-nav__link site-nav__link--active" hx-boost="false" href="/docs/getting-started">Docs</a></li><li class="site-nav__item"><a class="site-nav__link" hx-boost="false" href="/blog">Blog</a></li></ul></nav></div><nav class="site-nav__desktop site-nav__desktop--right"><ul class="site-nav__list site-nav__list--right"><li class="site-nav__item"><a class="site-nav__link btn btn-primary" hx-boost="true" href="/#hero">Get Started</a></li></ul></nav><details class="site-nav__mobile"><summary class="site-nav__mobile-toggle"><svg xmlns="http://www.w3.org/2000/svg" stroke="currentColor" viewBox="0 0 24 24" fill="none" class="site-nav__mobile-icon"><path d="M4 6h16M4 12h8m-8 6h16" stroke-linejoin="round" stroke-linecap="round" stroke-width="2"></path></svg></summary><ul class="site-nav__mobile-menu"><li class="site-nav__item"><a class="site-nav__link" hx-boost="false" href="/">Home</a></li><li class="site-nav__item"><a class="site-nav__link site-nav__link--active" hx-boost="false" href="/docs/getting-started">Docs</a></li><li class="site-nav__item"><a class="site-nav__link" hx-boost="false" href="/blog">Blog</a></li><li class="site-nav__item"><a class="site-nav__link" hx-boost="true" href="/#hero">Get Started</a></li><ul><li><a href="/docs/getting-started">Getting Started</a></li></ul></ul></details></div></div></header><main class="docs-page"><div class="docs-page__layout"><div class="docs-sidebar" data-scroll-key="docs"><nav class="docs-sidebar__nav"><p class="docs-sidebar__category-title">Getting Started</p><ul class="docs-sidebar__page-list"><li class="docs-sidebar__page-item"><a class="docs-sidebar__page-link docs-sidebar__page-link--active" href="/docs/getting-started" hx-boost="true" tabindex="0">Getting Started</a></li></ul></nav></div><section class="docs-content"><div class="docs-content__inner"><article class="docs-content__article"><div class="docs-content__body"><h1>Getting Started</h1>
+<p>This starter document exercises the full docs pipeline, including the docs sidebar layout.</p>
+<h2>What's Included</h2>
+<ul>
+<li>A homepage rendered from Rust</li>
+<li>A blog index with one starter article</li>
+<li>A docs section at <code>/docs/getting-started</code></li>
+<li>Shared site assets and custom JavaScript hooks</li>
+<li>A Cloudflare build script</li>
+</ul>
+<h2>Next Steps</h2>
+<p>Add more pages under <code>content/docs/</code> and group them in <code>src/docs_summary.rs</code> to populate the sidebar.</p>
+</div></article></div></section></div><script>
+                        (function() {
+                            const nav = document.querySelector('[data-scroll-key="docs"]');
+                            if (!nav) return;
+                            const storageKey = "left-nav-scroll-docs";
+                            const saved = sessionStorage.getItem(storageKey);
+                            if (saved) {
+                                nav.scrollTop = parseInt(saved, 10) || 0;
+                            }
+                            nav.addEventListener("scroll", function() {
+                                sessionStorage.setItem(storageKey, nav.scrollTop.toString());
+                            }, { passive: true });
+                        })();
+                    </script></main><script integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84q0uHVRRxEtvFPiQYbXWUorga2aqZJ0z" type="module" src="https://instant.page/5.2.0"></script></body></html>

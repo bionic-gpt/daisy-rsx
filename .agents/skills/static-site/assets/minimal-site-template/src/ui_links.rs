@@ -11,7 +11,7 @@ pub fn navigation_links() -> NavigationModel {
             NavigationEntry::Link(NavigationLink::external("Home", "/", Section::Home)),
             NavigationEntry::Link(NavigationLink::external(
                 "Docs",
-                "/getting-started",
+                "/docs/getting-started",
                 Section::Docs,
             )),
             NavigationEntry::Link(NavigationLink::external("Blog", "/blog", Section::Blog)),
@@ -22,7 +22,7 @@ pub fn navigation_links() -> NavigationModel {
         ],
         mobile: vec![
             NavigationLink::external("Home", "/", Section::Home),
-            NavigationLink::external("Docs", "/getting-started", Section::Docs),
+            NavigationLink::external("Docs", "/docs/getting-started", Section::Docs),
             NavigationLink::external("Blog", "/blog", Section::Blog),
             NavigationLink::new("Get Started", "/#hero", Section::Home),
         ],

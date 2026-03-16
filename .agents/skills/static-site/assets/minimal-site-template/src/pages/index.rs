@@ -28,7 +28,7 @@ pub fn page() -> String {
                             div {
                                 class: "flex flex-wrap justify-center gap-3",
                                 a { class: "btn btn-primary", href: "/blog", "Read the starter post" }
-                                a { class: "btn btn-outline", href: "/getting-started", "Browse the docs" }
+                                a { class: "btn btn-outline", href: "/docs/getting-started", "Browse the docs" }
                             }
                         }
                     }
