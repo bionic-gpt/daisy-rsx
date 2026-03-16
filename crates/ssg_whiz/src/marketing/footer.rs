@@ -8,47 +8,11 @@ pub struct FooterLinks {
     pub terms: String,
     pub privacy: String,
     pub about: Option<String>,
-    pub variant: Option<String>,
 }
 
 #[component]
 pub fn Footer(margin_top: Option<String>, links: FooterLinks) -> Element {
     let flush = margin_top.as_deref() == Some("mt-0");
-
-    if links.variant.as_deref() == Some("decision-luxe") {
-        return rsx! {
-            footer {
-                class: if flush { "dl-footer dl-footer--flush" } else { "dl-footer" },
-                div {
-                    class: "dl-footer-grid",
-                    div {
-                        h4 { "Decision Advantage" }
-                        p {
-                            class: "dl-lead",
-                            style: "font-size:0.92rem;max-width:30ch;",
-                            "Decision Advantage - Agentic decision support for command judgment."
-                        }
-                        div { class: "status", span { class: "pulse-dot" } "System Operational" }
-                    }
-                    nav {
-                        h4 { "Platform" }
-                        a { href: "/#hero", "Overview" }
-                        a { href: "/#protocol", "Architecture" }
-                    }
-                    nav {
-                        h4 { "Security" }
-                        a { href: "/#manifesto", "Controls" }
-                        a { href: "/#manifesto", "Assurance" }
-                    }
-                    nav {
-                        h4 { "Contact" }
-                        a { href: links.contact.clone(), "Schedule Demo" }
-                        a { href: links.contact.clone(), "Inquiries" }
-                    }
-                }
-            }
-        };
-    }
 
     rsx! {
         footer {

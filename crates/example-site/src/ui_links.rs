@@ -33,7 +33,6 @@ pub fn footer_links() -> FooterLinks {
         terms: "/".to_string(),
         privacy: "/".to_string(),
         about: None,
-        variant: None,
     }
 }
 

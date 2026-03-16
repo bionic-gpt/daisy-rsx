@@ -94,62 +94,34 @@ pub struct NavigationModel {
     pub mobile: Vec<NavigationLink>,
 }
 
-#[component]
-pub fn NavItem(link: NavigationLink, current_section: Section) -> Element {
-    let mut class = String::from("site-nav__link");
-    if link.section == current_section {
-        class.push_str(" site-nav__link--active");
-    }
-    if let Some(extra) = link.class {
-        if !extra.is_empty() {
-            class.push(' ');
-            class.push_str(&extra);
+fn nav_entry_links(entries: Vec<NavigationEntry>) -> Vec<NavigationLink> {
+    let mut links = Vec::new();
+    for entry in entries {
+        match entry {
+            NavigationEntry::Link(link) => links.push(link),
+            NavigationEntry::Menu(menu) => links.extend(menu.links),
         }
     }
-
-    rsx! {
-        li { class: "site-nav__item",
-            a {
-                class: class,
-                "hx-boost": if link.hx_boost { "true" } else { "false" },
-                href: link.href,
-                if let Some(src) = link.badge_image {
-                    img {
-                        src: src,
-                        alt: link.badge_alt.unwrap_or_default()
-                    }
-                } else {
-                    "{link.label}"
-                }
-            }
-        }
-    }
+    links
 }
 
-#[component]
-fn DesktopEntry(entry: NavigationEntry, current_section: Section) -> Element {
-    match entry {
-        NavigationEntry::Link(link) => rsx!(NavItem {
-            link,
-            current_section,
-        }),
-        NavigationEntry::Menu(menu) => rsx!(
-            li { class: "site-nav__item site-nav__item--menu",
-                details { class: "site-nav__menu",
-                    summary { class: "site-nav__menu-summary",
-                        "{menu.label}"
-                    }
-                    ul { class: "site-nav__submenu",
-                        for link in menu.links {
-                            NavItem {
-                                link,
-                                current_section: current_section.clone(),
-                            }
-                        }
-                    }
-                }
-            }
-        ),
+fn nav_link_class(link: &NavigationLink, current_section: &Section) -> Option<String> {
+    let mut classes = Vec::new();
+
+    if link.section == *current_section {
+        classes.push("active".to_string());
+    }
+
+    if let Some(extra) = &link.class {
+        if !extra.is_empty() {
+            classes.push(extra.clone());
+        }
+    }
+
+    if classes.is_empty() {
+        None
+    } else {
+        Some(classes.join(" "))
     }
 }
 
@@ -162,65 +134,28 @@ pub fn Navigation(
     site_header: Option<SiteHeader>,
 ) -> Element {
     let brand = brand.unwrap_or_else(|| "Bionic".to_string());
+    let desktop_left = nav_entry_links(model.desktop_left);
 
     rsx! {
         header {
-            class: "site-nav",
+            class: "sticky top-0 z-50 backdrop-filter backdrop-blur-lg bg-opacity-30",
             if let Some(site_header) = site_header {
                 {site_header}
             }
-            div { class: "site-nav__backdrop",
-                div { class: "site-nav__inner",
-                    div { class: "site-nav__brand-group",
-                        a {
-                            class: "site-nav__brand-link",
-                            href: model.home.clone(),
-                            span { class: "site-nav__brand",
-                                if let Some(logo_src) = model.logo_src {
-                                    img {
-                                        class: "site-nav__logo",
-                                        src: logo_src,
-                                        alt: model.logo_alt.unwrap_or_else(|| format!("{brand} logo"))
-                                    }
-                                }
-                                strong { class: "site-nav__brand-text",
-                                    "{brand}"
-                                }
-                            }
-                        }
-
-                        nav { class: "site-nav__desktop site-nav__desktop--left",
-                            ul { class: "site-nav__list",
-                                for entry in model.desktop_left {
-                                    DesktopEntry {
-                                        entry,
-                                        current_section: section.clone(),
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    nav { class: "site-nav__desktop site-nav__desktop--right",
-                        ul { class: "site-nav__list site-nav__list--right",
-                            for link in model.desktop_right {
-                                NavItem {
-                                    link,
-                                    current_section: section.clone(),
-                                }
-                            }
-                        }
-                    }
-
-                    details { class: "site-nav__mobile",
-                        summary {
-                            class: "site-nav__mobile-toggle",
+            div { class: "navbar justify-between",
+                div {
+                    class: "flex items-center gap-4",
+                    div { class: "dropdown lg:hidden",
+                        div {
+                            tabindex: "0",
+                            role: "button",
+                            class: "btn btn-ghost",
                             svg {
                                 xmlns: "http://www.w3.org/2000/svg",
                                 stroke: "currentColor",
                                 view_box: "0 0 24 24",
                                 fill: "none",
-                                class: "site-nav__mobile-icon",
+                                class: "h-5 w-5",
                                 path {
                                     d: "M4 6h16M4 12h8m-8 6h16",
                                     stroke_linejoin: "round",
@@ -229,14 +164,80 @@ pub fn Navigation(
                                 }
                             }
                         }
-                        ul { class: "site-nav__mobile-menu",
-                            for link in model.mobile {
-                                NavItem {
-                                    link,
-                                    current_section: section.clone(),
+                        ul { class: "menu menu-sm dropdown-content mt-3 z-10 w-52 rounded-box bg-base-100 p-2 shadow",
+                            for link in &model.mobile {
+                                li {
+                                    a {
+                                        class: nav_link_class(link, &section),
+                                        "hx-boost": if link.hx_boost { "true" } else { "false" },
+                                        href: link.href.clone(),
+                                        if let Some(src) = &link.badge_image {
+                                            img {
+                                                src: src.clone(),
+                                                alt: link.badge_alt.clone().unwrap_or_default()
+                                            }
+                                        } else {
+                                            "{link.label}"
+                                        }
+                                    }
                                 }
                             }
                             {mobile_menu}
+                        }
+                    }
+                    ul { class: "flex flex-row items-center gap-4",
+                        li {
+                            a {
+                                href: model.home.clone(),
+                                span { class: "pl-3 flex flex-row gap-2 items-center",
+                                    if let Some(logo_src) = model.logo_src {
+                                        img {
+                                            class: "h-8 w-auto",
+                                            src: logo_src,
+                                            alt: model.logo_alt.unwrap_or_else(|| format!("{brand} logo"))
+                                        }
+                                    }
+                                    strong { "{brand}" }
+                                }
+                            }
+                        }
+                        for link in desktop_left {
+                            li {
+                                a {
+                                    class: nav_link_class(&link, &section),
+                                    "hx-boost": if link.hx_boost { "true" } else { "false" },
+                                    href: link.href,
+                                    if let Some(src) = &link.badge_image {
+                                        img {
+                                            src: src.clone(),
+                                            alt: link.badge_alt.clone().unwrap_or_default()
+                                        }
+                                    } else {
+                                        "{link.label}"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                div { class: "hidden lg:flex",
+                    ul { class: "menu menu-horizontal px-1",
+                        for link in model.desktop_right {
+                            li {
+                                a {
+                                    class: nav_link_class(&link, &section),
+                                    "hx-boost": if link.hx_boost { "true" } else { "false" },
+                                    href: link.href,
+                                    if let Some(src) = &link.badge_image {
+                                        img {
+                                            src: src.clone(),
+                                            alt: link.badge_alt.clone().unwrap_or_default()
+                                        }
+                                    } else {
+                                        "{link.label}"
+                                    }
+                                }
+                            }
                         }
                     }
                 }

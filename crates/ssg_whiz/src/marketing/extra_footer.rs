@@ -29,7 +29,7 @@ pub fn ExtraFooter(config: ExtraFooterConfig) -> Element {
                     class: "site-extra-footer__actions",
                     a {
                         href: "{config.cta_url}",
-                        class: "site-extra-footer__button",
+                        class: "site-extra-footer__button btn btn-primary",
                         "{config.cta_label}"
                     }
                 }

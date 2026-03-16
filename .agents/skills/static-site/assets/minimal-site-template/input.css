@@ -2,4 +2,4 @@
 @plugin "@tailwindcss/typography";
 @plugin "daisyui";
 @source "./src/**/*.{rs,html}";
-@source inline("mx-auto max-w-none max-w-prose prose prose-slate prose-code:font-mono prose-img:max-w-full prose-pre:bg-slate-100 prose-pre:overflow-x-auto prose-pre:rounded-xl");
+@source inline("active backdrop-blur-lg backdrop-filter bg-base-100 bg-opacity-30 btn btn-ghost btn-primary dropdown dropdown-content flex flex-row gap-2 gap-4 h-5 h-8 hidden items-center justify-between lg:flex lg:hidden max-w-none max-w-prose menu menu-horizontal menu-sm mt-3 mx-auto navbar p-2 pl-3 prose prose-code:font-mono prose-img:max-w-full prose-pre:bg-slate-100 prose-pre:overflow-x-auto prose-pre:rounded-xl prose-slate px-1 rounded-box shadow sticky top-0 w-5 w-52 w-auto z-10 z-50");

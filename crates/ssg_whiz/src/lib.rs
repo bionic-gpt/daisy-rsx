@@ -181,7 +181,6 @@ impl Default for SiteConfig {
                 terms: "/terms".to_string(),
                 privacy: "/privacy".to_string(),
                 about: None,
-                variant: None,
             },
             site_meta: SiteMeta {
                 base_url: "https://bionic-gpt.com".to_string(),
