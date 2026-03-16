@@ -1,5 +1,5 @@
 use super::layout::Layout;
-use crate::{page_permalink, summaries::PageSummary, Footer, FooterLinks, Section};
+use crate::{Footer, FooterLinks, Section, page_permalink, summaries::PageSummary};
 use dioxus::prelude::*;
 
 #[component]

@@ -1,10 +1,16 @@
 use dioxus::prelude::*;
 
-pub const EXTRA_FOOTER_TITLE: &str =
-    "The all-in-one agentic AI platform for regulated teams—secure, open, and extensible end to end.";
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct ExtraFooterConfig {
+    pub title: String,
+    pub image: String,
+    pub image_alt: String,
+    pub cta_label: String,
+    pub cta_url: String,
+}
 
 #[component]
-pub fn ExtraFooter(title: String, image: String, cta: String, cta_url: String) -> Element {
+pub fn ExtraFooter(config: ExtraFooterConfig) -> Element {
     rsx! {
         section {
             class: "site-extra-footer",
@@ -12,19 +18,19 @@ pub fn ExtraFooter(title: String, image: String, cta: String, cta_url: String) -
                 class: "site-extra-footer__inner",
                 h2 {
                     class: "site-extra-footer__title",
-                    "{title}"
+                    "{config.title}"
                 }
                 img {
                     class: "site-extra-footer__image",
-                    alt: "Product Screenshot",
-                    src: "{image}"
+                    alt: "{config.image_alt}",
+                    src: "{config.image}"
                 }
                 div {
                     class: "site-extra-footer__actions",
                     a {
-                        href: "{cta_url}",
+                        href: "{config.cta_url}",
                         class: "site-extra-footer__button",
-                        "{cta}"
+                        "{config.cta_label}"
                     }
                 }
             }

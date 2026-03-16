@@ -1,6 +1,6 @@
 #![allow(non_snake_case)]
 
-use crate::{absolute_url, navigation_links, site_assets, site_meta, Navigation, Section};
+use crate::{Navigation, Section, absolute_url, navigation_links, site_assets, site_meta};
 use dioxus::prelude::*;
 
 // Remember: owned props must implement PartialEq!

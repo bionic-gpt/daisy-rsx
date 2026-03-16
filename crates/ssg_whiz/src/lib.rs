@@ -19,7 +19,7 @@ pub mod marketing;
 pub mod summaries;
 
 pub use builder::SiteBuilder;
-pub use marketing::extra_footer::{ExtraFooter, EXTRA_FOOTER_TITLE};
+pub use marketing::extra_footer::{ExtraFooter, ExtraFooterConfig};
 pub use marketing::footer::{Footer, FooterLinks};
 pub use marketing::navigation::{
     Navigation, NavigationEntry, NavigationLink, NavigationMenu, NavigationModel, Section,
@@ -30,6 +30,7 @@ static NAV_LINKS: OnceLock<NavigationModel> = OnceLock::new();
 static SITE_META: OnceLock<SiteMeta> = OnceLock::new();
 static SITE_HEADER_FACTORY: OnceLock<Option<SiteHeaderFactory>> = OnceLock::new();
 static SITE_ASSETS: OnceLock<SiteAssets> = OnceLock::new();
+static EXTRA_FOOTER: OnceLock<Option<ExtraFooterConfig>> = OnceLock::new();
 
 pub fn set_navigation_links(links: NavigationModel) {
     let _ = NAV_LINKS.set(links);
@@ -118,6 +119,14 @@ pub(crate) fn site_assets() -> &'static SiteAssets {
     SITE_ASSETS.get().expect("ssg_whiz site assets not set")
 }
 
+pub fn set_extra_footer(extra_footer: Option<ExtraFooterConfig>) {
+    let _ = EXTRA_FOOTER.set(extra_footer);
+}
+
+pub(crate) fn extra_footer() -> Option<ExtraFooterConfig> {
+    EXTRA_FOOTER.get().cloned().unwrap_or(None)
+}
+
 pub fn absolute_url(value: &str) -> String {
     let meta = site_meta();
     let base = meta.base_url.trim_end_matches('/');
@@ -146,6 +155,7 @@ pub struct SiteConfig {
     pub site_meta: SiteMeta,
     pub site_header: Option<SiteHeaderFactory>,
     pub site_assets: SiteAssets,
+    pub extra_footer: Option<ExtraFooterConfig>,
 }
 
 impl Default for SiteConfig {
@@ -220,6 +230,7 @@ impl Default for SiteConfig {
                 head_inline_scripts: vec![],
                 body_inline_scripts: vec![],
             },
+            extra_footer: None,
         }
     }
 }
@@ -246,6 +257,7 @@ pub async fn generate_website(
     set_site_meta(config.site_meta.clone());
     set_site_header(config.site_header);
     set_site_assets(config.site_assets.clone());
+    set_extra_footer(config.extra_footer.clone());
 
     let mut pages = input.static_pages;
     pages.extend(render_blog_posts(&input.blog, config.footer_links.clone()));

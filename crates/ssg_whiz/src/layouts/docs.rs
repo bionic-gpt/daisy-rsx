@@ -2,9 +2,8 @@ use dioxus::prelude::*;
 
 use super::layout::Layout;
 use crate::{
-    page_permalink,
+    Section, page_permalink,
     summaries::{Category, PageSummary, Summary},
-    Section,
 };
 
 #[component]

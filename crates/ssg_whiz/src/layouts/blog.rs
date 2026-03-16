@@ -1,8 +1,7 @@
 use super::layout::Layout;
 use crate::{
-    page_permalink, site_meta,
+    ExtraFooter, Footer, FooterLinks, Section, extra_footer, page_permalink,
     summaries::{PageSummary, Summary},
-    ExtraFooter, Footer, FooterLinks, Section, EXTRA_FOOTER_TITLE,
 };
 use dioxus::prelude::*;
 
@@ -31,6 +30,7 @@ fn supports_resized_variants(path: &str) -> bool {
 #[component]
 pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
     let content = crate::markdown::markdown_to_html(post.markdown);
+    let extra_footer = extra_footer();
     rsx! {
         Layout {
             title: "{post.title}",
@@ -107,11 +107,10 @@ pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
                     dangerous_inner_html: "{content}"
                 }
             }
-            ExtraFooter {
-                title: EXTRA_FOOTER_TITLE.to_string(),
-                image: "/landing-page/bionic-console.png",
-                cta: "Find out More",
-                cta_url: "/"
+            if let Some(config) = extra_footer {
+                ExtraFooter {
+                    config
+                }
             }
             Footer {
                 margin_top: "mt-0",
@@ -123,18 +122,9 @@ pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
 
 #[component]
 pub fn BlogList(summary: Summary, footer_links: FooterLinks) -> Element {
-    let meta = site_meta();
-    let (hero_title, hero_subtitle) = if meta.brand_name == "Decision" {
-        (
-            "Decision Briefings".to_string(),
-            "Operational insights, command judgment patterns, and secure decision-support practices.".to_string()
-        )
-    } else {
-        (
-            "Enterprise Generative AI".to_string(),
-            "The Bionic blog explores issues around LLMs in the enterprise".to_string(),
-        )
-    };
+    let hero_title = "Latest Insights".to_string();
+    let hero_subtitle = "Ideas, implementation notes, and product updates from the team."
+        .to_string();
 
     rsx! {
         Layout {

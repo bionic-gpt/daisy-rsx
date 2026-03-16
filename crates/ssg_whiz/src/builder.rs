@@ -6,13 +6,13 @@ use std::path::{Path, PathBuf};
 use std::pin::Pin;
 use std::process::Command;
 
-use image::{imageops::FilterType, ImageFormat, ImageReader};
+use image::{ImageFormat, ImageReader, imageops::FilterType};
 use sha2::{Digest, Sha256};
 
 use crate::summaries::{BlogSummary, DocumentSite, PagesSummary, Summary};
 use crate::{
-    generate_website, set_navigation_links, set_site_assets, set_site_header, set_site_meta,
-    SiteConfig, SitePage, WebsiteInput,
+    SiteConfig, SitePage, WebsiteInput, generate_website, set_extra_footer, set_navigation_links,
+    set_site_assets, set_site_header, set_site_meta,
 };
 
 pub struct SiteBuilder {
@@ -86,6 +86,7 @@ impl SiteBuilder {
         set_site_meta(config.site_meta.clone());
         set_site_header(config.site_header);
         set_site_assets(config.site_assets.clone());
+        set_extra_footer(config.extra_footer.clone());
 
         copy_assets_dir(&dist_dir)?;
         tracing::info!("site build: copied shared assets");
