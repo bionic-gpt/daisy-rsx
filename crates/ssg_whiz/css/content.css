@@ -1,6 +1,5 @@
 .blog-post {
-  max-width: 56rem;
-  margin: 8rem auto 0;
+  margin-top: 8rem;
   padding: 1.25rem;
 }
 
@@ -57,110 +56,6 @@
   height: 24rem;
   margin-bottom: 2rem;
   object-fit: cover;
-}
-
-.blog-post__content,
-.docs-content__body,
-.markdown-page__content {
-  color: inherit;
-  line-height: 1.75;
-}
-
-.blog-post__content h1,
-.blog-post__content h2,
-.blog-post__content h3,
-.blog-post__content h4,
-.docs-content__body h1,
-.docs-content__body h2,
-.docs-content__body h3,
-.docs-content__body h4,
-.markdown-page__content h1,
-.markdown-page__content h2,
-.markdown-page__content h3,
-.markdown-page__content h4 {
-  line-height: 1.2;
-  margin: 1.5em 0 0.7em;
-  font-weight: 700;
-}
-
-.blog-post__content h1,
-.docs-content__body h1,
-.markdown-page__content h1 {
-  font-size: 2.2rem;
-}
-
-.blog-post__content h2,
-.docs-content__body h2,
-.markdown-page__content h2 {
-  font-size: 1.7rem;
-}
-
-.blog-post__content h3,
-.docs-content__body h3,
-.markdown-page__content h3 {
-  font-size: 1.35rem;
-}
-
-.blog-post__content p,
-.blog-post__content ul,
-.blog-post__content ol,
-.blog-post__content pre,
-.blog-post__content blockquote,
-.docs-content__body p,
-.docs-content__body ul,
-.docs-content__body ol,
-.docs-content__body pre,
-.docs-content__body blockquote,
-.markdown-page__content p,
-.markdown-page__content ul,
-.markdown-page__content ol,
-.markdown-page__content pre,
-.markdown-page__content blockquote {
-  margin: 1em 0;
-}
-
-.blog-post__content ul,
-.blog-post__content ol,
-.docs-content__body ul,
-.docs-content__body ol,
-.markdown-page__content ul,
-.markdown-page__content ol {
-  padding-left: 1.4rem;
-}
-
-.blog-post__content li,
-.docs-content__body li,
-.markdown-page__content li {
-  margin: 0.35rem 0;
-}
-
-.blog-post__content a,
-.docs-content__body a,
-.markdown-page__content a {
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
-}
-
-.blog-post__content pre,
-.docs-content__body pre,
-.markdown-page__content pre {
-  overflow-x: auto;
-  padding: 1rem;
-  border-radius: 0.75rem;
-  background: rgba(15, 23, 42, 0.06);
-}
-
-.blog-post__content code,
-.docs-content__body code,
-.markdown-page__content code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-}
-
-.blog-post__content img,
-.docs-content__body img,
-.markdown-page__content img {
-  max-width: 100%;
-  height: auto;
 }
 
 .blog-list__hero {

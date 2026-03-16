@@ -2,5 +2,4 @@
 @plugin "@tailwindcss/typography";
 @plugin "daisyui";
 @source "./src/**/*.{rs,html}";
-@source "../daisy_rsx/src/**/*.{rs,html}";
-@source "../ssg_whiz/src/**/*.{rs,html}";
+@source inline("mx-auto max-w-none max-w-prose prose prose-slate prose-code:font-mono prose-img:max-w-full prose-pre:bg-slate-100 prose-pre:overflow-x-auto prose-pre:rounded-xl");

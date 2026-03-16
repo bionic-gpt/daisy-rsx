@@ -142,7 +142,7 @@ fn Content(doc: PageSummary) -> Element {
                 article {
                     class: "docs-content__article",
                     div {
-                        class: "docs-content__body",
+                        class: "prose prose-slate max-w-none prose-pre:overflow-x-auto prose-pre:rounded-xl prose-pre:bg-slate-100 prose-code:font-mono prose-img:max-w-full",
                         dangerous_inner_html: "{content}"
                     }
                 }

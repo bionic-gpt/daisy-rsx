@@ -40,71 +40,74 @@ pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
             section: Section::Blog,
             article {
                 class: "blog-post",
-                h1 {
-                    class: "blog-post__title",
-                    "{post.title}"
-                }
                 div {
-                    class: "blog-post__meta",
-                    if let Some(author_image) = post.author_image {
-                        img {
-                            class: "blog-post__author-image",
-                            width: "44",
-                            height: "44",
-                            src: author_image,
-                            alt: "Author"
+                    class: "mx-auto max-w-prose",
+                    h1 {
+                        class: "blog-post__title",
+                        "{post.title}"
+                    }
+                    div {
+                        class: "blog-post__meta",
+                        if let Some(author_image) = post.author_image {
+                            img {
+                                class: "blog-post__author-image",
+                                width: "44",
+                                height: "44",
+                                src: author_image,
+                                alt: "Author"
+                            }
+                        }
+                        div {
+                            class: "blog-post__meta-text",
+                            if let Some(author) = post.author {
+                                strong {
+                                    class: "blog-post__author",
+                                    "{author}"
+                                }
+                            }
+                            small {
+                                class: "blog-post__date",
+                                "{post.date}"
+                            }
                         }
                     }
                     div {
-                        class: "blog-post__meta-text",
-                        if let Some(author) = post.author {
-                            strong {
-                                class: "blog-post__author",
-                                "{author}"
-                            }
-                        }
+                        class: "blog-post__share",
                         small {
-                            class: "blog-post__date",
-                            "{post.date}"
+                            class: "blog-post__share-label",
+                            "Share"
+                        }
+                        div {
+                            class: "blog-post__share-links",
+                            a {
+                                href: "https://twitter.com/intent/tweet?url={page_permalink(post.folder)}",
+                                img {
+                                    width: "16",
+                                    height: "16",
+                                    src: "/social-sharing/x-twitter.svg"
+                                }
+                            }
+                            a {
+                                href: "https://www.linkedin.com/sharing/share-offsite/?url={page_permalink(post.folder)}",
+                                img {
+                                    width: "16",
+                                    height: "16",
+                                    src: "/social-sharing/linkedin.svg"
+                                }
+                            }
                         }
                     }
-                }
-                div {
-                    class: "blog-post__share",
-                    small {
-                        class: "blog-post__share-label",
-                        "Share"
+                    if let Some(image) = post.image {
+                        img {
+                            class: "blog-post__hero-image",
+                            src: image,
+                            alt: "{post.title}"
+                        }
                     }
                     div {
-                        class: "blog-post__share-links",
-                        a {
-                            href: "https://twitter.com/intent/tweet?url={page_permalink(post.folder)}",
-                            img {
-                                width: "16",
-                                height: "16",
-                                src: "/social-sharing/x-twitter.svg"
-                            }
-                        }
-                        a {
-                            href: "https://www.linkedin.com/sharing/share-offsite/?url={page_permalink(post.folder)}",
-                            img {
-                                width: "16",
-                                height: "16",
-                                src: "/social-sharing/linkedin.svg"
-                            }
-                        }
+                        class: "prose prose-slate max-w-none prose-pre:overflow-x-auto prose-pre:rounded-xl prose-pre:bg-slate-100 prose-code:font-mono prose-img:max-w-full",
+                        dangerous_inner_html: "{content}"
                     }
-                }
-                if let Some(image) = post.image {
-                    img {
-                        class: "blog-post__hero-image",
-                        src: image,
-                        alt: "{post.title}"
-                    }
-                }
-                div {
-                    class: "blog-post__content",
-                    dangerous_inner_html: "{content}"
                 }
             }
             if let Some(config) = extra_footer {

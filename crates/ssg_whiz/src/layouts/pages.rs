@@ -14,7 +14,7 @@ pub fn MarkdownPage(post: PageSummary, footer_links: FooterLinks) -> Element {
             article {
                 class: "markdown-page",
                 div {
-                    class: "markdown-page__content",
+                    class: "prose prose-slate max-w-none prose-pre:overflow-x-auto prose-pre:rounded-xl prose-pre:bg-slate-100 prose-code:font-mono prose-img:max-w-full",
                     dangerous_inner_html: "{content}"
                 }
             }
