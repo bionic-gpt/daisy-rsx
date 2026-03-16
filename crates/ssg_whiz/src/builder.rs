@@ -88,6 +88,7 @@ impl SiteBuilder {
         set_site_assets(config.site_assets.clone());
         set_extra_footer(config.extra_footer.clone());
 
+        emit_framework_assets(&dist_dir)?;
         copy_assets_dir(&dist_dir)?;
         tracing::info!("site build: copied shared assets");
 
@@ -174,6 +175,16 @@ const FRAMEWORK_STYLES: [(&str, &str); 2] = [
     ("ssg-whiz-navigation", include_str!("../css/navigation.css")),
     ("ssg-whiz-content", include_str!("../css/content.css")),
 ];
+const FRAMEWORK_ASSETS: [(&str, &str); 2] = [
+    (
+        "social-sharing/x-twitter.svg",
+        include_str!("../assets/social-sharing/x-twitter.svg"),
+    ),
+    (
+        "social-sharing/linkedin.svg",
+        include_str!("../assets/social-sharing/linkedin.svg"),
+    ),
+];
 
 fn emit_framework_stylesheets(dist_dir: &Path) -> io::Result<Vec<String>> {
     let mut emitted = Vec::with_capacity(FRAMEWORK_STYLES.len());
@@ -189,6 +200,20 @@ fn emit_framework_stylesheets(dist_dir: &Path) -> io::Result<Vec<String>> {
     }
 
     Ok(emitted)
+}
+
+fn emit_framework_assets(dist_dir: &Path) -> io::Result<()> {
+    for (relative_path, content) in FRAMEWORK_ASSETS {
+        let output_path = dist_dir.join(relative_path);
+        if let Some(parent) = output_path.parent() {
+            std::fs::create_dir_all(parent)?;
+        }
+
+        let mut file = std::fs::File::create(output_path)?;
+        file.write_all(content.as_bytes())?;
+    }
+
+    Ok(())
 }
 
 fn short_sha256_hex(bytes: &[u8]) -> String {

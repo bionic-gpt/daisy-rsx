@@ -17,7 +17,7 @@ async fn main() {
     let config = SiteConfig {
         dist_dir: "dist".into(),
         run_server: std::env::var("DO_NOT_RUN_SERVER").is_err(),
-        addr: SocketAddr::from(([0, 0, 0, 0], __SITE_PORT__)),
+        addr: SocketAddr::from(([0, 0, 0, 0], 3050)),
         live_reload: true,
         navigation_links: ui_links::navigation_links(),
         footer_links: ui_links::footer_links(),

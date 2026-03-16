@@ -123,8 +123,8 @@ pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
 #[component]
 pub fn BlogList(summary: Summary, footer_links: FooterLinks) -> Element {
     let hero_title = "Latest Insights".to_string();
-    let hero_subtitle = "Ideas, implementation notes, and product updates from the team."
-        .to_string();
+    let hero_subtitle =
+        "Ideas, implementation notes, and product updates from the team.".to_string();
 
     rsx! {
         Layout {

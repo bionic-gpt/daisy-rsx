@@ -1,6 +1,6 @@
 ---
 name: static-site
-description: Scaffold a minimal Rust static-site crate in this workspace using ssg_whiz and daisy_rsx. Use when the user wants a new site crate created under crates/<name> with a working homepage, blog, assets, custom JavaScript, and Cloudflare build script.
+description: Scaffold a minimal Rust static-site crate in this workspace using ssg_whiz and daisy_rsx. Use when the user wants a new site crate created under crates/<name> with a working homepage, starter docs page, blog, assets, custom JavaScript, and Cloudflare build script.
 ---
 
 # Static Site
@@ -23,6 +23,7 @@ Use this skill to create a new site crate with the smallest baseline that still 
 
 - `src/main.rs`, `src/generator.rs`, `src/pages/index.rs`, `src/ui_links.rs`
 - one starter blog post
+- one starter static docs page
 - `assets/copy-paste.js` and `assets/goat-counter.js`
 - `cloudflare-build.sh`
 - `input.css`

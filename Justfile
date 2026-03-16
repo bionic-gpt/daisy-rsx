@@ -8,20 +8,8 @@ install-d2:
     sudo install -m 0755 "$HOME/.local/bin/d2" /usr/local/bin/d2
     d2 --version
 
-bionic:
-    cd /workspace/crates/bionic-gpt && cargo watch --workdir /workspace/crates/bionic-gpt -w ./content -w ./src -w /workspace/crates/ssg_whiz/src --no-gitignore -x "run --bin bionic-gpt"
+example:
+    cd /workspace/crates/example-site && cargo watch --workdir /workspace/crates/example-site -w ./content -w ./src -w /workspace/crates/ssg_whiz/src --no-gitignore -x "run --bin example-site"
 
-bionic-tw:
-    cd /workspace/crates/bionic-gpt && tailwind-extra -i ./input.css -o ./dist/tailwind.css --watch
-
-deploy:
-    cd /workspace/crates/deploy-mcp && cargo watch --workdir /workspace/crates/deploy-mcp -w ./content -w ./src -w /workspace/crates/ssg_whiz/src --no-gitignore -x "run --bin deploy-mcp"
-
-deploy-tw:
-    cd /workspace/crates/deploy-mcp && tailwind-extra -i ./input.css -o ./dist/tailwind.css --watch
-
-decision:
-    cd /workspace/crates/decision && cargo watch --workdir /workspace/crates/decision -w ./content -w ./src -w /workspace/crates/ssg_whiz/src --no-gitignore -x "run --bin decision"
-
-decision-tw:
-    cd /workspace/crates/decision && tailwind-extra -i ./input.css -o ./dist/tailwind.css --watch
+example-tw:
+    cd /workspace/crates/example-site && tailwind-extra -i ./input.css -o ./dist/tailwind.css --watch

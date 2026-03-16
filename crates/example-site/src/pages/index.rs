@@ -1,10 +1,10 @@
 use dioxus::prelude::*;
-use ssg_whiz::{Footer, Section, layouts::layout::Layout};
+use ssg_whiz::{layouts::layout::Layout, Footer, Section};
 
 pub fn page() -> String {
     let page = rsx!(
         Layout {
-            title: "__SITE_TITLE__".to_string(),
+            title: "Example Site".to_string(),
             description: "A starter static site built with ssg_whiz.".to_string(),
             image: Some("/logo.svg".to_string()),
             mobile_menu: None,
@@ -19,7 +19,7 @@ pub fn page() -> String {
                         class: "hero-content text-center",
                         div {
                             class: "max-w-3xl",
-                            span { class: "badge badge-outline mb-6", "__SITE_TITLE__" }
+                            span { class: "badge badge-outline mb-6", "Example Site" }
                             h1 { class: "text-5xl font-bold", "A minimal site scaffold that already runs." }
                             p {
                                 class: "py-6 text-lg opacity-80",
