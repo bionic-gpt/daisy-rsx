@@ -142,7 +142,7 @@ pub fn Navigation(
             if let Some(site_header) = site_header {
                 {site_header}
             }
-            div { class: "navbar justify-between",
+            div { class: "navbar justify-between pl-4 pr-4",
                 div {
                     class: "flex items-center gap-4",
                     div { class: "dropdown lg:hidden",
@@ -189,7 +189,7 @@ pub fn Navigation(
                         li {
                             a {
                                 href: model.home.clone(),
-                                span { class: "pl-3 flex flex-row gap-2 items-center",
+                                span { class: "flex flex-row gap-2 items-center",
                                     if let Some(logo_src) = model.logo_src {
                                         img {
                                             class: "h-8 w-auto",
