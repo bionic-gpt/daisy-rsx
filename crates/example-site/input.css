@@ -2,21 +2,4 @@
 @plugin "@tailwindcss/typography";
 @plugin "daisyui";
 @source "./src/**/*.{rs,html}";
-
-/* Shared navigation layout from ssg_whiz */
-@source inline("active backdrop-blur-lg backdrop-filter bg-base-100 bg-opacity-30 btn btn-ghost btn-primary dropdown dropdown-content flex flex-row gap-2 gap-3 gap-4 h-5 h-8 hidden items-center justify-between lg:flex lg:hidden lg:block lg:left-0 lg:overflow-y-auto lg:sticky left-[-100%] menu menu-horizontal menu-sm mt-3 navbar p-2 pl-3 px-1 rounded-box shadow shrink-0 sticky top-0 top-2.5 w-5 w-52 w-[420px] w-auto z-10 z-40 z-50");
-
-/* Shared prose styling for blog, docs, and markdown pages */
-@source inline("lg:prose-xl max-w-none max-w-prose mt-24 mx-auto prose prose-code:font-mono prose-img:max-w-full prose-pre:bg-slate-100 prose-pre:overflow-x-auto prose-pre:rounded-xl prose-slate");
-
-/* Shared blog post layout */
-@source inline("aspect-video block border-base-300 border-y btn-sm leading-tight mb-4 mb-8 mt-32 my-8 object-cover opacity-70 px-5 py-2 rounded-full rounded-box shadow-md text-4xl text-5xl text-base text-sm uppercase tracking-wide md:text-5xl");
-
-/* Shared blog index card layout */
-@source inline("bg-base-100 card card-actions card-body card-title gap-6 grid line-clamp-3 max-w-5xl max-w-6xl max-w-sm mb-12 md:grid-cols-2 md:text-xl mx-auto opacity-60 opacity-80 pb-8 pt-2 ring-1 ring-base-300 text-balance text-center text-lg text-xl w-full");
-
-/* Shared docs layout */
-@source inline("border-r cursor-not-allowed flex-1 font-semibold h-[calc(100vh-108px)] mb-2 mb-6 mb-12 overflow-y-auto p-0 pb-5 pointer-events-none pt-12 rounded-xl text-3xl w-full");
-
-/* Shared footer and extra-footer layout */
-@source inline("bg-base-200 flex flex-col font-bold gap-2 gap-8 link link-hover max-w-3xl max-w-4xl max-w-5xl mx-auto py-10 py-16 px-6 sm:flex-row sm:justify-center text-3xl text-4xl text-base-content tracking-[0.08em] md:flex-row md:justify-between md:text-4xl mt-24 mt-0");
+@source "../ssg_whiz/src/**/*.{rs,html}";
