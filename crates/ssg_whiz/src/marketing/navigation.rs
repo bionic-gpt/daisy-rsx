@@ -213,10 +213,18 @@ pub fn Navigation(
                                         div {
                                             tabindex: "0",
                                             role: "button",
-                                            class: "btn btn-ghost",
+                                            "aria-haspopup": "true",
+                                            class: "flex cursor-pointer items-center gap-1",
                                             "{menu.label}"
+                                            svg {
+                                                xmlns: "http://www.w3.org/2000/svg",
+                                                view_box: "0 0 20 20",
+                                                fill: "currentColor",
+                                                class: "h-3 w-3",
+                                                path { d: "M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" }
+                                            }
                                         }
-                                        ul { class: "menu dropdown-content z-10 mt-3 w-52 rounded-box bg-base-100 p-2 shadow",
+                                        ul { class: "menu dropdown-content z-10 w-52 rounded-box bg-base-100 p-2 shadow",
                                             for link in menu.links {
                                                 li {
                                                     a {
@@ -302,8 +310,12 @@ mod tests {
         });
 
         assert!(html.contains(r#"<li class="dropdown dropdown-hover">"#));
-        assert!(html.contains(r#"role="button" class="btn btn-ghost">Product"#));
-        assert!(html.contains(r#"<ul class="menu dropdown-content z-10 mt-3 w-52 rounded-box bg-base-100 p-2 shadow">"#));
+        assert!(html.contains(r#"role="button" aria-haspopup="true" class="flex cursor-pointer items-center gap-1">Product"#));
+        assert!(html.contains(r#"class="h-3 w-3""#));
+        assert!(!html.contains(r#"role="button" class="btn btn-ghost">Product"#));
+        assert!(html.contains(
+            r#"<ul class="menu dropdown-content z-10 w-52 rounded-box bg-base-100 p-2 shadow">"#
+        ));
         assert!(html.contains(r#"class="custom-link" hx-boost="true" href="/top">Top"#));
         assert!(html.contains(r#"class="active" hx-boost="true" href="/pricing">Pricing"#));
         assert!(html.contains(r#"hx-boost="false" href="/docs">Docs"#));

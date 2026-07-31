@@ -1,4 +1,7 @@
-use ssg_whiz::{FooterLinks, NavigationEntry, NavigationLink, NavigationModel, Section, SiteMeta};
+use ssg_whiz::{
+    FooterLinks, NavigationEntry, NavigationLink, NavigationMenu, NavigationModel, Section,
+    SiteMeta,
+};
 
 pub fn navigation_links() -> NavigationModel {
     NavigationModel {
@@ -7,12 +10,13 @@ pub fn navigation_links() -> NavigationModel {
         logo_alt: Some("Example Site logo".to_string()),
         desktop_left: vec![
             NavigationEntry::Link(NavigationLink::external("Home", "/", Section::Home)),
-            NavigationEntry::Link(NavigationLink::external(
-                "Docs",
-                "/docs/getting-started",
-                Section::Docs,
+            NavigationEntry::Menu(NavigationMenu::new(
+                "Resources",
+                vec![
+                    NavigationLink::external("Docs", "/docs/getting-started", Section::Docs),
+                    NavigationLink::external("Blog", "/blog", Section::Blog),
+                ],
             )),
-            NavigationEntry::Link(NavigationLink::external("Blog", "/blog", Section::Blog)),
         ],
         desktop_right: vec![NavigationLink::new("Get Started", "/#hero", Section::Home)
             .with_class("btn btn-primary")],
