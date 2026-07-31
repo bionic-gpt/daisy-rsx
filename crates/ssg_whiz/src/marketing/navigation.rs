@@ -94,17 +94,6 @@ pub struct NavigationModel {
     pub mobile: Vec<NavigationLink>,
 }
 
-fn nav_entry_links(entries: Vec<NavigationEntry>) -> Vec<NavigationLink> {
-    let mut links = Vec::new();
-    for entry in entries {
-        match entry {
-            NavigationEntry::Link(link) => links.push(link),
-            NavigationEntry::Menu(menu) => links.extend(menu.links),
-        }
-    }
-    links
-}
-
 fn nav_link_class(link: &NavigationLink, current_section: &Section) -> Option<String> {
     let mut classes = Vec::new();
 
@@ -134,7 +123,6 @@ pub fn Navigation(
     site_header: Option<SiteHeader>,
 ) -> Element {
     let brand = brand.unwrap_or_else(|| "Bionic".to_string());
-    let desktop_left = nav_entry_links(model.desktop_left);
 
     rsx! {
         header {
@@ -201,19 +189,52 @@ pub fn Navigation(
                                 }
                             }
                         }
-                        for link in desktop_left {
-                            li {
-                                a {
-                                    class: nav_link_class(&link, &section),
-                                    "hx-boost": if link.hx_boost { "true" } else { "false" },
-                                    href: link.href,
-                                    if let Some(src) = &link.badge_image {
-                                        img {
-                                            src: src.clone(),
-                                            alt: link.badge_alt.clone().unwrap_or_default()
+                        for entry in model.desktop_left {
+                            match entry {
+                                NavigationEntry::Link(link) => rsx! {
+                                    li {
+                                        a {
+                                            class: nav_link_class(&link, &section),
+                                            "hx-boost": if link.hx_boost { "true" } else { "false" },
+                                            href: link.href,
+                                            if let Some(src) = &link.badge_image {
+                                                img {
+                                                    src: src.clone(),
+                                                    alt: link.badge_alt.clone().unwrap_or_default()
+                                                }
+                                            } else {
+                                                "{link.label}"
+                                            }
                                         }
-                                    } else {
-                                        "{link.label}"
+                                    }
+                                },
+                                NavigationEntry::Menu(menu) => rsx! {
+                                    li { class: "dropdown dropdown-hover",
+                                        div {
+                                            tabindex: "0",
+                                            role: "button",
+                                            class: "btn btn-ghost",
+                                            "{menu.label}"
+                                        }
+                                        ul { class: "menu dropdown-content z-10 mt-3 w-52 rounded-box bg-base-100 p-2 shadow",
+                                            for link in menu.links {
+                                                li {
+                                                    a {
+                                                        class: nav_link_class(&link, &section),
+                                                        "hx-boost": if link.hx_boost { "true" } else { "false" },
+                                                        href: link.href,
+                                                        if let Some(src) = &link.badge_image {
+                                                            img {
+                                                                src: src.clone(),
+                                                                alt: link.badge_alt.clone().unwrap_or_default()
+                                                            }
+                                                        } else {
+                                                            "{link.label}"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -239,5 +260,53 @@ pub fn Navigation(
                 }
             }
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn renders_desktop_menu_without_flattening_links() {
+        let model = NavigationModel {
+            home: "/".to_string(),
+            logo_src: None,
+            logo_alt: None,
+            desktop_left: vec![
+                NavigationEntry::Link(
+                    NavigationLink::new("Top", "/top", Section::Home).with_class("custom-link"),
+                ),
+                NavigationEntry::Menu(NavigationMenu::new(
+                    "Product",
+                    vec![
+                        NavigationLink::new("Pricing", "/pricing", Section::Pricing),
+                        NavigationLink::external("Docs", "/docs", Section::Docs),
+                        NavigationLink::new("Badge", "/badge", Section::Blog)
+                            .with_badge_image("/badge.svg", "Badge"),
+                    ],
+                )),
+            ],
+            desktop_right: vec![],
+            mobile: vec![NavigationLink::new("Mobile Only", "/mobile", Section::Home)],
+        };
+
+        let html = dioxus_ssr::render_element(rsx! {
+            Navigation {
+                mobile_menu: None,
+                section: Section::Pricing,
+                model,
+                brand: Some("Test".to_string()),
+                site_header: None
+            }
+        });
+
+        assert!(html.contains(r#"<li class="dropdown dropdown-hover">"#));
+        assert!(html.contains(r#"role="button" class="btn btn-ghost">Product"#));
+        assert!(html.contains(r#"<ul class="menu dropdown-content z-10 mt-3 w-52 rounded-box bg-base-100 p-2 shadow">"#));
+        assert!(html.contains(r#"class="custom-link" hx-boost="true" href="/top">Top"#));
+        assert!(html.contains(r#"class="active" hx-boost="true" href="/pricing">Pricing"#));
+        assert!(html.contains(r#"hx-boost="false" href="/docs">Docs"#));
+        assert!(html.contains(r#"src="/badge.svg" alt="Badge""#));
     }
 }
