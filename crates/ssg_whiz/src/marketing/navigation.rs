@@ -174,7 +174,7 @@ pub fn Navigation(
                         }
                     }
                     ul { class: "flex flex-row items-center gap-4",
-                        li {
+                        li { class: "lg:mr-2",
                             a {
                                 href: model.home.clone(),
                                 span { class: "flex flex-row gap-2 items-center",
