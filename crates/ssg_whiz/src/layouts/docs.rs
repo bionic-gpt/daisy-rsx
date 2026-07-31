@@ -105,7 +105,7 @@ fn LeftNav(summary: Summary, active_folder: &'static str, scroll_key: &'static s
                                     class: format!(
                                         "{}{}",
                                         if page.folder == active_folder && !category.name.contains("Coming Soon") {
-                                            "active"
+                                            "font-bold"
                                         } else {
                                             ""
                                         },
@@ -147,5 +147,57 @@ fn Content(doc: PageSummary) -> Element {
                 }
             }
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn page(title: &'static str, folder: &'static str) -> PageSummary {
+        PageSummary {
+            date: "2026-03-16",
+            title,
+            description: "Test page",
+            folder,
+            markdown: "# Test",
+            image: None,
+            author: None,
+            author_image: None,
+        }
+    }
+
+    #[test]
+    fn left_nav_highlights_selected_page() {
+        let summary = Summary {
+            source_folder: "docs",
+            categories: vec![
+                Category {
+                    name: "Guides".to_string(),
+                    pages: vec![page("Intro", "docs/intro"), page("Install", "docs/install")],
+                },
+                Category {
+                    name: "Coming Soon".to_string(),
+                    pages: vec![page("Future", "docs/future")],
+                },
+            ],
+        };
+
+        let html = dioxus_ssr::render_element(rsx! {
+            LeftNav {
+                summary,
+                active_folder: "docs/install",
+                scroll_key: "docs"
+            }
+        });
+
+        assert!(html.contains(
+            r#"class="font-bold" href="/docs/install" hx-boost="true" tabindex="0">Install"#
+        ));
+        assert!(!html.contains(r#"<svg"#));
+        assert!(html.contains(r#"class="" href="/docs/intro" hx-boost="true" tabindex="0">Intro"#));
+        assert!(html.contains(r#"class=" pointer-events-none cursor-not-allowed opacity-50" href="/docs/future" hx-boost="false" tabindex="-1">Future"#));
+        assert!(!html.contains(r#"bg-primary text-primary-content"#));
+        assert!(!html.contains(r#"font-bold" href="/docs/future"#));
     }
 }
