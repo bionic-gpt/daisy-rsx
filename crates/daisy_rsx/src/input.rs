@@ -51,6 +51,7 @@ pub struct InputProps {
     input_size: Option<InputSize>,
     pub name: String,
     pub id: Option<String>,
+    pub class: Option<String>,
     pub label_class: Option<String>,
     pub value: Option<String>,
     pub label: Option<String>,
@@ -66,6 +67,7 @@ pub struct InputProps {
 pub fn Input(props: InputProps) -> Element {
     let input_type = props.input_type.unwrap_or_default();
     let input_size = props.input_size.unwrap_or_default();
+    let class = props.class.unwrap_or_default();
 
     rsx!(
         match (props.label, props.required) {
@@ -79,7 +81,7 @@ pub fn Input(props: InputProps) -> Element {
         }
         input {
             id: props.id,
-            class: "input input-bordered {input_size}",
+            class: "input input-bordered {input_size} {class}",
             value: props.value,
             required: props.required,
             disabled: props.disabled,

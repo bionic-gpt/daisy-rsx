@@ -31,6 +31,7 @@ pub struct SelectProps {
     select_size: Option<SelectSize>,
     pub name: String,
     pub id: Option<String>,
+    pub class: Option<String>,
     pub value: Option<String>,
     pub label: Option<String>,
     pub label_class: Option<String>,
@@ -44,6 +45,7 @@ pub struct SelectProps {
 pub fn Select(props: SelectProps) -> Element {
     let select_size = props.select_size.unwrap_or_default();
     let value = props.value.unwrap_or_default();
+    let class = props.class.unwrap_or_default();
     let disabled = props.disabled.filter(|&d| d);
 
     rsx!(
@@ -58,7 +60,7 @@ pub fn Select(props: SelectProps) -> Element {
             required: props.required,
             disabled,
             multiple: props.multiple,
-            class: "select select-bordered {select_size}",
+            class: "select select-bordered {select_size} {class}",
             value: "{value}",
             name: "{props.name}",
             {props.children}
@@ -124,6 +126,7 @@ fn test_select() {
         select_size: Some(SelectSize::Large),
         name: "test".to_string(),
         id: Some("test".to_string()),
+        class: Some("custom-select".to_string()),
         value: Some("test".to_string()),
         label: Some("test".to_string()),
         label_class: Some("test".to_string()),
@@ -133,7 +136,7 @@ fn test_select() {
         multiple: Some(false),
     };
 
-    let expected = r#"<label class="test">test</label><select id="test" required=true class="select select-bordered select-lg" value="test" name="test"><option value="test" selected=true>Hello</option><option value="test2">Hello2</option></select><label class="label-text-alt"><span>test</span></label>"#;
+    let expected = r#"<label class="test">test</label><select id="test" required=true class="select select-bordered select-lg custom-select" value="test" name="test"><option value="test" selected=true>Hello</option><option value="test2">Hello2</option></select><label class="label-text-alt"><span>test</span></label>"#;
     let result = dioxus_ssr::render_element(Select(props));
     // println!("{}", result);
     assert_eq!(expected, result);
