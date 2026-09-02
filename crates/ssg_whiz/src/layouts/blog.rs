@@ -249,9 +249,9 @@ pub fn BlogList(summary: Summary, footer_links: FooterLinks) -> Element {
                 }
             }
             section {
-                class: "mx-auto max-w-6xl px-5 pb-8",
+                class: "mx-auto max-w-4xl px-5 pb-8",
                 div {
-                    class: "grid gap-6 md:grid-cols-2",
+                    class: "grid gap-4 md:grid-cols-2 md:gap-5",
                     for category in summary.categories {
                         for page in category.pages {
                             article {

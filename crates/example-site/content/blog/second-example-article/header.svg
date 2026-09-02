@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Second Example Article</title>
+  <desc id="desc">Abstract blocks and lines for a blog article header.</desc>
+  <rect width="1200" height="675" fill="#f8fafc"/>
+  <rect x="72" y="78" width="1056" height="519" rx="24" fill="#0f172a"/>
+  <rect x="124" y="136" width="304" height="26" rx="13" fill="#38bdf8"/>
+  <rect x="124" y="196" width="684" height="34" rx="17" fill="#e2e8f0"/>
+  <rect x="124" y="254" width="548" height="24" rx="12" fill="#94a3b8"/>
+  <rect x="124" y="322" width="214" height="136" rx="18" fill="#22c55e"/>
+  <rect x="370" y="322" width="214" height="136" rx="18" fill="#f97316"/>
+  <rect x="616" y="322" width="214" height="136" rx="18" fill="#a855f7"/>
+  <path d="M878 198c72 46 120 97 143 153 21 52 22 101 3 147-18 43-55 71-109 84-56 13-115 3-177-29" fill="none" stroke="#38bdf8" stroke-width="18" stroke-linecap="round"/>
+  <circle cx="978" cy="188" r="42" fill="#facc15"/>
+</svg>
