@@ -67,13 +67,30 @@ pub(crate) fn site_header_factory() -> Option<SiteHeaderFactory> {
     SITE_HEADER_FACTORY.get().cloned().unwrap_or(None)
 }
 
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
 pub struct SiteAssets {
     pub stylesheets: Vec<String>,
     pub head_scripts: Vec<ScriptAsset>,
     pub body_scripts: Vec<ScriptAsset>,
     pub head_inline_scripts: Vec<InlineScript>,
     pub body_inline_scripts: Vec<InlineScript>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct SiteFeatures {
+    pub goat_counter: bool,
+    pub copy_paste: bool,
+    pub content_lightbox: bool,
+}
+
+impl Default for SiteFeatures {
+    fn default() -> Self {
+        Self {
+            goat_counter: true,
+            copy_paste: true,
+            content_lightbox: false,
+        }
+    }
 }
 
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -155,6 +172,7 @@ pub struct SiteConfig {
     pub footer_links: FooterLinks,
     pub site_meta: SiteMeta,
     pub site_header: Option<SiteHeaderFactory>,
+    pub features: SiteFeatures,
     pub site_assets: SiteAssets,
     pub extra_footer: Option<ExtraFooterConfig>,
 }
@@ -189,34 +207,17 @@ impl Default for SiteConfig {
                 goatcounter: "https://bionicgpt.goatcounter.com/count".to_string(),
             },
             site_header: None,
+            features: SiteFeatures::default(),
             site_assets: SiteAssets {
                 stylesheets: vec!["/tailwind.css".to_string()],
-                head_scripts: vec![
-                    ScriptAsset {
-                        src: "/goat-counter.js".to_string(),
-                        script_type: None,
-                        async_load: true,
-                        integrity: None,
-                        data_goatcounter: Some(
-                            "https://bionicgpt.goatcounter.com/count".to_string(),
-                        ),
-                    },
-                    ScriptAsset {
-                        src: "/copy-paste.js".to_string(),
-                        script_type: None,
-                        async_load: true,
-                        integrity: None,
-                        data_goatcounter: None,
-                    },
-                    ScriptAsset {
+                head_scripts: vec![ScriptAsset {
                         src: "https://cdn.jsdelivr.net/npm/@justinribeiro/lite-youtube@1/lite-youtube.min.js"
                             .to_string(),
                         script_type: Some("module".to_string()),
                         async_load: false,
                         integrity: None,
                         data_goatcounter: None,
-                    },
-                ],
+                    }],
                 body_scripts: vec![ScriptAsset {
                     src: "https://instant.page/5.2.0".to_string(),
                     script_type: Some("module".to_string()),

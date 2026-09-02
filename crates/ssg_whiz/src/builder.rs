@@ -6,14 +6,12 @@ use std::path::{Path, PathBuf};
 use std::pin::Pin;
 use std::process::Command;
 
-use image::{ImageFormat, ImageReader, imageops::FilterType};
-use sha2::{Digest, Sha256};
-
 use crate::summaries::{BlogSummary, DocumentSite, PagesSummary, Summary};
 use crate::{
-    SiteConfig, SitePage, WebsiteInput, generate_website, set_extra_footer, set_navigation_links,
-    set_site_assets, set_site_header, set_site_meta,
+    ScriptAsset, SiteAssets, SiteConfig, SiteFeatures, SitePage, WebsiteInput, generate_website,
+    set_extra_footer, set_navigation_links, set_site_assets, set_site_header, set_site_meta,
 };
+use image::{ImageFormat, ImageReader, imageops::FilterType};
 
 pub struct SiteBuilder {
     config: SiteConfig,
@@ -75,12 +73,12 @@ impl SiteBuilder {
         std::fs::create_dir_all(&dist_dir)?;
         tracing::info!("site build: dist dir ready at {}", dist_dir.display());
 
-        let framework_stylesheets = emit_framework_stylesheets(&dist_dir)?;
-        if !framework_stylesheets.is_empty() {
-            let mut stylesheets = framework_stylesheets;
-            stylesheets.extend(config.site_assets.stylesheets);
-            config.site_assets.stylesheets = stylesheets;
-        }
+        emit_framework_assets(&dist_dir, &config.features)?;
+        config.site_assets = merge_feature_assets(
+            &config.features,
+            &config.site_meta.goatcounter,
+            config.site_assets,
+        );
 
         set_navigation_links(config.navigation_links.clone());
         set_site_meta(config.site_meta.clone());
@@ -88,7 +86,6 @@ impl SiteBuilder {
         set_site_assets(config.site_assets.clone());
         set_extra_footer(config.extra_footer.clone());
 
-        emit_framework_assets(&dist_dir)?;
         copy_assets_dir(&dist_dir)?;
         tracing::info!("site build: copied shared assets");
 
@@ -171,7 +168,6 @@ struct BlogImageStats {
 
 const BLOG_VARIANT_SIZES: [(u32, u32); 2] = [(384, 216), (768, 432)];
 const PROCESSED_ASSETS_DIR: &str = "processed";
-const FRAMEWORK_STYLES: [(&str, &str); 0] = [];
 const FRAMEWORK_ASSETS: [(&str, &str); 2] = [
     (
         "social-sharing/x-twitter.svg",
@@ -182,45 +178,99 @@ const FRAMEWORK_ASSETS: [(&str, &str); 2] = [
         include_str!("../assets/social-sharing/linkedin.svg"),
     ),
 ];
+const GOAT_COUNTER_ASSET: (&str, &str) =
+    ("goat-counter.js", include_str!("../assets/goat-counter.js"));
+const COPY_PASTE_ASSET: (&str, &str) = ("copy-paste.js", include_str!("../assets/copy-paste.js"));
+const CONTENT_LIGHTBOX_CSS_ASSET: (&str, &str) = (
+    "content-lightbox.css",
+    include_str!("../assets/content-lightbox.css"),
+);
+const CONTENT_LIGHTBOX_JS_ASSET: (&str, &str) = (
+    "content-lightbox.js",
+    include_str!("../assets/content-lightbox.js"),
+);
 
-fn emit_framework_stylesheets(dist_dir: &Path) -> io::Result<Vec<String>> {
-    let mut emitted = Vec::with_capacity(FRAMEWORK_STYLES.len());
+fn merge_feature_assets(
+    features: &SiteFeatures,
+    goatcounter_endpoint: &str,
+    mut site_assets: SiteAssets,
+) -> SiteAssets {
+    let mut feature_stylesheets = Vec::new();
+    let mut feature_head_scripts = Vec::new();
 
-    for (name, content) in FRAMEWORK_STYLES {
-        let hash = short_sha256_hex(content.as_bytes());
-        let filename = format!("{name}-{hash}.css");
-        let output_path = dist_dir.join(&filename);
-
-        let mut file = std::fs::File::create(&output_path)?;
-        file.write_all(content.as_bytes())?;
-        emitted.push(format!("/{filename}"));
+    if features.content_lightbox {
+        feature_stylesheets.push("/content-lightbox.css".to_string());
+        feature_head_scripts.push(ScriptAsset {
+            src: "/content-lightbox.js".to_string(),
+            script_type: None,
+            async_load: true,
+            integrity: None,
+            data_goatcounter: None,
+        });
     }
 
-    Ok(emitted)
+    if features.goat_counter {
+        feature_head_scripts.push(ScriptAsset {
+            src: "/goat-counter.js".to_string(),
+            script_type: None,
+            async_load: true,
+            integrity: None,
+            data_goatcounter: Some(goatcounter_endpoint.to_string()),
+        });
+    }
+
+    if features.copy_paste {
+        feature_head_scripts.push(ScriptAsset {
+            src: "/copy-paste.js".to_string(),
+            script_type: None,
+            async_load: true,
+            integrity: None,
+            data_goatcounter: None,
+        });
+    }
+
+    feature_stylesheets.extend(site_assets.stylesheets);
+    site_assets.stylesheets = feature_stylesheets;
+    feature_head_scripts.extend(site_assets.head_scripts);
+    site_assets.head_scripts = feature_head_scripts;
+    site_assets
 }
 
-fn emit_framework_assets(dist_dir: &Path) -> io::Result<()> {
+fn emit_framework_assets(dist_dir: &Path, features: &SiteFeatures) -> io::Result<()> {
     for (relative_path, content) in FRAMEWORK_ASSETS {
-        let output_path = dist_dir.join(relative_path);
-        if let Some(parent) = output_path.parent() {
-            std::fs::create_dir_all(parent)?;
-        }
-
-        let mut file = std::fs::File::create(output_path)?;
-        file.write_all(content.as_bytes())?;
+        emit_framework_asset(dist_dir, relative_path, content)?;
+    }
+    if features.content_lightbox {
+        emit_framework_asset(
+            dist_dir,
+            CONTENT_LIGHTBOX_CSS_ASSET.0,
+            CONTENT_LIGHTBOX_CSS_ASSET.1,
+        )?;
+        emit_framework_asset(
+            dist_dir,
+            CONTENT_LIGHTBOX_JS_ASSET.0,
+            CONTENT_LIGHTBOX_JS_ASSET.1,
+        )?;
+    }
+    if features.goat_counter {
+        emit_framework_asset(dist_dir, GOAT_COUNTER_ASSET.0, GOAT_COUNTER_ASSET.1)?;
+    }
+    if features.copy_paste {
+        emit_framework_asset(dist_dir, COPY_PASTE_ASSET.0, COPY_PASTE_ASSET.1)?;
     }
 
     Ok(())
 }
 
-fn short_sha256_hex(bytes: &[u8]) -> String {
-    let digest = Sha256::digest(bytes);
-    let mut out = String::with_capacity(12);
-    for byte in digest.iter().take(6) {
-        use std::fmt::Write as _;
-        let _ = write!(&mut out, "{byte:02x}");
+fn emit_framework_asset(dist_dir: &Path, relative_path: &str, content: &str) -> io::Result<()> {
+    let output_path = dist_dir.join(relative_path);
+    if let Some(parent) = output_path.parent() {
+        std::fs::create_dir_all(parent)?;
     }
-    out
+
+    let mut file = std::fs::File::create(output_path)?;
+    file.write_all(content.as_bytes())?;
+    Ok(())
 }
 
 fn copy_folder(src: &Path, dst: &Path) -> io::Result<()> {
@@ -483,4 +533,75 @@ fn render_d2_diagram(path: &Path) -> io::Result<()> {
         path.display(),
         detail
     )))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn merge_feature_assets_prepends_selected_assets() {
+        let assets = merge_feature_assets(
+            &SiteFeatures {
+                goat_counter: true,
+                copy_paste: true,
+                content_lightbox: true,
+            },
+            "https://example.goatcounter.com/count",
+            SiteAssets {
+                stylesheets: vec!["/tailwind.css".to_string()],
+                head_scripts: vec![ScriptAsset::new("/custom.js")],
+                ..SiteAssets::default()
+            },
+        );
+
+        assert_eq!(
+            assets.stylesheets,
+            vec!["/content-lightbox.css", "/tailwind.css"]
+        );
+        assert_eq!(
+            assets
+                .head_scripts
+                .iter()
+                .map(|script| script.src.as_str())
+                .collect::<Vec<_>>(),
+            vec![
+                "/content-lightbox.js",
+                "/goat-counter.js",
+                "/copy-paste.js",
+                "/custom.js"
+            ]
+        );
+        assert_eq!(
+            assets.head_scripts[1].data_goatcounter.as_deref(),
+            Some("https://example.goatcounter.com/count")
+        );
+    }
+
+    #[test]
+    fn merge_feature_assets_leaves_custom_assets_when_features_disabled() {
+        let assets = merge_feature_assets(
+            &SiteFeatures {
+                goat_counter: false,
+                copy_paste: false,
+                content_lightbox: false,
+            },
+            "",
+            SiteAssets {
+                stylesheets: vec!["/tailwind.css".to_string()],
+                head_scripts: vec![ScriptAsset::new("/custom.js")],
+                ..SiteAssets::default()
+            },
+        );
+
+        assert_eq!(assets.stylesheets, vec!["/tailwind.css"]);
+        assert_eq!(
+            assets
+                .head_scripts
+                .iter()
+                .map(|script| script.src.as_str())
+                .collect::<Vec<_>>(),
+            vec!["/custom.js"]
+        );
+    }
 }

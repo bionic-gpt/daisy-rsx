@@ -57,7 +57,7 @@ function initCopyPaste() {
 
         await navigator.clipboard.writeText(text);
 
-        button.innerHTML = "OK";
+        button.innerHTML = "✔️";
 
         setTimeout(() => {
             button.innerHTML = svgIcon;

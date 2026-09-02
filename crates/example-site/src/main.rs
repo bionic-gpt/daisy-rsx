@@ -7,7 +7,9 @@ pub mod ui_links;
 
 use std::net::SocketAddr;
 
-use ssg_whiz::{DocumentSite, ScriptAsset, Section, SiteAssets, SiteBuilder, SiteConfig};
+use ssg_whiz::{
+    DocumentSite, ScriptAsset, Section, SiteAssets, SiteBuilder, SiteConfig, SiteFeatures,
+};
 
 #[tokio::main]
 async fn main() {
@@ -24,20 +26,22 @@ async fn main() {
         footer_links: ui_links::footer_links(),
         site_meta: ui_links::site_meta(),
         site_header: None,
+        features: SiteFeatures {
+            goat_counter: true,
+            copy_paste: true,
+            content_lightbox: true,
+        },
         site_assets: SiteAssets {
             stylesheets: vec!["/tailwind.css".to_string()],
-            head_scripts: vec![
-                ScriptAsset::new("/goat-counter.js"),
-                ScriptAsset::new("/copy-paste.js"),
-                ScriptAsset {
-                    src: "https://cdn.jsdelivr.net/npm/@justinribeiro/lite-youtube@1/lite-youtube.min.js"
+            head_scripts: vec![ScriptAsset {
+                src:
+                    "https://cdn.jsdelivr.net/npm/@justinribeiro/lite-youtube@1/lite-youtube.min.js"
                         .to_string(),
-                    script_type: Some("module".to_string()),
-                    async_load: false,
-                    integrity: None,
-                    data_goatcounter: None,
-                },
-            ],
+                script_type: Some("module".to_string()),
+                async_load: false,
+                integrity: None,
+                data_goatcounter: None,
+            }],
             body_scripts: vec![ScriptAsset {
                 src: "https://instant.page/5.2.0".to_string(),
                 script_type: Some("module".to_string()),
