@@ -139,7 +139,7 @@ pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
             image: post.image.map(|image| image.to_string()),
             section: Section::Blog,
             article {
-                class: "mt-24 mx-auto max-w-prose px-5 lg:max-w-[81.25ch]",
+                class: "mt-24 mb-16 mx-auto max-w-prose px-5 lg:max-w-[81.25ch]",
                 div {
                     class: "",
                     h1 {
@@ -207,7 +207,7 @@ pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
                         }
                     }
                     div {
-                        class: "prose prose-slate max-w-none prose-pre:overflow-x-auto prose-pre:rounded-xl prose-pre:bg-slate-100 prose-code:font-mono prose-img:max-w-full lg:prose-xl",
+                        class: "prose prose-slate max-w-none prose-pre:overflow-x-auto prose-pre:rounded-xl prose-pre:bg-slate-100 prose-code:font-mono prose-img:max-w-full",
                         dangerous_inner_html: "{content}"
                     }
                 }
