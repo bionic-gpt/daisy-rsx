@@ -19,7 +19,9 @@ pub mod marketing;
 pub mod summaries;
 
 pub use builder::SiteBuilder;
-pub use marketing::extra_footer::{ExtraFooter, ExtraFooterConfig};
+pub use marketing::extra_footer::{
+    ExtraFooter, ExtraFooterConfig, ExtraFooterFactory, ExtraFooterSlot, RenderExtraFooter,
+};
 pub use marketing::footer::{Footer, FooterLinks};
 pub use marketing::navigation::{
     Navigation, NavigationEntry, NavigationLink, NavigationMenu, NavigationModel, Section,
@@ -31,7 +33,7 @@ static NAV_LINKS: OnceLock<NavigationModel> = OnceLock::new();
 static SITE_META: OnceLock<SiteMeta> = OnceLock::new();
 static SITE_HEADER_FACTORY: OnceLock<Option<SiteHeaderFactory>> = OnceLock::new();
 static SITE_ASSETS: OnceLock<SiteAssets> = OnceLock::new();
-static EXTRA_FOOTER: OnceLock<Option<ExtraFooterConfig>> = OnceLock::new();
+static EXTRA_FOOTER: OnceLock<Option<ExtraFooterSlot>> = OnceLock::new();
 
 pub fn set_navigation_links(links: NavigationModel) {
     let _ = NAV_LINKS.set(links);
@@ -137,11 +139,11 @@ pub(crate) fn site_assets() -> &'static SiteAssets {
     SITE_ASSETS.get().expect("ssg_whiz site assets not set")
 }
 
-pub fn set_extra_footer(extra_footer: Option<ExtraFooterConfig>) {
+pub fn set_extra_footer(extra_footer: Option<ExtraFooterSlot>) {
     let _ = EXTRA_FOOTER.set(extra_footer);
 }
 
-pub(crate) fn extra_footer() -> Option<ExtraFooterConfig> {
+pub(crate) fn extra_footer() -> Option<ExtraFooterSlot> {
     EXTRA_FOOTER.get().cloned().unwrap_or(None)
 }
 
@@ -174,7 +176,7 @@ pub struct SiteConfig {
     pub site_header: Option<SiteHeaderFactory>,
     pub features: SiteFeatures,
     pub site_assets: SiteAssets,
-    pub extra_footer: Option<ExtraFooterConfig>,
+    pub extra_footer: Option<ExtraFooterSlot>,
 }
 
 impl Default for SiteConfig {

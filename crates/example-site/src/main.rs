@@ -8,7 +8,8 @@ pub mod ui_links;
 use std::net::SocketAddr;
 
 use ssg_whiz::{
-    DocumentSite, ScriptAsset, Section, SiteAssets, SiteBuilder, SiteConfig, SiteFeatures,
+    DocumentSite, ExtraFooterConfig, ExtraFooterSlot, ScriptAsset, Section, SiteAssets,
+    SiteBuilder, SiteConfig, SiteFeatures,
 };
 
 #[tokio::main]
@@ -55,6 +56,13 @@ async fn main() {
             head_inline_scripts: vec![],
             body_inline_scripts: vec![],
         },
+        extra_footer: Some(ExtraFooterSlot::BuiltIn(ExtraFooterConfig {
+            title: "Ready to build your own static site?".to_string(),
+            image: "/logo.svg".to_string(),
+            image_alt: "Example Site logo".to_string(),
+            cta_label: "Read the docs".to_string(),
+            cta_url: "/docs/getting-started".to_string(),
+        })),
         ..SiteConfig::default()
     };
 

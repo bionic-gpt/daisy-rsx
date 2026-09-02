@@ -1,6 +1,6 @@
 use super::layout::Layout;
 use crate::{
-    ExtraFooter, Footer, FooterLinks, Section, extra_footer, page_permalink,
+    Footer, FooterLinks, RenderExtraFooter, Section, extra_footer, page_permalink,
     summaries::{PageSummary, Summary},
 };
 use dioxus::prelude::*;
@@ -212,9 +212,9 @@ pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
                     }
                 }
             }
-            if let Some(config) = extra_footer {
-                ExtraFooter {
-                    config
+            if let Some(slot) = extra_footer {
+                RenderExtraFooter {
+                    slot
                 }
             }
             Footer {
