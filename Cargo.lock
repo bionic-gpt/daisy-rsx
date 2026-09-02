@@ -1854,7 +1854,7 @@ dependencies = [
 
 [[package]]
 name = "ssg_whiz"
-version = "0.1.14"
+version = "0.1.15"
 dependencies = [
  "axum",
  "dioxus",
