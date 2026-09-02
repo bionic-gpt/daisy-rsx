@@ -12,8 +12,8 @@ pub fn summary() -> Summary {
                 folder: "blog/hello-world",
                 markdown: include_str!("../content/blog/hello-world/index.md"),
                 image: Some("/blog/hello-world/header.png"),
-                author: None,
-                author_image: None,
+                author_image: Some("/blog-authors/ian.png"),
+                author: Some("Ian"),
             }],
         }],
     }

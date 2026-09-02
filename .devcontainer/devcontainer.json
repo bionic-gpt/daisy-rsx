@@ -6,7 +6,10 @@
   },
 
   "runArgs": [
-    "--add-host=host.docker.internal:host-gateway"
+    "--add-host=host.docker.internal:host-gateway",
+		"--security-opt", "seccomp=unconfined",
+		"--cap-add", "SYS_ADMIN",
+		"--privileged"
   ],
 
   "features": {

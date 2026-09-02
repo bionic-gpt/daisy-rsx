@@ -1,4 +1,7 @@
 codex: 
+    sudo apt update && sudo apt install -y bubblewrap
+    sudo chmod u-s /usr/bin/bwrap
+    sudo chown -R vscode:vscode /home/vscode/.codex
     sudo npm install -g @openai/codex
 
 install-d2:
