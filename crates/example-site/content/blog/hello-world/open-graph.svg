@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Hello from Example Site</title>
+  <desc id="desc">Open Graph preview artwork for the starter blog post.</desc>
+  <rect width="1200" height="630" fill="#0f172a"/>
+  <rect x="72" y="72" width="1056" height="486" rx="32" fill="#f8fafc"/>
+  <circle cx="206" cy="192" r="72" fill="#2563eb"/>
+  <circle cx="296" cy="192" r="72" fill="#22c55e"/>
+  <rect x="146" y="318" width="672" height="38" rx="19" fill="#0f172a"/>
+  <rect x="146" y="384" width="498" height="28" rx="14" fill="#475569"/>
+  <rect x="146" y="452" width="244" height="52" rx="26" fill="#2563eb"/>
+  <text x="146" y="260" fill="#0f172a" font-family="Arial, sans-serif" font-size="64" font-weight="700">Hello from Example Site</text>
+  <path d="M873 182h136v136H873z" fill="#f97316"/>
+  <path d="M941 385 1048 492H834z" fill="#22c55e"/>
+</svg>

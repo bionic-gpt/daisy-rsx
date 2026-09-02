@@ -20,6 +20,7 @@ pub struct PageSummary {
     pub folder: &'static str,
     pub markdown: &'static str,
     pub image: Option<&'static str>,
+    pub open_graph_image: Option<&'static str>,
     pub author: Option<&'static str>,
     pub author_image: Option<&'static str>,
 }

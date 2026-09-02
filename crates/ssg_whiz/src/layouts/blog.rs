@@ -126,6 +126,12 @@ fn weekday_name(year: i32, month: u32, day: u32) -> &'static str {
     NAMES[index]
 }
 
+fn page_meta_image(post: &PageSummary) -> Option<String> {
+    post.open_graph_image
+        .or(post.image)
+        .map(|image| image.to_string())
+}
+
 #[component]
 pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
     let content = crate::markdown::markdown_to_html(post.markdown);
@@ -136,7 +142,7 @@ pub fn BlogPost(post: PageSummary, footer_links: FooterLinks) -> Element {
             title: "{post.title}",
             description: "{post.description}",
             url: Some(page_permalink(post.folder)),
-            image: post.image.map(|image| image.to_string()),
+            image: page_meta_image(&post),
             section: Section::Blog,
             article {
                 class: "mt-24 mb-16 mx-auto max-w-prose px-5 lg:max-w-[81.25ch]",
@@ -327,6 +333,20 @@ pub fn BlogList(summary: Summary, footer_links: FooterLinks) -> Element {
 mod tests {
     use super::*;
 
+    fn page(image: Option<&'static str>, open_graph_image: Option<&'static str>) -> PageSummary {
+        PageSummary {
+            date: "2026-03-16",
+            title: "Test page",
+            description: "Test description",
+            folder: "blog/test",
+            markdown: "# Test",
+            image,
+            open_graph_image,
+            author: None,
+            author_image: None,
+        }
+    }
+
     #[test]
     fn formats_iso_dates_with_weekday_month_and_ordinal() {
         assert_eq!(format_display_date("2026-03-09"), "Monday 9th March 2026");
@@ -356,5 +376,24 @@ mod tests {
         assert_eq!(format_display_date("May 23 2026"), "May 23 2026");
         assert_eq!(format_display_date("2026-02-29"), "2026-02-29");
         assert_eq!(format_display_date("2026-13-01"), "2026-13-01");
+    }
+
+    #[test]
+    fn page_meta_image_prefers_dedicated_open_graph_image() {
+        assert_eq!(
+            page_meta_image(&page(
+                Some("/blog/test/header.png"),
+                Some("/blog/test/open-graph.png")
+            )),
+            Some("/blog/test/open-graph.png".to_string())
+        );
+    }
+
+    #[test]
+    fn page_meta_image_falls_back_to_visible_image() {
+        assert_eq!(
+            page_meta_image(&page(Some("/blog/test/header.png"), None)),
+            Some("/blog/test/header.png".to_string())
+        );
     }
 }

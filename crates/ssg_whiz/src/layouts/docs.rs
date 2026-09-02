@@ -162,6 +162,7 @@ mod tests {
             folder,
             markdown: "# Test",
             image: None,
+            open_graph_image: None,
             author: None,
             author_image: None,
         }

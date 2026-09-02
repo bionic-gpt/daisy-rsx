@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Second Example Article</title>
+  <desc id="desc">Open Graph preview artwork for the second example article.</desc>
+  <rect width="1200" height="630" fill="#111827"/>
+  <rect x="78" y="78" width="1044" height="474" rx="34" fill="#ecfeff"/>
+  <rect x="138" y="144" width="282" height="30" rx="15" fill="#0891b2"/>
+  <text x="138" y="284" fill="#111827" font-family="Arial, sans-serif" font-size="72" font-weight="700">Second Example Article</text>
+  <rect x="138" y="340" width="610" height="30" rx="15" fill="#334155"/>
+  <rect x="138" y="400" width="428" height="24" rx="12" fill="#64748b"/>
+  <circle cx="884" cy="214" r="70" fill="#a855f7"/>
+  <rect x="816" y="328" width="186" height="122" rx="22" fill="#f97316"/>
+  <path d="M814 494c82-74 162-74 240 0" fill="none" stroke="#0891b2" stroke-width="22" stroke-linecap="round"/>
+</svg>
