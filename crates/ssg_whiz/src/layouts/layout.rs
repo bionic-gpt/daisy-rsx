@@ -67,9 +67,9 @@ pub fn Layout(props: LayoutProps) -> Element {
             for script_asset in &assets.head_scripts {
                 script {
                     async: script_asset.async_load,
-                    "data-goatcounter": "{script_asset.data_goatcounter.as_deref().unwrap_or(\"\")}",
-                    integrity: "{script_asset.integrity.as_deref().unwrap_or(\"\")}",
-                    r#type: "{script_asset.script_type.as_deref().unwrap_or(\"\")}",
+                    "data-goatcounter": script_asset.data_goatcounter.as_deref(),
+                    integrity: script_asset.integrity.as_deref(),
+                    r#type: script_asset.script_type.as_deref(),
                     src: "{script_asset.src}"
                 }
             }
